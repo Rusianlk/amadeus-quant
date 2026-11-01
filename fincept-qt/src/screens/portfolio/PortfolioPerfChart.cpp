@@ -526,16 +526,10 @@ void PortfolioPerfChart::update_chart() {
             else if (t.transaction_type == "SELL")
                 sells->append(x, y);
         }
-        if (buys->count() > 0) {
+        if (buys->count() > 0)
             chart->addSeries(buys);
-            buys->attachAxis(axis_x);
-            buys->attachAxis(axis_y);
-        }
-        if (sells->count() > 0) {
+        if (sells->count() > 0)
             chart->addSeries(sells);
-            sells->attachAxis(axis_x);
-            sells->attachAxis(axis_y);
-        }
     }
 
 
@@ -611,6 +605,13 @@ void PortfolioPerfChart::update_chart() {
     chart->addAxis(y_axis, Qt::AlignLeft);
     nav_line->attachAxis(x_axis);
     nav_line->attachAxis(y_axis);
+    // Attach trade markers if they were added
+    for (auto* s : chart->series()) {
+        if (auto* sc = qobject_cast<QScatterSeries*>(s)) {
+            sc->attachAxis(x_axis);
+            sc->attachAxis(y_axis);
+        }
+    }
     area->attachAxis(x_axis);
     area->attachAxis(y_axis);
     if (cost_line) {

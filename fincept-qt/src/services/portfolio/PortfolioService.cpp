@@ -481,7 +481,6 @@ void PortfolioService::invalidate_cache(const QString& portfolio_id) {
     summary_cache_.remove(portfolio_id);
 }
 
-} // namespace fincept::services
 
 void PortfolioService::load_combined_summary() {
     auto list = PortfolioRepository::instance().list_portfolios();
@@ -540,31 +539,5 @@ void PortfolioService::load_combined_summary() {
     LOG_INFO("PortfolioSvc", QString("Combined TOTAL: %1 positions, cost %2")
                                  .arg(combined.total_positions).arg(combined.total_cost_basis));
 }
-    MarketDataService::instance().fetch_quotes(symbols, [this, combined](bool ok, QVector<fincept::services::QuoteData> quotes) mutable {
-        if (ok) {
-            QHash<QString, double> px;
-            for (const auto& q : quotes)
-                px[q.symbol] = q.price;
-            double total_mv = 0;
-            for (auto& h : combined.holdings) {
-                double p = px.value(h.symbol, 0);
-                if (p > 0) {
-                    h.current_price = p;
-                    h.market_value = h.quantity * p;
-                    h.unrealized_pnl = h.market_value - h.cost_basis;
-                    h.unrealized_pnl_percent = h.cost_basis > 0 ? (h.unrealized_pnl / h.cost_basis) * 100.0 : 0;
-                }
-                total_mv += h.market_value;
-            }
-            combined.total_market_value = total_mv;
-            combined.total_unrealized_pnl = total_mv - combined.total_cost_basis;
-            combined.total_unrealized_pnl_percent = combined.total_cost_basis > 0
-                ? (combined.total_unrealized_pnl / combined.total_cost_basis) * 100.0 : 0;
-        }
-        // Deliver on the UI thread.
-        QMetaObject::invokeMethod(this, [this, combined]() {
-            emit summary_loaded(combined);
-        }, Qt::QueuedConnection);
-    });
-}
 
+} // namespace fincept::services
