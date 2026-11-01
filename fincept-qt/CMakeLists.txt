@@ -1333,6 +1333,8 @@ set(SERVICE_SOURCES
     src/services/news/NewsService_Parsing.cpp
     src/services/news/NewsService_Classification.cpp
     src/services/news/NewsService_Feeds.cpp
+    src/services/news/FinnhubNewsService.cpp
+    src/services/news/NewsTranslationService.cpp
     src/services/news/NewsClusterService.cpp
     src/services/news/NewsMonitorService.cpp
     src/services/news/NewsNlpService.cpp

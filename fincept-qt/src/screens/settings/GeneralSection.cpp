@@ -10,6 +10,7 @@
 #include "storage/repositories/SettingsRepository.h"
 #include "ui/theme/Theme.h"
 
+#include <QCheckBox>
 #include <QLabel>
 #include <QScrollArea>
 #include <QShowEvent>
@@ -113,6 +114,22 @@ void GeneralSection::build_ui() {
                                      "translations are embedded with the build."));
     capture_row_labels(language_row, &language_label_, &language_desc_);
     vl->addWidget(language_row);
+    vl->addSpacing(16);
+    auto* news_title = new QLabel(tr("NOTICIAS"));
+    news_title->setStyleSheet(section_title_ss());
+    vl->addWidget(news_title);
+    vl->addWidget(make_sep());
+    vl->addSpacing(8);
+
+    auto* auto_tr = new QCheckBox(tr("Traducir noticias al español automáticamente"));
+    auto_tr->setObjectName("newsAutoTranslate");
+    auto r = SettingsRepository::instance().get("news.auto_translate_es");
+    auto_tr->setChecked(r.is_ok() && r.value() == "true");
+    connect(auto_tr, &QCheckBox::toggled, this, [](bool on) {
+        SettingsRepository::instance().set("news.auto_translate_es", on ? "true" : "false", "news");
+    });
+    vl->addWidget(auto_tr);
+
 
     connect(language_combo_, qOverload<int>(&QComboBox::currentIndexChanged), this, [this](int idx) {
         const QString code = language_combo_->itemData(idx).toString();

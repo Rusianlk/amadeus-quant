@@ -231,7 +231,7 @@ QWidget* NewsDetailPanel::build_content_view() {
     bookmark_btn_->setCheckable(true);
 
     // Translate button
-    translate_btn_ = new QPushButton(tr("TRANSLATE"), content);
+    translate_btn_ = new QPushButton(tr("Traducir al español"), content);
     translate_btn_->setObjectName("newsDetailOpenBtn");
 
     // All action buttons share a uniform height and expand to fill their grid
@@ -334,39 +334,29 @@ QWidget* NewsDetailPanel::build_content_view() {
             return;
         translate_btn_->setText(tr("..."));
         translate_btn_->setEnabled(false);
-        // The service callback is not lifetime-bound to this widget, so a raw
-        // [this] capture would dangle if the panel is destroyed while the
-        // translation is in flight (P8). Guard with QPointer, and pin the
-        // article id so a late result can't overwrite a different article.
         QPointer<NewsDetailPanel> self = this;
         const QString for_article = current_article_.id;
         const QString source_text = current_article_.headline + "\n\n" + current_article_.summary;
-        services::NewsNlpService::instance().translate_text(
-            source_text, "en", [self, for_article, source_text](bool ok, QString translated, QString detected_lang) {
+        services::NewsTranslationService::instance().translate_to_spanish(
+            source_text, [self, for_article](bool ok, QString translated) {
                 if (!self)
                     return;
                 self->translate_btn_->setEnabled(true);
                 if (self->current_article_.id != for_article) {
-                    self->translate_btn_->setText(self->tr("TRANSLATE"));
-                    return; // user moved on to another article
+                    self->translate_btn_->setText(self->tr("Traducir al español"));
+                    return;
                 }
-                // Say what happened instead of silently resetting the button.
-                QString result_label = self->tr("TRANSLATE");
-                if (!ok || translated.isEmpty()) {
-                    result_label = self->tr("FAILED");
-                } else if (translated.trimmed() == source_text.trimmed()) {
-                    result_label = self->tr("ALREADY EN"); // nothing to translate
+                if (ok && !translated.isEmpty()) {
+                    self->summary_label_->setText(translated);
+                    self->translate_btn_->setText(self->tr("Traducido"));
                 } else {
-                    self->summary_label_->setText(self->tr("[%1 -> EN] %2").arg(detected_lang, translated));
+                    self->translate_btn_->setText(self->tr("Error"));
                 }
-                self->translate_btn_->setText(result_label);
-                if (result_label != self->tr("TRANSLATE")) {
-                    QPointer<NewsDetailPanel> guard = self;
-                    QTimer::singleShot(1500, self->translate_btn_, [guard]() {
-                        if (guard)
-                            guard->translate_btn_->setText(guard->tr("TRANSLATE"));
-                    });
-                }
+                QPointer<NewsDetailPanel> guard = self;
+                QTimer::singleShot(2000, self->translate_btn_, [guard]() {
+                    if (guard)
+                        guard->translate_btn_->setText(guard->tr("Traducir al español"));
+                });
             });
     });
 

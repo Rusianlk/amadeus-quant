@@ -247,6 +247,11 @@ void NewsService::fetch_all_news(bool force, ArticlesCallback cb) {
     state->callback = std::move(cb);
     state->service = this;
 
+    // Count Finnhub as one more "feed" so the final callback waits for it.
+    bool finnhub_pending = !FinnhubNewsService::instance().api_key().isEmpty();
+    if (finnhub_pending)
+        state->remaining.fetchAndAddRelaxed(1);
+
     for (const auto& feed : feeds) {
         QNetworkRequest req(QUrl(feed.url));
         req.setHeader(QNetworkRequest::UserAgentHeader, kBrowserUserAgent);
@@ -302,27 +307,8 @@ void NewsService::fetch_all_news(bool force, ArticlesCallback cb) {
                                 state->service->persist_articles_async(all);
                             }
 
-                            // Merge Finnhub results if a key is configured (offline, user key).
-                            FinnhubNewsService::instance().fetch_general([state](bool ok, QVector<FinnhubNewsItem> items) {
-                                if (!ok || items.isEmpty())
-                                    return;
-                                QVector<NewsArticle> extra;
-                                for (const auto& it : items) {
-                                    NewsArticle a;
-                                    a.id = QString("finnhub-%1").arg(it.datetime);
-                                    a.headline = it.headline;
-                                    a.summary = it.summary;
-                                    a.source = it.source.isEmpty() ? "FINNHUB" : it.source;
-                                    a.link = it.url;
-                                    a.sort_ts = it.datetime;
-                                    a.tier = 2;
-                                    a.category = "MARKETS";
-                                    a.region = "GLOBAL";
-                                    extra.append(a);
-                                }
-                                QMutexLocker lock(&state->mutex);
-                                merge_unique(state->all_articles, state->seen_ids, extra);
-                            });
+                            // Finnhub is fetched in parallel and merged before the final callback
+                            // so its items appear on the first refresh.
 
                             LOG_INFO("NewsService",
                                      QString("Fetched %1 articles from %2 sources").arg(all.size()).arg(sources.size()));
@@ -334,6 +320,43 @@ void NewsService::fetch_all_news(bool force, ArticlesCallback cb) {
                     },
                     Qt::QueuedConnection);
             });
+        });
+    }
+
+    if (finnhub_pending) {
+        FinnhubNewsService::instance().fetch_general([state](bool ok, QVector<FinnhubNewsItem> items) {
+            QVector<NewsArticle> extra;
+            if (ok) {
+                for (const auto& it : items) {
+                    NewsArticle a;
+                    a.id = QString("finnhub-%1").arg(it.datetime);
+                    a.headline = it.headline;
+                    a.summary = it.summary;
+                    a.source = it.source.isEmpty() ? QStringLiteral("FINNHUB") : it.source;
+                    a.link = it.url;
+                    a.sort_ts = it.datetime;
+                    a.tier = 2;
+                    a.category = QStringLiteral("MARKETS");
+                    a.region = QStringLiteral("GLOBAL");
+                    extra.append(a);
+                }
+            }
+            QMutexLocker lock(&state->mutex);
+            if (!extra.isEmpty())
+                merge_unique(state->all_articles, state->seen_ids, extra);
+            if (state->remaining.fetchAndSubRelaxed(1) == 1) {
+                // Last "feed" finished — emit the combined result
+                auto all = state->all_articles;
+                std::sort(all.begin(), all.end(), [](const NewsArticle& a, const NewsArticle& b) {
+                    return a.sort_ts > b.sort_ts;
+                });
+                state->service->latest_articles_ = all;
+                if (!all.isEmpty())
+                    store_cache_async(all);
+                state->callback(true, all);
+                emit state->service->articles_updated(all);
+                state->service->publish_articles_to_hub(all);
+            }
         });
     }
 }
