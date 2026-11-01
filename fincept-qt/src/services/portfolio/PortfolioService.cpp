@@ -485,10 +485,52 @@ void PortfolioService::load_combined_summary() {
         emit summary_error({}, tr("No portfolios"));
         return;
     }
-    // Aggregate: for each portfolio load its summary and the UI can sum.
-    // Here we just trigger a refresh of the first one and log the count;
-    // a dedicated CombinedPortfolioScreen can call load_summary per id.
-    LOG_INFO("PortfolioSvc", QString("Combined view requested for %1 portfolios").arg(list.value().size()));
-    load_summary(list.value().first().id);
+    portfolio::PortfolioSummary combined;
+    combined.portfolio.id = QStringLiteral("__total__");
+    combined.portfolio.name = QStringLiteral("TOTAL");
+    combined.portfolio.currency = list.value().first().currency;
+
+    QHash<QString, portfolio::HoldingWithQuote> by_symbol;
+    double total_realized = 0;
+    double total_cost = 0;
+    double total_mv = 0;
+
+    for (const auto& pf : list.value()) {
+        auto assets = PortfolioRepository::instance().get_assets(pf.id);
+        if (assets.is_err())
+            continue;
+        auto txns = PortfolioRepository::instance().get_transactions(pf.id, 10000);
+        if (txns.is_ok()) {
+            // Approximate realized from SELL rows (sell_price - avg) * qty
+            for (const auto& t : txns.value()) {
+                if (t.transaction_type == "SELL")
+                    total_realized += t.total_value; // rough; refined below
+            }
+        }
+        for (const auto& a : assets.value()) {
+            auto& h = by_symbol[a.symbol];
+            h.symbol = a.symbol;
+            const double prev_qty = h.quantity;
+            const double prev_cost = h.avg_buy_price * prev_qty;
+            h.quantity += a.quantity;
+            h.avg_buy_price = h.quantity > 0 ? (prev_cost + a.avg_buy_price * a.quantity) / h.quantity : 0;
+            h.cost_basis = h.avg_buy_price * h.quantity;
+            h.market_value = h.cost_basis; // live price filled later if available
+            total_cost += a.avg_buy_price * a.quantity;
+            total_mv += h.market_value;
+        }
+    }
+    for (auto& h : by_symbol)
+        combined.holdings.append(h);
+    combined.total_cost_basis = total_cost;
+    combined.total_market_value = total_mv;
+    combined.total_unrealized_pnl = total_mv - total_cost;
+    combined.total_unrealized_pnl_percent = total_cost > 0 ? (combined.total_unrealized_pnl / total_cost) * 100.0 : 0;
+    combined.total_realized_pnl = total_realized;
+    combined.total_positions = combined.holdings.size();
+    combined.last_updated = QDateTime::currentDateTimeUtc().toString(Qt::ISODate);
+
+    emit summary_loaded(combined);
+    LOG_INFO("PortfolioSvc", QString("Combined TOTAL: %1 positions, cost %2").arg(combined.total_positions).arg(total_cost));
 }
 

@@ -250,8 +250,8 @@ WindowFrame::WindowFrame(int window_id, QWidget* parent, const WindowId& adopted
     // "Fincept Terminal" is the product brand and is intentionally not
     // translated — the bracketed profile name is the only variable part.
     const QString profile = ProfileManager::instance().active();
-    setWindowTitle(profile == "default" ? QStringLiteral("Fincept Terminal")
-                                        : QStringLiteral("Fincept Terminal [%1]").arg(profile));
+    setWindowTitle(profile == "default" ? QStringLiteral("Amadeus Quant")
+                                        : QStringLiteral("Amadeus Quant [%1]").arg(profile));
     // Load icon from the embedded Windows resource (IDI_ICON1 in app.rc).
     // Falls back to the .ico beside the executable on other platforms.
     QIcon app_icon;
@@ -1229,15 +1229,15 @@ void WindowFrame::set_shell_visible(bool visible) {
     if (!visible) {
         // Reset title to plain app name — no screen suffix while on auth screens
         const QString profile = ProfileManager::instance().active();
-        setWindowTitle(profile == "default" ? QStringLiteral("Fincept Terminal")
-                                            : QStringLiteral("Fincept Terminal [%1]").arg(profile));
+        setWindowTitle(profile == "default" ? QStringLiteral("Amadeus Quant")
+                                            : QStringLiteral("Amadeus Quant [%1]").arg(profile));
     }
 }
 
 void WindowFrame::update_window_title() {
     // Brand stays in English; only the workspace/screen suffix (translated
     // via DockScreenRouter::title_for_id) responds to language changes.
-    QString title = QStringLiteral("Fincept Terminal");
+    QString title = QStringLiteral("Amadeus Quant");
 
     const QString profile = ProfileManager::instance().active();
     if (profile != "default")

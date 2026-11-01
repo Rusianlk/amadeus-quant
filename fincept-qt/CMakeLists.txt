@@ -1030,6 +1030,7 @@ set(STORAGE_SOURCES
     src/storage/sqlite/migrations/v051_drop_duplicate_indexes.cpp
     src/storage/sqlite/migrations/v052_coding_agents.cpp
     src/storage/sqlite/migrations/v053_instrument_indexes.cpp
+    src/storage/sqlite/migrations/v054_portfolio_commission.cpp
 
     # Historical OHLCV data store (Historify, Phase 3 §13)
     src/storage/HistoricalDataStore.cpp

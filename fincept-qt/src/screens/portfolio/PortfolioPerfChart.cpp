@@ -12,6 +12,7 @@
 #include <QGuiApplication>
 #include <QHBoxLayout>
 #include <QLineSeries>
+#include <QScatterSeries>
 #include <QMouseEvent>
 #include <QScreen>
 #include <QTimeZone>
@@ -498,6 +499,40 @@ void PortfolioPerfChart::update_chart() {
     chart->addSeries(area);
     chart->addSeries(nav_line);
 
+    // Buy/sell markers
+    if (!trade_markers_.isEmpty()) {
+        auto* buys = new QScatterSeries;
+        buys->setName(tr("Buys"));
+        buys->setMarkerSize(8);
+        buys->setColor(QColor("#16a34a"));
+        auto* sells = new QScatterSeries;
+        sells->setName(tr("Sells"));
+        sells->setMarkerSize(8);
+        sells->setColor(QColor("#dc2626"));
+        for (const auto& t : trade_markers_) {
+            // Place marker at the NAV value on that date if we have a snapshot
+            double y = 0;
+            for (const auto& s : snapshots_) {
+                if (s.snapshot_date.left(10) == t.transaction_date.left(10)) {
+                    y = s.total_value;
+                    break;
+                }
+            }
+            if (y <= 0)
+                continue;
+            qint64 x = QDateTime::fromString(t.transaction_date.left(10), Qt::ISODate).toMSecsSinceEpoch();
+            if (t.transaction_type == "BUY")
+                buys->append(x, y);
+            else if (t.transaction_type == "SELL")
+                sells->append(x, y);
+        }
+        if (buys->count() > 0)
+            chart->addSeries(buys);
+        if (sells->count() > 0)
+            chart->addSeries(sells);
+    }
+
+
     // ── Cost basis reference line (per-day, from replay snapshots) ───────────
     // Skipped in indexed mode (where the period baseline IS the reference at 100).
     // Each snapshot now carries its own cost basis (BUYs add, SELLs reduce by
@@ -737,3 +772,8 @@ void PortfolioPerfChart::refresh_theme() {
 }
 
 } // namespace fincept::screens
+
+void PortfolioPerfChart::set_trade_markers(const QVector<portfolio::Transaction>& txns) {
+    trade_markers_ = txns;
+    update_chart();
+}

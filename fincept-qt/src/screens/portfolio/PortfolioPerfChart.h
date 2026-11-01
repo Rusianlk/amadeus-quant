@@ -41,6 +41,7 @@ class PortfolioPerfChart : public QWidget {
 
     void set_summary(const portfolio::PortfolioSummary& summary);
     void set_snapshots(const QVector<portfolio::PortfolioSnapshot>& snapshots);
+    void set_trade_markers(const QVector<portfolio::Transaction>& txns);
     void set_currency(const QString& currency);
     /// Feed real benchmark closes for the overlay. The symbol is shown on the
     /// toggle button and used to disambiguate currencies in indexed mode.
@@ -93,6 +94,7 @@ class PortfolioPerfChart : public QWidget {
     // Data
     portfolio::PortfolioSummary summary_;
     QVector<portfolio::PortfolioSnapshot> snapshots_;
+    QVector<portfolio::Transaction> trade_markers_;
     QVector<portfolio::TwrPoint> twr_series_;
     QString currency_ = "USD";
 

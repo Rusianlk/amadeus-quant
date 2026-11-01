@@ -384,7 +384,7 @@ QLabel#setupInstallDir { color: @text_dim; font-family: @font; font-size: 10px; 
 }
 
 void SetupScreen::retranslateUi() {
-    setWindowTitle(tr("Fincept Terminal — First-Time Setup"));
+    setWindowTitle(tr("Amadeus Quant — First-Time Setup"));
     title_lbl_->setText(tr("FINCEPT TERMINAL — FIRST-TIME SETUP"));
     quit_btn_->setText(tr("QUIT"));
     install_dir_lbl_->setText(
@@ -512,7 +512,7 @@ void SetupScreen::render_buttons(bool has_run, bool running, bool succeeded, boo
         primary = anything_installed_ ? tr("CONTINUE SETUP") : tr("BEGIN SETUP");
         subtitle = anything_installed_
                        ? tr("Part of the Python environment is already in place — only the missing pieces are installed.")
-                       : tr("Fincept Terminal installs its own Python runtime and analytics libraries once. Later "
+                       : tr("Amadeus Quant installs its own Python runtime and analytics libraries once. Later "
                             "launches start instantly.");
         note = tr("Needs an internet connection. The terminal opens as soon as the analytics core is installed; "
                   "the remaining libraries finish in the background.");
@@ -532,7 +532,7 @@ void SetupScreen::render_buttons(bool has_run, bool running, bool succeeded, boo
         primary_action_ = PrimaryAction::Launch;
         primary = tr("LAUNCH TERMINAL");
         subtitle = tr("Everything is installed.");
-        note = tr("Launching Fincept Terminal…");
+        note = tr("Launching Amadeus Quant…");
     } else if (core_ready) {
         primary_action_ = PrimaryAction::Launch;
         primary = tr("LAUNCH TERMINAL");
@@ -696,7 +696,7 @@ void SetupScreen::closeEvent(QCloseEvent* event) {
     auto& psm = python::PythonSetupManager::instance();
     if (psm.is_running()) {
         const auto answer =
-            QMessageBox::question(this, tr("Quit Fincept Terminal"), tr("Setup is still running. Quit Fincept Terminal?"),
+            QMessageBox::question(this, tr("Quit Amadeus Quant"), tr("Setup is still running. Quit Amadeus Quant?"),
                                   QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
         if (answer != QMessageBox::Yes) {
             event->ignore();

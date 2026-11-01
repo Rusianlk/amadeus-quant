@@ -155,7 +155,7 @@ AboutScreen::AboutScreen(QWidget* parent) : QWidget(parent) {
 
         auto* left = new QVBoxLayout;
         left->setSpacing(4);
-        app_name_ = new QLabel(QStringLiteral("Fincept Terminal"));
+        app_name_ = new QLabel(QStringLiteral("Amadeus Quant"));
         app_name_->setStyleSheet(QString("color: %1; font-size: 15px; font-weight: bold; background: transparent; "
                                          "font-family: 'Consolas','Courier New',monospace;")
                                      .arg(ui::colors::TEXT_PRIMARY()));
@@ -219,7 +219,7 @@ AboutScreen::AboutScreen(QWidget* parent) : QWidget(parent) {
         pvl->addWidget(body);
 
         // Footer bar
-        copyright_ = new QLabel(tr("© 2024-2026 Fincept Corporation. All rights reserved."));
+        copyright_ = new QLabel(tr("© 2024-2026 Amadeus Quant Corporation. All rights reserved."));
         copyright_->setStyleSheet(
             QString("color: %1; font-size: 11px; background: %2; "
                     "padding: 6px 14px; border-top: 1px solid %3; "
@@ -274,7 +274,7 @@ AboutScreen::AboutScreen(QWidget* parent) : QWidget(parent) {
         }
 
         // Enterprise — the separate closed-source product, not a licence for this build.
-        // Fincept no longer sells a commercial licence for the open-source edition;
+        // Amadeus Quant no longer sells a commercial licence for the open-source edition;
         // commercial, institutional and academic use is served by Enterprise instead.
         {
             auto* panel = makePanel();
@@ -385,7 +385,7 @@ AboutScreen::AboutScreen(QWidget* parent) : QWidget(parent) {
         copy_info_btn_->setCursor(Qt::PointingHandCursor);
         copy_info_btn_->setToolTip(tr("Copy version and OS details to the clipboard for bug reports"));
         connect(copy_info_btn_, &QPushButton::clicked, this, [this]() {
-            const QString info = QStringLiteral("Fincept Terminal v%1\nQt: %2 (built with %3)\nOS: %4 (%5 %6)\n"
+            const QString info = QStringLiteral("Amadeus Quant v%1\nQt: %2 (built with %3)\nOS: %4 (%5 %6)\n"
                                                 "CPU architecture: %7\nBuild ABI: %8\nLocale: %9")
                                      .arg(QApplication::applicationVersion(), QString::fromLatin1(qVersion()),
                                           QStringLiteral(QT_VERSION_STR), QSysInfo::prettyProductName(),
@@ -421,15 +421,15 @@ AboutScreen::AboutScreen(QWidget* parent) : QWidget(parent) {
         bvl->setSpacing(6);
 
         trademarks_desc_ =
-            new QLabel(tr("\"Fincept\", \"Fincept Terminal\", and associated logos are trademarks of "
-                          "Fincept Corporation. Use of these marks requires explicit written permission."));
+            new QLabel(tr("\"Amadeus Quant\", \"Amadeus Quant\", and associated logos are trademarks of "
+                          "Amadeus Quant Corporation. Use of these marks requires explicit written permission."));
         trademarks_desc_->setStyleSheet(BODY());
         trademarks_desc_->setWordWrap(true);
         bvl->addWidget(trademarks_desc_);
 
         trademarks_perm_ =
-            new QLabel(tr("Permission is not granted to use Fincept trademarks in a way that suggests "
-                          "affiliation with or endorsement by Fincept Corporation without prior written consent."));
+            new QLabel(tr("Permission is not granted to use Amadeus Quant trademarks in a way that suggests "
+                          "affiliation with or endorsement by Amadeus Quant Corporation without prior written consent."));
         trademarks_perm_->setStyleSheet(MUTED());
         trademarks_perm_->setWordWrap(true);
         bvl->addWidget(trademarks_perm_);
@@ -461,12 +461,12 @@ AboutScreen::AboutScreen(QWidget* parent) : QWidget(parent) {
         // exist in the repository — those two buttons opened GitHub 404 pages.
         // Replaced with documents that are actually checked in.
         const Link links[] = {
-            {tr("GitHub Repository"), "https://github.com/Fincept-Corporation/FinceptTerminal"},
-            {tr("License (AGPL-3.0)"), "https://github.com/Fincept-Corporation/FinceptTerminal/blob/main/LICENSE"},
-            {tr("Fincept Enterprise"), ui::enterprise::url_with_ref(ui::enterprise::site_url(), QStringLiteral("about"))},
-            {tr("Documentation"), "https://github.com/Fincept-Corporation/FinceptTerminal/tree/main/docs"},
+            {tr("GitHub Repository"), "https://github.com/Amadeus Quant-Corporation/Amadeus QuantTerminal"},
+            {tr("License (AGPL-3.0)"), "https://github.com/Amadeus Quant-Corporation/Amadeus QuantTerminal/blob/main/LICENSE"},
+            {tr("Amadeus Quant Enterprise"), ui::enterprise::url_with_ref(ui::enterprise::site_url(), QStringLiteral("about"))},
+            {tr("Documentation"), "https://github.com/Amadeus Quant-Corporation/Amadeus QuantTerminal/tree/main/docs"},
             {tr("Contributing Guide"),
-             "https://github.com/Fincept-Corporation/FinceptTerminal/blob/main/docs/CONTRIBUTING.md"},
+             "https://github.com/Amadeus Quant-Corporation/Amadeus QuantTerminal/blob/main/docs/CONTRIBUTING.md"},
             {tr("Official Website"), "https://fincept.in"},
         };
 
@@ -564,7 +564,7 @@ void AboutScreen::retranslateUi() {
     if (check_btn_)
         check_btn_->setText(check_in_progress_ ? tr("Checking…") : tr("Check for Updates"));
     if (copyright_)
-        copyright_->setText(tr("© 2024-2026 Fincept Corporation. All rights reserved."));
+        copyright_->setText(tr("© 2024-2026 Amadeus Quant Corporation. All rights reserved."));
 
     // Open source license — bullet 0 is the SPDX identifier (untranslated).
     setPanelHeaderText(oss_header_, "", tr("OPEN SOURCE LICENSE"));
@@ -601,19 +601,19 @@ void AboutScreen::retranslateUi() {
     // Trademarks
     setPanelHeaderText(trademarks_header_, "", tr("TRADEMARKS"));
     if (trademarks_desc_)
-        trademarks_desc_->setText(tr("\"Fincept\", \"Fincept Terminal\", and associated logos are trademarks of "
-                                     "Fincept Corporation. Use of these marks requires explicit written permission."));
+        trademarks_desc_->setText(tr("\"Amadeus Quant\", \"Amadeus Quant\", and associated logos are trademarks of "
+                                     "Amadeus Quant Corporation. Use of these marks requires explicit written permission."));
     if (trademarks_perm_)
         trademarks_perm_->setText(
-            tr("Permission is not granted to use Fincept trademarks in a way that suggests "
-               "affiliation with or endorsement by Fincept Corporation without prior written consent."));
+            tr("Permission is not granted to use Amadeus Quant trademarks in a way that suggests "
+               "affiliation with or endorsement by Amadeus Quant Corporation without prior written consent."));
 
     // Resources
     setPanelHeaderText(resources_header_, "", tr("RESOURCES"));
     if (resource_btns_.size() == 6) {
         resource_btns_[0]->setText(tr("GitHub Repository"));
         resource_btns_[1]->setText(tr("License (AGPL-3.0)"));
-        resource_btns_[2]->setText(tr("Fincept Enterprise"));
+        resource_btns_[2]->setText(tr("Amadeus Quant Enterprise"));
         resource_btns_[3]->setText(tr("Documentation"));
         resource_btns_[4]->setText(tr("Contributing Guide"));
         resource_btns_[5]->setText(tr("Official Website"));

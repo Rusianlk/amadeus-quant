@@ -1,5 +1,5 @@
 > [!IMPORTANT]
-> ## 🔒 Fincept Terminal **Enterprise** — the private edition is now available.
+> ## 🔒 Amadeus Quant **Enterprise** — the private edition is now available.
 > RealTime data · Multi-agent AI research · Live broker, Backtest & Algo execution · Priority support ·
 > Equity Research · Portfolio Management · Financial Workflows · Quant Research Lab · Maritime · Geopolitics
 >
@@ -29,7 +29,7 @@
 > <sub>30-day passes — nothing auto-renews · Students: Apex for $5 · Free to start at [quantcept.io](https://quantcept.io)</sub>
 
 
-# Fincept Terminal
+# Amadeus Quant
 
 <div align="center">
 
@@ -57,7 +57,7 @@ State-of-the-art financial intelligence platform with institutional-grade financ
 
 <sub>English · [Deutsch](docs/translations/README.de.md) · [Español](docs/translations/README.es.md) · [Français](docs/translations/README.fr.md) · [हिन्दी](docs/translations/README.hi.md) · [日本語](docs/translations/README.ja.md) · [한국어](docs/translations/README.ko.md) · [简体中文](docs/translations/README.zh-CN.md) · [繁體中文](docs/translations/README.zh-TW.md)</sub>
 
-![Fincept Terminal](https://raw.githubusercontent.com/Fincept-Corporation/FinceptTerminal/main/images/FinceptBanner.png)
+![Amadeus Quant](https://raw.githubusercontent.com/Fincept-Corporation/FinceptTerminal/main/images/FinceptBanner.png)
 
 <table>
   <tr>
@@ -74,7 +74,7 @@ State-of-the-art financial intelligence platform with institutional-grade financ
 
 ## About
 
-**Fincept Terminal** is a native C++20 desktop terminal for financial research — Qt6 UI, embedded Python 3.11 analytics, one binary, no Electron.
+**Amadeus Quant** is a native C++20 desktop terminal for financial research — Qt6 UI, embedded Python 3.11 analytics, one binary, no Electron.
 
 Two editions run on one data core. **[Enterprise](https://fincept.in/enterprise)** is the private, closed-source build the team develops daily, for funds, family offices and research desks. **This repo** is the free AGPL-3.0 edition — learning, personal use, academic research — shipping one release a month.
 
@@ -176,9 +176,9 @@ New data connectors, AI agents, analytics modules, C++ screens and documentation
 
 Free for personal use, learning and academic research. AGPL-3.0 is **strong copyleft, not permissive**: distribute a modified build, or run one as a service other people reach, and you must publish your changes under the same licence. For most legal teams that is the row that ends the discussion — which is why firms take **[Enterprise](https://fincept.in/enterprise)**, which is proprietary and carries no copyleft obligations to manage. Personal, non-distributed use carries no obligations.
 
-Fincept no longer sells a separate commercial or academic licence for this repository. Commercial, enterprise and university needs are served by **[Fincept Terminal Enterprise](https://fincept.in/enterprise)** at the published prices above.
+Fincept no longer sells a separate commercial or academic licence for this repository. Commercial, enterprise and university needs are served by **[Amadeus Quant Enterprise](https://fincept.in/enterprise)** at the published prices above.
 
-**Trademarks.** "Fincept", "Fincept Terminal" and the Fincept logo are trademarks of Fincept Corporation. Use in any forked, derivative, rebranded or commercial product requires prior written permission.
+**Trademarks.** "Fincept", "Amadeus Quant" and the Fincept logo are trademarks of Fincept Corporation. Use in any forked, derivative, rebranded or commercial product requires prior written permission.
 
 Questions: [support@fincept.in](mailto:support@fincept.in) · [Terms](https://fincept.in/terms) · [Privacy](https://fincept.in/privacy)
 
