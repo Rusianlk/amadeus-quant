@@ -7,7 +7,7 @@ AppConfig& AppConfig::instance() {
     return s;
 }
 
-AppConfig::AppConfig() : settings_("Fincept", "FinceptTerminal") {}
+AppConfig::AppConfig() : settings_("Amadeus", "AmadeusQuant") {}
 
 QVariant AppConfig::get(const QString& key, const QVariant& default_val) const {
     return settings_.value(key, default_val);
@@ -22,11 +22,11 @@ void AppConfig::remove(const QString& key) {
 }
 
 QString AppConfig::api_base_url() const {
-    return settings_.value("api/base_url", "https://api.fincept.in").toString();
+    return settings_.value("api/base_url", "http://127.0.0.1").toString();
 }
 
 QString AppConfig::cloud_base_url() const {
-    return settings_.value("api/cloud_base_url", "https://api.fincept.in/v1").toString();
+    return settings_.value("api/cloud_base_url", "http://127.0.0.1/v1").toString();
 }
 
 bool AppConfig::dark_mode() const {
