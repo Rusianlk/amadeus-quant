@@ -192,7 +192,8 @@ NewsService& NewsService::instance() {
 NewsService::NewsService() {
     nam_ = new QNetworkAccessManager(this);
     refresh_timer_ = new QTimer(this);
-    refresh_timer_->setInterval(kArticleCacheTtlSec * 1000);
+    refresh_timer_->setInterval(5 * 60 * 1000); // default 5 min for offline mode
+    start_auto_refresh(); // start immediately in offline mode
     connect(refresh_timer_, &QTimer::timeout, this,
             [this]() { fetch_all_news(true, [](bool, QVector<NewsArticle>) {}); });
 }

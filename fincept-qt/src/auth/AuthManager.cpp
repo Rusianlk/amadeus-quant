@@ -215,30 +215,25 @@ void AuthManager::clear_session() {
 }
 
 bool AuthManager::needs_pin_setup() const {
-    return session_.authenticated && !PinManager::instance().has_pin();
+    return false; // Offline mode: no PIN gate
 }
 
 // ── Initialize ───────────────────────────────────────────────────────────────
 
 void AuthManager::initialize() {
+    // Offline mode (Amadeus Quant): never contact Fincept servers.
+    // Always start with a local authenticated session so the terminal
+    // opens directly to the main screen.
     set_loading(true);
-    load_session();
-
-    if (!session_.api_key.isEmpty()) {
-        // Apply api_key ONLY — do NOT send the stale session_token during
-        // startup validation. The server enforces single-session via
-        // X-Session-Token; sending a stale one triggers 401 even though
-        // the api_key is perfectly valid and permanent.
-        auto& http = fincept::HttpClient::instance();
-        http.set_auth_header(session_.api_key);
-        http.clear_session_token();
-
-        validate_saved_session();
-        return;
-    }
-
+    session_.authenticated = true;
+    session_.user_info.username = QStringLiteral("local");
+    session_.user_info.email = QStringLiteral("local@amadeus.local");
+    session_.user_info.account_type = QStringLiteral("pro");
+    session_.subscription.account_type = QStringLiteral("pro");
+    session_.has_subscription = true;
     set_loading(false);
     emit auth_state_changed();
+    emit terminal_unlocked();
 }
 
 void AuthManager::validate_saved_session() {

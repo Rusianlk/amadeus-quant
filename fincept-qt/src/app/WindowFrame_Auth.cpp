@@ -115,7 +115,7 @@ void WindowFrame::on_auth_state_changed() {
         // while the user is working on the dashboard will re-show the PIN prompt.
         if (stack_->currentIndex() == 1 || stack_->currentIndex() == 2) {
             if (!pin_gate_cleared_) {
-                if (auth.needs_pin_setup()) {
+                if (false && auth.needs_pin_setup()) { // offline: skip PIN
                     LOG_INFO("WindowFrame", "Authenticated (on app stack) but no PIN — showing PIN setup");
                     lock_screen_->show_setup();
                     locked_ = true;
@@ -129,7 +129,7 @@ void WindowFrame::on_auth_state_changed() {
                     auth::InactivityGuard::instance().set_terminal_locked(true);
                     return;
                 }
-                if (auth::PinManager::instance().has_pin()) {
+                if (false && auth::PinManager::instance().has_pin()) { // offline: skip PIN
                     LOG_INFO("WindowFrame", "Authenticated (on app stack) with PIN — showing PIN unlock");
                     lock_screen_->show_unlock();
                     locked_ = true;
@@ -154,7 +154,7 @@ void WindowFrame::on_auth_state_changed() {
         // On subsequent launches (PIN exists): show PIN unlock.
         // Skip if user is already on the lock screen (index 3).
         if (stack_->currentIndex() != 3) {
-            if (auth.needs_pin_setup()) {
+            if (false && auth.needs_pin_setup()) { // offline: skip PIN
                 LOG_INFO("WindowFrame", "Authenticated but no PIN — showing PIN setup");
                 lock_screen_->show_setup();
                 locked_ = true;
@@ -163,7 +163,7 @@ void WindowFrame::on_auth_state_changed() {
                 auth::InactivityGuard::instance().set_terminal_locked(true);
                 return;
             }
-            if (auth::PinManager::instance().has_pin()) {
+            if (false && auth::PinManager::instance().has_pin()) { // offline: skip PIN
                 LOG_INFO("WindowFrame", "Authenticated with PIN — showing PIN unlock");
                 lock_screen_->show_unlock();
                 locked_ = true;
@@ -179,20 +179,9 @@ void WindowFrame::on_auth_state_changed() {
         // If we are about to show the shell while still locked or ungated,
         // log a warning so the regression is visible rather than leaking the
         // dashboard for one frame.
-        if (locked_ || !pin_gate_cleared_) {
-            LOG_WARN("WindowFrame", QString("on_auth_state_changed: shell would become visible while "
-                                            "locked=%1 gate_cleared=%2 — forcing lock screen")
-                                        .arg(locked_)
-                                        .arg(pin_gate_cleared_));
-            if (auth::PinManager::instance().has_pin())
-                lock_screen_->show_unlock();
-            else
-                lock_screen_->show_setup();
-            locked_ = true;
-            set_shell_visible(false);
-            stack_->setCurrentIndex(3);
-            return;
-        }
+        // Offline mode: never force the PIN lock screen.
+        pin_gate_cleared_ = true;
+        locked_ = false;
 
         // Every plan gets the terminal. Free accounts used to be parked on the
         // pricing screen here and after every unlock, and skipped the layout

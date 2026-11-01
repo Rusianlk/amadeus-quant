@@ -115,6 +115,9 @@ QVector<RSSFeed> NewsService::default_feeds() {
          2},
         {"investing-news", "Investing.com", "https://www.investing.com/rss/news.rss", "MARKETS", "GLOBAL",
          "INVESTING.COM", 2},
+        {"yahoo-finance", "Yahoo Finance", "https://finance.yahoo.com/news/rssindex", "MARKETS", "US", "YAHOO FINANCE", 2},
+        {"gestion-pe", "Gestión", "https://gestion.pe/rss/economia.xml", "MARKETS", "LATAM", "GESTIÓN", 2},
+        {"bloomberg-linea", "Bloomberg Línea", "https://www.bloomberglinea.com/rss/", "MARKETS", "LATAM", "BLOOMBERG LÍNEA", 2},
         {"economist", "The Economist", "https://www.economist.com/finance-and-economics/rss.xml", "ECONOMIC", "GLOBAL",
          "ECONOMIST", 2},
 

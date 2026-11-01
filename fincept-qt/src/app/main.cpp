@@ -292,8 +292,8 @@ int main(int argc, char* argv[]) {
     // "FinceptTerminal --profile work" and "FinceptTerminal --profile personal"
     // run as two independent primaries.
     QApplication app(argc, argv);
-    app.setApplicationName("FinceptTerminal");
-    app.setOrganizationName("Fincept");
+    app.setApplicationName("AmadeusQuant");
+    app.setOrganizationName("Amadeus");
 #ifndef FINCEPT_VERSION_STRING
 #    define FINCEPT_VERSION_STRING "0.0.0-dev"
 #endif
@@ -318,7 +318,7 @@ int main(int argc, char* argv[]) {
     }
 
     // ── Single-instance lock + new-window IPC ────────────────────────────────
-    const QString profile_key = QString("FinceptTerminal-%1").arg(fincept::ProfileManager::instance().active());
+    const QString profile_key = QString("AmadeusQuant-%1").arg(fincept::ProfileManager::instance().active());
     fincept::InstanceLock instance_lock;
     const auto lock_status = instance_lock.acquire(profile_key, QCoreApplication::arguments());
 
