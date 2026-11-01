@@ -227,13 +227,13 @@ Result<QVector<portfolio::Transaction>> PortfolioRepository::get_symbol_transact
 
 Result<QString> PortfolioRepository::add_transaction(const QString& portfolio_id, const QString& symbol,
                                                      const QString& type, double qty, double price, const QString& date,
-                                                     const QString& notes) {
+                                                     const QString& notes, double commission) {
     QString id = QUuid::createUuid().toString(QUuid::WithoutBraces);
     auto r = exec_write("INSERT INTO portfolio_transactions "
                         "(id, portfolio_id, symbol, transaction_type, quantity, price, total_value, "
-                        " transaction_date, notes) "
-                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                        {id, portfolio_id, symbol.toUpper(), type, qty, price, qty * price, date, notes});
+                        " transaction_date, notes, commission) "
+                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                        {id, portfolio_id, symbol.toUpper(), type, qty, price, qty * price, date, notes, commission});
     if (r.is_err())
         return Result<QString>::err(r.error());
     SyncOutbox::record_unique("portfolio", portfolio_id, "sync");

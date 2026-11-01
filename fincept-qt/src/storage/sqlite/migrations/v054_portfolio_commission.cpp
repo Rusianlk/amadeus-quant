@@ -22,6 +22,11 @@ Result<void> sql_v054(QSqlDatabase& db, const char* stmt) {
 }
 
 Result<void> migrate_v054(QSqlDatabase& db) {
+    QSqlQuery check(db);
+    if (!check.exec("SELECT name FROM sqlite_master WHERE type='table' AND name='portfolio_transactions'"))
+        return Result<void>::err(check.lastError().text().toStdString());
+    if (!check.next())
+        return {}; // table does not exist yet; nothing to alter
     return sql_v054(db, "ALTER TABLE portfolio_transactions ADD COLUMN commission REAL DEFAULT 0");
 }
 

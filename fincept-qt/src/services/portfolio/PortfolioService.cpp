@@ -186,8 +186,9 @@ static void fetch_close_for_date(const QString& symbol, const QString& date, std
             }
             double close = 0;
             for (const auto& p : pts) {
-                const QString d = QDateTime::fromSecsSinceEpoch(p.timestamp).toString(Qt::ISODate).left(10);
-                if (d <= date.left(10))
+                const QString d = QDateTime::fromSecsSinceEpoch(p.timestamp, Qt::UTC).date().toString(Qt::ISODate);
+                const QString target = QDate::fromString(date.left(10), Qt::ISODate).toString(Qt::ISODate);
+                if (!target.isEmpty() && d <= target)
                     close = p.close;
                 else
                     break;
@@ -199,7 +200,8 @@ static void fetch_close_for_date(const QString& symbol, const QString& date, std
 }
 
 bool PortfolioService::add_asset(const QString& portfolio_id, const QString& symbol, double qty, double price,
-                                 const QString& date, const QString& broker_symbol, const QString& exchange) {
+                                 const QString& date, const QString& broker_symbol, const QString& exchange,
+                                 double commission) {
     const QString sym = symbol.trimmed().toUpper();
     if (sym.isEmpty() || !psd::positive_finite(qty)) {
         emit operation_failed(portfolio_id, tr("BUY rejected: a symbol and a quantity > 0 are required."));
@@ -229,7 +231,7 @@ bool PortfolioService::add_asset(const QString& portfolio_id, const QString& sym
         return false;
     }
 
-    auto tr_r = repo.add_transaction(portfolio_id, sym, "BUY", qty, price, txn_date);
+    auto tr_r = repo.add_transaction(portfolio_id, sym, "BUY", qty, price, txn_date, {}, commission);
     if (tr_r.is_err())
         LOG_ERROR("PortfolioSvc", "BUY recorded on the position but not in the ledger: " +
                                       QString::fromStdString(tr_r.error()));
@@ -540,14 +542,17 @@ void PortfolioService::load_combined_summary() {
         emit summary_loaded(combined);
         return;
     }
-    MarketDataService::instance().fetch_quotes(symbols, [this, combined](bool ok, QHash<QString, QuoteData> quotes) mutable {
+    MarketDataService::instance().fetch_quotes(symbols, [this, combined](bool ok, QVector<QuoteData> quotes) mutable {
         if (ok) {
+            QHash<QString, double> px;
+            for (const auto& q : quotes)
+                px[q.symbol] = q.price;
             double total_mv = 0;
             for (auto& h : combined.holdings) {
-                auto it = quotes.find(h.symbol);
-                if (it != quotes.end() && it->price > 0) {
-                    h.current_price = it->price;
-                    h.market_value = h.quantity * it->price;
+                double p = px.value(h.symbol, 0);
+                if (p > 0) {
+                    h.current_price = p;
+                    h.market_value = h.quantity * p;
                     h.unrealized_pnl = h.market_value - h.cost_basis;
                     h.unrealized_pnl_percent = h.cost_basis > 0 ? (h.unrealized_pnl / h.cost_basis) * 100.0 : 0;
                 }
@@ -558,9 +563,10 @@ void PortfolioService::load_combined_summary() {
             combined.total_unrealized_pnl_percent = combined.total_cost_basis > 0
                 ? (combined.total_unrealized_pnl / combined.total_cost_basis) * 100.0 : 0;
         }
-        emit summary_loaded(combined);
-        LOG_INFO("PortfolioSvc", QString("Combined TOTAL live: %1 positions, MV %2")
-                                     .arg(combined.total_positions).arg(combined.total_market_value));
+        // Deliver on the UI thread.
+        QMetaObject::invokeMethod(this, [this, combined]() {
+            emit summary_loaded(combined);
+        }, Qt::QueuedConnection);
     });
 }
 

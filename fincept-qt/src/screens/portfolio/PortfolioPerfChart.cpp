@@ -526,10 +526,16 @@ void PortfolioPerfChart::update_chart() {
             else if (t.transaction_type == "SELL")
                 sells->append(x, y);
         }
-        if (buys->count() > 0)
+        if (buys->count() > 0) {
             chart->addSeries(buys);
-        if (sells->count() > 0)
+            buys->attachAxis(axis_x);
+            buys->attachAxis(axis_y);
+        }
+        if (sells->count() > 0) {
             chart->addSeries(sells);
+            sells->attachAxis(axis_x);
+            sells->attachAxis(axis_y);
+        }
     }
 
 

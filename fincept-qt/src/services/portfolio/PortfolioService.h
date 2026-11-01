@@ -47,7 +47,8 @@ class PortfolioService : public QObject {
     /// (YYYY-MM-DD or ISO date-time; empty = now). Returns false (and records
     /// nothing) on a non-positive quantity/price or a database error.
     bool add_asset(const QString& portfolio_id, const QString& symbol, double qty, double price,
-                   const QString& date = {}, const QString& broker_symbol = {}, const QString& exchange = {});
+                   const QString& date = {}, const QString& broker_symbol = {}, const QString& exchange = {},
+                   double commission = 0);
     /// Records a SELL and reduces (or closes) the position. Refuses — returning
     /// false and recording nothing — when the symbol is not held or @p qty
     /// exceeds the quantity held: an over-sell used to close the position and

@@ -38,7 +38,7 @@ class PortfolioRepository : public BaseRepository<portfolio::Portfolio> {
     Result<QVector<portfolio::Transaction>> get_transactions(const QString& portfolio_id, int limit = 50);
     Result<QVector<portfolio::Transaction>> get_symbol_transactions(const QString& portfolio_id, const QString& symbol);
     Result<QString> add_transaction(const QString& portfolio_id, const QString& symbol, const QString& type, double qty,
-                                    double price, const QString& date, const QString& notes = {});
+                                    double price, const QString& date, const QString& notes = {}, double commission = 0);
     Result<void> update_transaction(const QString& id, double qty, double price, const QString& date,
                                     const QString& notes = {});
     Result<void> delete_transaction(const QString& id);
