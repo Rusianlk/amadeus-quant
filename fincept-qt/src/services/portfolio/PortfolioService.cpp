@@ -13,11 +13,13 @@
 #include "services/sectors/SectorResolver.h"
 #include "storage/repositories/PortfolioRepository.h"
 
+#include <QDate>
 #include <QDateTime>
 #include <QMutexLocker>
 
 #include <algorithm>
 #include <cmath>
+#include <functional>
 #include <utility>
 
 namespace fincept::services {
