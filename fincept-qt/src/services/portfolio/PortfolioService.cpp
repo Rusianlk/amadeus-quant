@@ -542,7 +542,7 @@ void PortfolioService::load_combined_summary() {
         emit summary_loaded(combined);
         return;
     }
-    MarketDataService::instance().fetch_quotes(symbols, [this, combined](bool ok, QVector<QuoteData> quotes) mutable {
+    MarketDataService::instance().fetch_quotes(symbols, [this, combined](bool ok, QVector<fincept::services::QuoteData> quotes) mutable {
         if (ok) {
             QHash<QString, double> px;
             for (const auto& q : quotes)
