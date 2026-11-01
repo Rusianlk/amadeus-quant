@@ -451,12 +451,11 @@ void PortfolioService::import_json(const QString& file_path, portfolio::ImportMo
     backfill_history(target_id);
 }
 
-} // namespace fincept::services
 
 void PortfolioService::import_csv(const QString& portfolio_id, const QString& file_path) {
     QFile f(file_path);
     if (!f.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        emit import_failed(file_path, tr("Cannot open CSV"));
+        emit operation_failed(portfolio_id, tr("Cannot open CSV: %1").arg(file_path));
         return;
     }
     QTextStream in(&f);
@@ -491,3 +490,5 @@ void PortfolioService::import_csv(const QString& portfolio_id, const QString& fi
     emit import_complete({portfolio_id, added, 0, {}});
     load_summary(portfolio_id);
 }
+
+} // namespace fincept::services
