@@ -3,6 +3,8 @@
 #include "services/llm/LlmService.h"
 #include "storage/repositories/SettingsRepository.h"
 
+#include <QtConcurrent>
+
 namespace fincept::services {
 
 NewsTranslationService& NewsTranslationService::instance() {
@@ -26,15 +28,24 @@ void NewsTranslationService::translate_to_spanish(const QString& text, std::func
         if (cb) cb(false, {});
         return;
     }
-    // Use the active LLM provider configured by the user (Gemini, Groq, DeepSeek, Ollama, ...).
-    // LlmService routes to the provider the user selected in Settings.
-    QString prompt = QStringLiteral("Translate the following financial news text to Spanish. "
-                                    "Return only the translated text, no explanations:\n\n") + text;
+    if (!LlmService::instance().is_configured()) {
+        LOG_WARN("NewsTranslation", "No LLM configured — cannot translate");
+        if (cb) cb(false, text);
+        return;
+    }
 
-    // Placeholder: actual call goes through LlmService once the provider is set.
-    // For now we log and return the original so the UI can be wired later.
-    LOG_INFO("NewsTranslation", "Translation requested (LLM integration point)");
-    if (cb) cb(true, text); // temporary: return original until full LlmService wiring
+    const QString prompt = QStringLiteral(
+        "Translate the following financial news text to Spanish. "
+        "Return ONLY the translated text, with no quotes, explanations or extra commentary:\n\n") + text;
+
+    // Blocking chat() must run off the GUI thread.
+    QtConcurrent::run([prompt, cb = std::move(cb)]() {
+        auto resp = LlmService::instance().chat(prompt, {}, /*use_tools=*/false);
+        const bool ok = !resp.error.isEmpty() ? false : !resp.content.isEmpty();
+        const QString out = ok ? resp.content.trimmed() : prompt; // fallback to original on failure
+        if (cb)
+            cb(ok, out);
+    });
 }
 
 } // namespace fincept::services

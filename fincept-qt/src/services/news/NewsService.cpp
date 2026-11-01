@@ -9,6 +9,7 @@
 //   - NewsService_Classification.cpp — threat classification + source flags
 //   - NewsService_Feeds.cpp          — static catalog of default RSS feeds
 #include "services/news/NewsService.h"
+#include "services/news/FinnhubNewsService.h"
 
 #include "core/logging/Logger.h"
 #include "datahub/DataHub.h"
@@ -300,6 +301,28 @@ void NewsService::fetch_all_news(bool force, ArticlesCallback cb) {
                                 state->service->latest_articles_ = all;
                                 state->service->persist_articles_async(all);
                             }
+
+                            // Merge Finnhub results if a key is configured (offline, user key).
+                            FinnhubNewsService::instance().fetch_general([state](bool ok, QVector<FinnhubNewsItem> items) {
+                                if (!ok || items.isEmpty())
+                                    return;
+                                QVector<NewsArticle> extra;
+                                for (const auto& it : items) {
+                                    NewsArticle a;
+                                    a.id = QString("finnhub-%1").arg(it.datetime);
+                                    a.headline = it.headline;
+                                    a.summary = it.summary;
+                                    a.source = it.source.isEmpty() ? "FINNHUB" : it.source;
+                                    a.link = it.url;
+                                    a.sort_ts = it.datetime;
+                                    a.tier = 2;
+                                    a.category = "MARKETS";
+                                    a.region = "GLOBAL";
+                                    extra.append(a);
+                                }
+                                QMutexLocker lock(&state->mutex);
+                                merge_unique(state->all_articles, state->seen_ids, extra);
+                            });
 
                             LOG_INFO("NewsService",
                                      QString("Fetched %1 articles from %2 sources").arg(all.size()).arg(sources.size()));
