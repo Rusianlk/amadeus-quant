@@ -87,7 +87,7 @@ void GeneralSection::build_ui() {
 
     connect(on_close_combo_, qOverload<int>(&QComboBox::currentIndexChanged), this, [this](int idx) {
         const QString val = on_close_combo_->itemData(idx).toString();
-        SettingsRepository::instance().set(QString::fromLatin1(kKeyOnClose), val, QStringLiteral("general"));
+        fincept::SettingsRepository::instance().set(QString::fromLatin1(kKeyOnClose), val, QStringLiteral("general"));
         LOG_INFO("Settings", QString("on_last_window_close → %1").arg(val));
     });
 
@@ -123,10 +123,10 @@ void GeneralSection::build_ui() {
 
     auto* auto_tr = new QCheckBox(tr("Traducir noticias al español automáticamente"));
     auto_tr->setObjectName("newsAutoTranslate");
-    auto r = SettingsRepository::instance().get("news.auto_translate_es");
+    auto r = fincept::SettingsRepository::instance().get("news.auto_translate_es");
     auto_tr->setChecked(r.is_ok() && r.value() == "true");
     connect(auto_tr, &QCheckBox::toggled, this, [](bool on) {
-        SettingsRepository::instance().set("news.auto_translate_es", on ? "true" : "false", "news");
+        fincept::SettingsRepository::instance().set("news.auto_translate_es", on ? "true" : "false", "news");
     });
     vl->addWidget(auto_tr);
 
@@ -183,7 +183,7 @@ void GeneralSection::build_ui() {
 void GeneralSection::reload() {
     if (on_close_combo_) {
         const auto r =
-            SettingsRepository::instance().get(QString::fromLatin1(kKeyOnClose), QString::fromLatin1(kDefaultOnClose));
+            fincept::SettingsRepository::instance().get(QString::fromLatin1(kKeyOnClose), QString::fromLatin1(kDefaultOnClose));
         const QString cur = r.is_ok() ? r.value() : QString::fromLatin1(kDefaultOnClose);
         const int idx = on_close_combo_->findData(cur);
         QSignalBlocker block(on_close_combo_);

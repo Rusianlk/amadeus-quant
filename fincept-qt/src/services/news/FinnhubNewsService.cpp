@@ -19,7 +19,7 @@ FinnhubNewsService& FinnhubNewsService::instance() {
 FinnhubNewsService::FinnhubNewsService() {}
 
 QString FinnhubNewsService::api_key() const {
-    auto r = SettingsRepository::instance().get("finnhub_api_key");
+    auto r = fincept::SettingsRepository::instance().get("finnhub_api_key");
     if (r.is_ok() && !r.value().isEmpty())
         return r.value();
     return qEnvironmentVariable("FINNHUB_API_KEY");

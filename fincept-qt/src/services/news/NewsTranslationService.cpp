@@ -15,12 +15,12 @@ NewsTranslationService& NewsTranslationService::instance() {
 NewsTranslationService::NewsTranslationService() {}
 
 bool NewsTranslationService::auto_translate_enabled() const {
-    auto r = SettingsRepository::instance().get("news.auto_translate_es");
+    auto r = fincept::SettingsRepository::instance().get("news.auto_translate_es");
     return r.is_ok() && r.value() == "true";
 }
 
 void NewsTranslationService::set_auto_translate_enabled(bool on) {
-    SettingsRepository::instance().set("news.auto_translate_es", on ? "true" : "false", "news");
+    fincept::SettingsRepository::instance().set("news.auto_translate_es", on ? "true" : "false", "news");
 }
 
 void NewsTranslationService::translate_to_spanish(const QString& text, std::function<void(bool, QString)> cb) {
@@ -28,7 +28,7 @@ void NewsTranslationService::translate_to_spanish(const QString& text, std::func
         if (cb) cb(false, {});
         return;
     }
-    if (!LlmService::instance().is_configured()) {
+    if (!fincept::ai_chat::LlmService::instance().is_configured()) {
         LOG_WARN("NewsTranslation", "No LLM configured — cannot translate");
         if (cb) cb(false, text);
         return;
@@ -39,10 +39,10 @@ void NewsTranslationService::translate_to_spanish(const QString& text, std::func
         "Return ONLY the translated text, with no quotes, explanations or extra commentary:\n\n") + text;
 
     // Blocking chat() must run off the GUI thread.
-    QtConcurrent::run([prompt, cb = std::move(cb)]() {
-        auto resp = LlmService::instance().chat(prompt, {}, /*use_tools=*/false);
+    (void)QtConcurrent::run([prompt, cb = std::move(cb)]() {
+        auto resp = fincept::ai_chat::LlmService::instance().chat(prompt, {}, /*use_tools=*/false);
         const bool ok = !resp.error.isEmpty() ? false : !resp.content.isEmpty();
-        const QString out = ok ? resp.content.trimmed() : prompt; // fallback to original on failure
+        const QString out = ok ? resp.content.trimmed() : prompt;
         if (cb)
             cb(ok, out);
     });
