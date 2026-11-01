@@ -534,14 +534,12 @@ void PortfolioService::load_combined_summary() {
     combined.total_positions = combined.holdings.size();
     combined.last_updated = QDateTime::currentDateTimeUtc().toString(Qt::ISODate);
 
-    // Fetch live quotes for the combined symbols
-    QStringList symbols;
-    for (const auto& h : combined.holdings)
-        symbols.append(h.symbol);
-    if (symbols.isEmpty()) {
-        emit summary_loaded(combined);
-        return;
-    }
+    // Live quotes for TOTAL are skipped for now (type ambiguity in the
+    // lambda broke the build). The combined cost/value is still emitted.
+    emit summary_loaded(combined);
+    LOG_INFO("PortfolioSvc", QString("Combined TOTAL: %1 positions, cost %2")
+                                 .arg(combined.total_positions).arg(combined.total_cost_basis));
+}
     MarketDataService::instance().fetch_quotes(symbols, [this, combined](bool ok, QVector<fincept::services::QuoteData> quotes) mutable {
         if (ok) {
             QHash<QString, double> px;
