@@ -15,10 +15,10 @@ Result<void> sql_v054(QSqlDatabase& db, const char* stmt) {
         const QString err = q.lastError().text();
         // Column already exists on re-run — ignore.
         if (err.contains("duplicate column", Qt::CaseInsensitive))
-            return {};
+            return Result<void>::ok();
         return Result<void>::err(err.toStdString());
     }
-    return {};
+    return Result<void>::ok();
 }
 
 Result<void> migrate_v054(QSqlDatabase& db) {
@@ -26,7 +26,7 @@ Result<void> migrate_v054(QSqlDatabase& db) {
     if (!check.exec("SELECT name FROM sqlite_master WHERE type='table' AND name='portfolio_transactions'"))
         return Result<void>::err(check.lastError().text().toStdString());
     if (!check.next())
-        return {}; // table does not exist yet; nothing to alter
+        return Result<void>::ok(); // table does not exist yet; nothing to alter
     return sql_v054(db, "ALTER TABLE portfolio_transactions ADD COLUMN commission REAL DEFAULT 0");
 }
 
