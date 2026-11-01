@@ -212,7 +212,7 @@ bool PortfolioService::add_asset(const QString& portfolio_id, const QString& sym
     if (!psd::positive_finite(price)) {
         // Empty price: fetch that day's close via yfinance and re-enter.
         const QString d = date.isEmpty() ? QDate::currentDate().toString(Qt::ISODate) : date;
-        fetch_close_for_date(sym, d, [this, portfolio_id, sym, qty, date, broker_symbol, exchange](double close) {
+        fetch_close_for_date(sym, d, [this, portfolio_id, sym, qty, date, broker_symbol, exchange, d](double close) {
             if (close > 0)
                 add_asset(portfolio_id, sym, qty, close, date, broker_symbol, exchange);
             else

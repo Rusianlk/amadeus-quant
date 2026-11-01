@@ -487,7 +487,8 @@ void PortfolioService::import_csv(const QString& portfolio_id, const QString& fi
             add_asset(portfolio_id, ticker, qty, price, date);
         ++added;
     }
-    emit import_complete({portfolio_id, added, 0, {}});
+    emit import_complete({portfolio_id, QString(), added, {}});
+    emit ledger_changed(portfolio_id);
     load_summary(portfolio_id);
 }
 
