@@ -7,6 +7,7 @@
 //   - PortfolioService_Metrics.cpp      — market analytics, TWR metrics, history backfill
 //   - PortfolioService_ImportExport.cpp — CSV/JSON round-trip
 #include "services/portfolio/PortfolioService.h"
+#include "services/markets/MarketDataService.h"
 
 #include "core/logging/Logger.h"
 #include "services/sectors/SectorResolver.h"
@@ -185,7 +186,8 @@ static void fetch_close_for_date(const QString& symbol, const QString& date, std
             }
             double close = 0;
             for (const auto& p : pts) {
-                if (p.date.left(10) <= date.left(10))
+                const QString d = QDateTime::fromSecsSinceEpoch(p.timestamp).toString(Qt::ISODate).left(10);
+                if (d <= date.left(10))
                     close = p.close;
                 else
                     break;
@@ -530,7 +532,35 @@ void PortfolioService::load_combined_summary() {
     combined.total_positions = combined.holdings.size();
     combined.last_updated = QDateTime::currentDateTimeUtc().toString(Qt::ISODate);
 
-    emit summary_loaded(combined);
-    LOG_INFO("PortfolioSvc", QString("Combined TOTAL: %1 positions, cost %2").arg(combined.total_positions).arg(total_cost));
+    // Fetch live quotes for the combined symbols
+    QStringList symbols;
+    for (const auto& h : combined.holdings)
+        symbols.append(h.symbol);
+    if (symbols.isEmpty()) {
+        emit summary_loaded(combined);
+        return;
+    }
+    MarketDataService::instance().fetch_quotes(symbols, [this, combined](bool ok, QHash<QString, QuoteData> quotes) mutable {
+        if (ok) {
+            double total_mv = 0;
+            for (auto& h : combined.holdings) {
+                auto it = quotes.find(h.symbol);
+                if (it != quotes.end() && it->price > 0) {
+                    h.current_price = it->price;
+                    h.market_value = h.quantity * it->price;
+                    h.unrealized_pnl = h.market_value - h.cost_basis;
+                    h.unrealized_pnl_percent = h.cost_basis > 0 ? (h.unrealized_pnl / h.cost_basis) * 100.0 : 0;
+                }
+                total_mv += h.market_value;
+            }
+            combined.total_market_value = total_mv;
+            combined.total_unrealized_pnl = total_mv - combined.total_cost_basis;
+            combined.total_unrealized_pnl_percent = combined.total_cost_basis > 0
+                ? (combined.total_unrealized_pnl / combined.total_cost_basis) * 100.0 : 0;
+        }
+        emit summary_loaded(combined);
+        LOG_INFO("PortfolioSvc", QString("Combined TOTAL live: %1 positions, MV %2")
+                                     .arg(combined.total_positions).arg(combined.total_market_value));
+    });
 }
 

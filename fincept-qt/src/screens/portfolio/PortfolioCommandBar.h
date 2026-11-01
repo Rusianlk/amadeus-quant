@@ -35,6 +35,9 @@ class PortfolioCommandBar : public QWidget {
     void portfolio_selected(QString id);
     void create_requested();
     void delete_requested(QString id);
+    void rename_requested(QString id);
+    void import_csv_requested(QString id);
+    void combined_requested();
     void buy_requested();
     void sell_requested();
     void dividend_requested();

@@ -70,9 +70,14 @@ PortfolioScreen::PortfolioScreen(QWidget* parent) : QWidget(parent) {
     connect(&svc, &services::PortfolioService::asset_added, this, &PortfolioScreen::on_asset_changed);
     connect(&svc, &services::PortfolioService::asset_sold, this, &PortfolioScreen::on_asset_changed);
     connect(&svc, &services::PortfolioService::snapshots_loaded, this, &PortfolioScreen::on_snapshots_loaded);
+        connect(command_bar_, &PortfolioCommandBar::rename_requested, this, &PortfolioScreen::on_rename_requested);
+    connect(command_bar_, &PortfolioCommandBar::import_csv_requested, this, &PortfolioScreen::on_import_csv_requested);
+    connect(command_bar_, &PortfolioCommandBar::combined_requested, this, &PortfolioScreen::on_combined_requested);
     connect(&svc, &services::PortfolioService::transactions_loaded, this, [this](QVector<portfolio::Transaction> txns) {
         if (txn_panel_)
             txn_panel_->set_transactions(txns);
+        if (perf_chart_)
+            perf_chart_->set_trade_markers(txns);
     });
     // One analytics run per load delivers correlation, benchmark history,
     // risk-free rate and ex-ante risk together (was four Python spawns).

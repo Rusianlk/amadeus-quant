@@ -1,21 +1,34 @@
 // v054 — add optional commission column to portfolio_transactions.
-// Safe: ALTER TABLE ADD COLUMN is non-destructive.
+// SAFE: ALTER TABLE ADD COLUMN is non-destructive.
+
 #include "storage/sqlite/migrations/MigrationRunner.h"
-#include "storage/sqlite/Database.h"
 
-namespace fincept::migrations {
+#include <QSqlError>
+#include <QSqlQuery>
 
-static Result<void> migrate_v054(QSqlDatabase& db) {
-    auto r = Database::exec(db, "ALTER TABLE portfolio_transactions ADD COLUMN commission REAL DEFAULT 0");
-    // Ignore "duplicate column" if re-run
-    if (r.is_err() && !QString::fromStdString(r.error()).contains("duplicate column"))
-        return r;
+namespace fincept {
+namespace {
+
+Result<void> sql_v054(QSqlDatabase& db, const char* stmt) {
+    QSqlQuery q(db);
+    if (!q.exec(stmt)) {
+        const QString err = q.lastError().text();
+        // Column already exists on re-run — ignore.
+        if (err.contains("duplicate column", Qt::CaseInsensitive))
+            return {};
+        return Result<void>::err(err.toStdString());
+    }
     return {};
 }
 
-static const bool registered = [] {
+Result<void> migrate_v054(QSqlDatabase& db) {
+    return sql_v054(db, "ALTER TABLE portfolio_transactions ADD COLUMN commission REAL DEFAULT 0");
+}
+
+const bool reg_v054 = [] {
     MigrationRunner::register_migration({54, "portfolio_commission", migrate_v054});
     return true;
 }();
 
-} // namespace fincept::migrations
+} // namespace
+} // namespace fincept

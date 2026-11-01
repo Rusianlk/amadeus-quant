@@ -77,6 +77,7 @@ class AddAssetDialog : public QDialog {
     QString symbol() const;
     double quantity() const;
     double price() const;
+    double commission() const;
     /// Trade date, YYYY-MM-DD (defaults to today, never in the future).
     QString date() const;
 
@@ -102,6 +103,7 @@ class AddAssetDialog : public QDialog {
     QLineEdit* symbol_edit_ = nullptr;
     QLineEdit* quantity_edit_ = nullptr;
     QLineEdit* price_edit_ = nullptr;
+    QLineEdit* commission_edit_ = nullptr;
     QLabel* title_label_ = nullptr;
     QLabel* hint_label_ = nullptr;
     QLabel* symbol_row_label_ = nullptr;

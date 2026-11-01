@@ -347,9 +347,13 @@ AddAssetDialog::AddAssetDialog(QWidget* parent) : QDialog(parent) {
     form->addRow(quantity_row_label_, quantity_edit_);
 
     price_edit_ = new QLineEdit;
-    price_edit_->setPlaceholderText(tr("e.g. 150.00"));
+    price_edit_->setPlaceholderText(tr("e.g. 150.00 (empty = close of that day)"));
     price_row_label_ = new QLabel(tr("Price:"));
     form->addRow(price_row_label_, price_edit_);
+
+    commission_edit_ = new QLineEdit;
+    commission_edit_->setPlaceholderText(tr("optional"));
+    form->addRow(tr("Commission"), commission_edit_);
 
     // Trade date: every BUY used to be stamped "now", so back-entered trades
     // rebuilt a NAV history that started on the day they were typed in.
@@ -1441,3 +1445,7 @@ QString AddDividendDialog::notes() const {
 }
 
 } // namespace fincept::screens
+
+double AddAssetDialog::commission() const {
+    return commission_edit_ ? commission_edit_->text().toDouble() : 0.0;
+}
