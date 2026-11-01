@@ -452,3 +452,42 @@ void PortfolioService::import_json(const QString& file_path, portfolio::ImportMo
 }
 
 } // namespace fincept::services
+
+void PortfolioService::import_csv(const QString& portfolio_id, const QString& file_path) {
+    QFile f(file_path);
+    if (!f.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        emit import_failed(file_path, tr("Cannot open CSV"));
+        return;
+    }
+    QTextStream in(&f);
+    bool first = true;
+    int added = 0;
+    while (!in.atEnd()) {
+        QString line = in.readLine().trimmed();
+        if (line.isEmpty())
+            continue;
+        if (first && line.toLower().contains("ticker")) {
+            first = false;
+            continue;
+        }
+        first = false;
+        auto parts = line.split(',');
+        if (parts.size() < 3)
+            continue;
+        QString ticker = parts[0].trimmed().toUpper();
+        QString date = parts.size() > 1 ? parts[1].trimmed() : QString();
+        double qty = parts.size() > 2 ? parts[2].toDouble() : 0;
+        double price = parts.size() > 3 ? parts[3].toDouble() : 0;
+        // commission ignored for now (can be stored in notes)
+        QString type = parts.size() > 5 ? parts[5].trimmed().toUpper() : QStringLiteral("BUY");
+        if (ticker.isEmpty() || qty <= 0)
+            continue;
+        if (type == "SELL")
+            sell_asset(portfolio_id, ticker, qty, price, date);
+        else
+            add_asset(portfolio_id, ticker, qty, price, date);
+        ++added;
+    }
+    emit import_complete({portfolio_id, added, 0, {}});
+    load_summary(portfolio_id);
+}

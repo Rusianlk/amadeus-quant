@@ -33,6 +33,7 @@ class PortfolioService : public QObject {
     void create_portfolio(const QString& name, const QString& owner, const QString& currency,
                           const QString& description = {}, const QString& broker_account_id = {});
     void delete_portfolio(const QString& id);
+    void rename_portfolio(const QString& id, const QString& new_name);
 
     // ── Summary (assets + live quotes) ───────────────────────────────────────
     void load_summary(const QString& portfolio_id);
@@ -107,6 +108,7 @@ class PortfolioService : public QObject {
     /// validated before anything is written; a rejected file reports every
     /// problem found (row-by-row) instead of a generic "unsupported format".
     void import_json(const QString& file_path, portfolio::ImportMode mode, const QString& merge_target_id = {});
+    void import_csv(const QString& portfolio_id, const QString& file_path);
 
     // ── Snapshots (performance history) ─────────────────────────────────────
     void load_snapshots(const QString& portfolio_id, int days = 365);

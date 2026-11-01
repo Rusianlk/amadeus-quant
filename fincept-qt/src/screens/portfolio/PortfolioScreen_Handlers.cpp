@@ -8,6 +8,8 @@
 //
 // Part of the partial-class split of PortfolioScreen.cpp.
 
+#include <QInputDialog>
+#include <QFileDialog>
 #include "core/session/ScreenStateManager.h"
 #include "core/symbol/SymbolContext.h"
 #include "core/symbol/SymbolRef.h"
@@ -487,3 +489,16 @@ void PortfolioScreen::load_demo_portfolio() {
 }
 
 } // namespace fincept::screens
+
+void PortfolioScreen::on_rename_requested(const QString& id) {
+    bool ok = false;
+    QString name = QInputDialog::getText(this, tr("Rename portfolio"), tr("New name:"), QLineEdit::Normal, {}, &ok);
+    if (ok && !name.trimmed().isEmpty())
+        services::PortfolioService::instance().rename_portfolio(id, name.trimmed());
+}
+
+void PortfolioScreen::on_import_csv_requested(const QString& id) {
+    QString path = QFileDialog::getOpenFileName(this, tr("Import CSV"), {}, tr("CSV (*.csv)"));
+    if (!path.isEmpty())
+        services::PortfolioService::instance().import_csv(id, path);
+}

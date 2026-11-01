@@ -258,6 +258,24 @@ bool PortfolioService::sell_asset(const QString& portfolio_id, const QString& sy
 }
 
 // ── Transactions ─────────────────────────────────────────────────────────────
+void PortfolioService::rename_portfolio(const QString& id, const QString& new_name) {
+    if (id.isEmpty() || new_name.trimmed().isEmpty())
+        return;
+    auto r = PortfolioRepository::instance().get_portfolio(id);
+    if (r.is_err()) {
+        emit operation_failed(id, QString::fromStdString(r.error()));
+        return;
+    }
+    auto p = r.value();
+    auto ur = PortfolioRepository::instance().update_portfolio(id, new_name.trimmed(), p.owner, p.currency, p.description);
+    if (ur.is_err()) {
+        emit operation_failed(id, QString::fromStdString(ur.error()));
+        return;
+    }
+    load_portfolios();
+}
+
+
 
 void PortfolioService::load_transactions(const QString& portfolio_id, int limit) {
     auto r = PortfolioRepository::instance().get_transactions(portfolio_id, limit);

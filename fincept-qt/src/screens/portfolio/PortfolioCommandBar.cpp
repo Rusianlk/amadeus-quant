@@ -217,6 +217,24 @@ void PortfolioCommandBar::build_portfolio_selector() {
     });
     btn_row->addWidget(delete_btn_);
 
+    auto* rename_btn = new QPushButton(tr("RENAME"));
+    rename_btn->setFixedHeight(24);
+    rename_btn->setCursor(Qt::PointingHandCursor);
+    connect(rename_btn, &QPushButton::clicked, this, [this]() {
+        if (!selected_id_.isEmpty())
+            emit rename_requested(selected_id_);
+    });
+    btn_row->addWidget(rename_btn);
+
+    auto* csv_btn = new QPushButton(tr("IMPORT CSV"));
+    csv_btn->setFixedHeight(24);
+    csv_btn->setCursor(Qt::PointingHandCursor);
+    connect(csv_btn, &QPushButton::clicked, this, [this]() {
+        if (!selected_id_.isEmpty())
+            emit import_csv_requested(selected_id_);
+    });
+    btn_row->addWidget(csv_btn);
+
     dd_layout->addLayout(btn_row);
     dropdown_->hide();
 }
