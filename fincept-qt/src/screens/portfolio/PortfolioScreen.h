@@ -72,6 +72,7 @@ class PortfolioScreen : public QWidget, public IStatefulScreen, public IGroupLin
     void on_delete_requested(const QString& id);
     void on_rename_requested(const QString& id);
     void on_import_csv_requested(const QString& id);
+    void on_combined_requested();
     void on_detail_view_selected(portfolio::DetailView view);
     void on_refresh_interval_changed(int ms);
     void on_symbol_selected(const QString& symbol);

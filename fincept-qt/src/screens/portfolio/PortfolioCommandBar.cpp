@@ -235,6 +235,14 @@ void PortfolioCommandBar::build_portfolio_selector() {
     });
     btn_row->addWidget(csv_btn);
 
+    auto* total_btn = new QPushButton(tr("TOTAL"));
+    total_btn->setFixedHeight(24);
+    total_btn->setCursor(Qt::PointingHandCursor);
+    connect(total_btn, &QPushButton::clicked, this, [this]() {
+        emit combined_requested();
+    });
+    btn_row->addWidget(total_btn);
+
     dd_layout->addLayout(btn_row);
     dropdown_->hide();
 }

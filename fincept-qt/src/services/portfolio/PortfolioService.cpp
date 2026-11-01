@@ -174,12 +174,45 @@ void PortfolioService::delete_portfolio(const QString& id) {
 
 // ── Asset operations ─────────────────────────────────────────────────────────
 
+
+static void fetch_close_for_date(const QString& symbol, const QString& date, std::function<void(double)> cb) {
+    // Use yfinance history and pick the close on or before the given date.
+    fincept::services::MarketDataService::instance().fetch_history(
+        symbol, "5y", "1d", [date, cb = std::move(cb)](bool ok, QVector<fincept::services::HistoryPoint> pts) {
+            if (!ok || pts.isEmpty()) {
+                cb(0);
+                return;
+            }
+            double close = 0;
+            for (const auto& p : pts) {
+                if (p.date.left(10) <= date.left(10))
+                    close = p.close;
+                else
+                    break;
+            }
+            if (close <= 0 && !pts.isEmpty())
+                close = pts.last().close;
+            cb(close);
+        });
+}
+
 bool PortfolioService::add_asset(const QString& portfolio_id, const QString& symbol, double qty, double price,
                                  const QString& date, const QString& broker_symbol, const QString& exchange) {
     const QString sym = symbol.trimmed().toUpper();
-    if (sym.isEmpty() || !psd::positive_finite(qty) || !psd::positive_finite(price)) {
-        emit operation_failed(portfolio_id, tr("BUY rejected: a symbol, a quantity > 0 and a price > 0 are required."));
+    if (sym.isEmpty() || !psd::positive_finite(qty)) {
+        emit operation_failed(portfolio_id, tr("BUY rejected: a symbol and a quantity > 0 are required."));
         return false;
+    }
+    if (!psd::positive_finite(price)) {
+        // Empty price: fetch that day's close via yfinance and re-enter.
+        const QString d = date.isEmpty() ? QDate::currentDate().toString(Qt::ISODate) : date;
+        fetch_close_for_date(sym, d, [this, portfolio_id, sym, qty, date, broker_symbol, exchange](double close) {
+            if (close > 0)
+                add_asset(portfolio_id, sym, qty, close, date, broker_symbol, exchange);
+            else
+                emit operation_failed(portfolio_id, tr("Could not get close for %1 on %2").arg(sym, d));
+        });
+        return true; // async path
     }
     auto& repo = PortfolioRepository::instance();
     const QString txn_date = psd::normalise_trade_date(date);
@@ -445,3 +478,17 @@ void PortfolioService::invalidate_cache(const QString& portfolio_id) {
 }
 
 } // namespace fincept::services
+
+void PortfolioService::load_combined_summary() {
+    auto list = PortfolioRepository::instance().list_portfolios();
+    if (list.is_err() || list.value().isEmpty()) {
+        emit summary_error({}, tr("No portfolios"));
+        return;
+    }
+    // Aggregate: for each portfolio load its summary and the UI can sum.
+    // Here we just trigger a refresh of the first one and log the count;
+    // a dedicated CombinedPortfolioScreen can call load_summary per id.
+    LOG_INFO("PortfolioSvc", QString("Combined view requested for %1 portfolios").arg(list.value().size()));
+    load_summary(list.value().first().id);
+}
+

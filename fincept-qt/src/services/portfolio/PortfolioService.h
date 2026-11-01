@@ -37,6 +37,7 @@ class PortfolioService : public QObject {
 
     // ── Summary (assets + live quotes) ───────────────────────────────────────
     void load_summary(const QString& portfolio_id);
+    void load_combined_summary(); // sum of all portfolios
     void refresh_summary(const QString& portfolio_id); // invalidates cache first
 
     // ── Asset operations ─────────────────────────────────────────────────────

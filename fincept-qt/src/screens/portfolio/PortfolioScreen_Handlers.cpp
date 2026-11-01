@@ -502,3 +502,7 @@ void PortfolioScreen::on_import_csv_requested(const QString& id) {
     if (!path.isEmpty())
         services::PortfolioService::instance().import_csv(id, path);
 }
+
+void PortfolioScreen::on_combined_requested() {
+    services::PortfolioService::instance().load_combined_summary();
+}
