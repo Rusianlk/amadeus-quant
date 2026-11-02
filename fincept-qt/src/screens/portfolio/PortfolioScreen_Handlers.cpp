@@ -488,21 +488,22 @@ void PortfolioScreen::load_demo_portfolio() {
         disconnect(*conn);
 }
 
-} // namespace fincept::screens
 
 void PortfolioScreen::on_rename_requested(const QString& id) {
     bool ok = false;
     QString name = QInputDialog::getText(this, tr("Rename portfolio"), tr("New name:"), QLineEdit::Normal, {}, &ok);
     if (ok && !name.trimmed().isEmpty())
-        services::PortfolioService::instance().rename_portfolio(id, name.trimmed());
+        fincept::services::PortfolioService::instance().rename_portfolio(id, name.trimmed());
 }
 
 void PortfolioScreen::on_import_csv_requested(const QString& id) {
     QString path = QFileDialog::getOpenFileName(this, tr("Import CSV"), {}, tr("CSV (*.csv)"));
     if (!path.isEmpty())
-        services::PortfolioService::instance().import_csv(id, path);
+        fincept::services::PortfolioService::instance().import_csv(id, path);
 }
 
 void PortfolioScreen::on_combined_requested() {
-    services::PortfolioService::instance().load_combined_summary();
+    fincept::services::PortfolioService::instance().load_combined_summary();
 }
+
+} // namespace fincept::screens
