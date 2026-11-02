@@ -5,6 +5,7 @@
 #include "network/http/HttpClient.h"
 #include "screens/news/NewsFeedPanel.h"
 #include "services/file_manager/FileManagerService.h"
+#include "services/news/NewsTranslationService.h"
 #include "storage/repositories/NewsArticleRepository.h"
 #include "ui/theme/Theme.h"
 #include "ui/theme/ThemeManager.h"
@@ -337,7 +338,7 @@ QWidget* NewsDetailPanel::build_content_view() {
         QPointer<NewsDetailPanel> self = this;
         const QString for_article = current_article_.id;
         const QString source_text = current_article_.headline + "\n\n" + current_article_.summary;
-        services::NewsTranslationService::instance().translate_to_spanish(
+        fincept::services::NewsTranslationService::instance().translate_to_spanish(
             source_text, [self, for_article](bool ok, QString translated) {
                 if (!self)
                     return;
