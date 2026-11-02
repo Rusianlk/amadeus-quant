@@ -1444,8 +1444,9 @@ QString AddDividendDialog::notes() const {
     return notes_edit_->text().trimmed();
 }
 
-} // namespace fincept::screens
 
 double AddAssetDialog::commission() const {
     return commission_edit_ ? commission_edit_->text().toDouble() : 0.0;
 }
+
+} // namespace fincept::screens
