@@ -332,17 +332,15 @@ static QPushButton* make_cta_card(const QString& glyph, const QString& title, co
     v->addSpacing(4);
 
     auto* h = new QLabel(title);
-    h->setStyleSheet(QString("color:%1; font-size:13px; font-weight:700; letter-spacing:0.5px;"
-                             " background:transparent; border:none;")
-                         .arg(ui::colors::TEXT_PRIMARY()));
+    h->setStyleSheet("color:#ffffff; font-size:16px; font-weight:700; letter-spacing:0.5px;"
+                       " background:transparent; border:none;");
     v->addWidget(h);
     if (out_title)
         *out_title = h;
 
     auto* p = new QLabel(subtitle);
     p->setWordWrap(true);
-    p->setStyleSheet(QString("color:%1; font-size:11px; line-height:1.4; background:transparent; border:none;")
-                         .arg(ui::colors::TEXT_TERTIARY()));
+    p->setStyleSheet("color:#d0d0d0; font-size:14px; line-height:1.4; background:transparent; border:none;");
     v->addWidget(p);
     if (out_subtitle)
         *out_subtitle = p;
@@ -384,13 +382,13 @@ QWidget* PortfolioScreen::build_empty_state() {
     empty_title_label_ = new QLabel(tr("PORTFOLIO WORKSPACE"));
     empty_title_label_->setAlignment(Qt::AlignCenter);
     empty_title_label_->setStyleSheet(
-        QString("color:%1; font-size:18px; font-weight:700; letter-spacing:2px;").arg(ui::colors::TEXT_PRIMARY()));
+        "color:#ffffff; font-size:20px; font-weight:700; letter-spacing:2px;");
     layout->addWidget(empty_title_label_);
 
     empty_sub_label_ = new QLabel(tr("Create, import, or explore a sample portfolio to get started."));
     empty_sub_label_->setAlignment(Qt::AlignCenter);
     empty_sub_label_->setStyleSheet(
-        QString("color:%1; font-size:12px; letter-spacing:0.2px;").arg(ui::colors::TEXT_SECONDARY()));
+        QString("color:#d0d0d0; font-size:14px; letter-spacing:0.2px;"));
     layout->addWidget(empty_sub_label_);
 
     layout->addSpacing(24);
