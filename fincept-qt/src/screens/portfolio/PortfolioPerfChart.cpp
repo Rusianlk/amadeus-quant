@@ -778,9 +778,10 @@ void PortfolioPerfChart::refresh_theme() {
     update_chart();
 }
 
-} // namespace fincept::screens
 
-void PortfolioPerfChart::set_trade_markers(const QVector<portfolio::Transaction>& txns) {
+void PortfolioPerfChart::set_trade_markers(const QVector<fincept::portfolio::Transaction>& txns) {
     trade_markers_ = txns;
     update_chart();
 }
+
+} // namespace fincept::screens
