@@ -29,6 +29,12 @@ DataTable::DataTable(QWidget* parent) : QTableWidget(parent) {
     verticalHeader()->setDefaultSectionSize(kRowHeightPx);
     horizontalHeader()->setStretchLastSection(true);
     horizontalHeader()->setDefaultAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+    // Size columns to their content so symbols and prices aren't elided
+    // into "DOW ..." / "51,7..." on a laptop-width dashboard.
+    horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    horizontalHeader()->setMinimumSectionSize(72);
+    setTextElideMode(Qt::ElideRight);
+    setWordWrap(false);
     // NOTE: sorting is intentionally NOT enabled here.
     // Callers that need sorting (e.g. WatchlistScreen) opt in with
     // setSortingEnabled(true) after giving numeric columns a numeric sort key

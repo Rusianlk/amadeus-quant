@@ -1,3 +1,4 @@
+#include <QSizePolicy>
 #include "screens/dashboard/widgets/NewsWidget.h"
 
 #include "datahub/DataHub.h"
@@ -150,15 +151,17 @@ void NewsWidget::populate(const QVector<services::NewsArticle>& articles) {
 
         auto* headline = new QLabel(article.headline);
         headline->setWordWrap(true);
+        headline->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
         headline->setStyleSheet(
-            QString("color: %1; font-size: 11px; background: transparent;").arg(ui::colors::TEXT_PRIMARY()));
+            QString("color: %1; font-size: 12px; background: transparent;").arg(ui::colors::TEXT_PRIMARY()));
         rl->addWidget(headline, 1);
 
         if (!article.source.isEmpty()) {
             auto* src = new QLabel(article.source);
+            src->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Preferred);
             src->setStyleSheet(
-                QString("color: %1; font-size: 9px; background: transparent;").arg(ui::colors::TEXT_TERTIARY()));
-            rl->addWidget(src);
+                QString("color: %1; font-size: 10px; background: transparent;").arg(ui::colors::TEXT_TERTIARY()));
+            rl->addWidget(src, 0);
         }
 
         // Click → open the article. Child labels are made transparent to the
