@@ -133,7 +133,7 @@ QDialog* TopMoversWidget::make_config_dialog(QWidget* parent) {
 void TopMoversWidget::apply_styles() {
     if (universe_label_)
         universe_label_->setStyleSheet(
-            QString("color:%1;font-size:9px;background:transparent;").arg(ui::colors::TEXT_TERTIARY()));
+            QString("color:%1;font-size: 24px;background:transparent;").arg(ui::colors::TEXT_TERTIARY()));
     // Theme changed → force the tab-button stylesheets to be re-applied.
     tab_style_applied_ = false;
     show_tab(showing_gainers_);
@@ -210,13 +210,13 @@ void TopMoversWidget::show_tab(bool gainers) {
     if (tab_style_dirty) {
         tab_style_applied_ = true;
         auto active_g = QString("QPushButton { background: %1; color: %2; border: none; "
-                                "font-size: 12px; font-weight: bold; padding: 4px; }")
+                                "font-size: 24px; font-weight: bold; padding: 4px; }")
                             .arg(ui::colors::POSITIVE(), ui::colors::BG_BASE());
         auto active_l = QString("QPushButton { background: %1; color: %2; border: none; "
-                                "font-size: 12px; font-weight: bold; padding: 4px; }")
+                                "font-size: 24px; font-weight: bold; padding: 4px; }")
                             .arg(ui::colors::NEGATIVE(), ui::colors::BG_BASE());
         auto inactive = QString("QPushButton { background: %1; color: %2; border: none; "
-                                "font-size: 12px; font-weight: bold; padding: 4px; }")
+                                "font-size: 24px; font-weight: bold; padding: 4px; }")
                             .arg(ui::colors::BG_SURFACE(), ui::colors::TEXT_TERTIARY());
 
         gainers_btn_->setStyleSheet(gainers ? active_g : inactive);

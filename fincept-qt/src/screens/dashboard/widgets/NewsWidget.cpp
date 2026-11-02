@@ -117,7 +117,7 @@ void NewsWidget::populate(const QVector<services::NewsArticle>& articles) {
     if (articles.isEmpty()) {
         auto* empty = new QLabel(tr("No news available."));
         empty->setAlignment(Qt::AlignCenter);
-        empty->setStyleSheet(QString("color: %1; font-size: 11px; padding: 12px; background: transparent;")
+        empty->setStyleSheet(QString("color: %1; font-size: 24px; padding: 12px; background: transparent;")
                                  .arg(ui::colors::TEXT_TERTIARY()));
         news_layout_->insertWidget(0, empty);
         return;
@@ -151,13 +151,13 @@ void NewsWidget::populate(const QVector<services::NewsArticle>& articles) {
         if (!time_str.isEmpty()) {
             auto* time_lbl = new QLabel(time_str);
             time_lbl->setStyleSheet(
-                QString("color: %1; font-size: 11px; background: transparent;").arg(ui::colors::CYAN()));
+                QString("color: %1; font-size: 24px; background: transparent;").arg(ui::colors::CYAN()));
             meta->addWidget(time_lbl);
         }
         if (!article.source.isEmpty()) {
             auto* src = new QLabel(article.source);
             src->setStyleSheet(
-                QString("color: %1; font-size: 11px; background: transparent;").arg(ui::colors::TEXT_SECONDARY()));
+                QString("color: #c8c8c8; font-size: 24px; background: transparent;"));
             meta->addWidget(src);
         }
         meta->addStretch();
@@ -167,7 +167,7 @@ void NewsWidget::populate(const QVector<services::NewsArticle>& articles) {
         headline->setWordWrap(true);
         headline->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
         headline->setStyleSheet(
-            QString("color: %1; font-size: 13px; background: transparent;").arg(ui::colors::TEXT_PRIMARY()));
+            QString("color: #ffffff; font-size: 24px; font-weight: 500; background: transparent;"));
         vl->addWidget(headline);
 
         // Click → open the article. Child labels are made transparent to the

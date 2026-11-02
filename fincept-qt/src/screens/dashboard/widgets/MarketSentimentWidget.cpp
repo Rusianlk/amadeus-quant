@@ -128,10 +128,10 @@ void MarketSentimentWidget::apply_styles() {
         reset_css_cache(w);
     banner_->setStyleSheet(QString("background: %1; border-radius: 2px;").arg(ui::colors::BG_RAISED()));
     arrow_label_->setStyleSheet(
-        QString("font-size: 18px; background: transparent; color: %1;").arg(ui::colors::TEXT_TERTIARY()));
+        QString("font-size: 24px; background: transparent; color: %1;").arg(ui::colors::TEXT_TERTIARY()));
     score_label_->setStyleSheet(QString("color: %1; font-size: 24px; font-weight: bold; background: transparent;")
                                     .arg(ui::colors::TEXT_TERTIARY()));
-    verdict_label_->setStyleSheet(QString("color: %1; font-size: 12px; font-weight: bold; background: transparent;")
+    verdict_label_->setStyleSheet(QString("color: %1; font-size: 24px; font-weight: bold; background: transparent;")
                                       .arg(ui::colors::TEXT_TERTIARY()));
 
     bull_bar_->setStyleSheet(QString("background: %1; border-radius: 0;").arg(ui::colors::POSITIVE()));
@@ -139,22 +139,22 @@ void MarketSentimentWidget::apply_styles() {
     bear_bar_->setStyleSheet(QString("background: %1; border-radius: 0;").arg(ui::colors::NEGATIVE()));
 
     bull_label_->setStyleSheet(
-        QString("color: %1; font-size: 12px; background: transparent;").arg(ui::colors::POSITIVE()));
+        QString("color: %1; font-size: 24px; background: transparent;").arg(ui::colors::POSITIVE()));
     neutral_label_->setStyleSheet(
-        QString("color: %1; font-size: 12px; background: transparent;").arg(ui::colors::TEXT_TERTIARY()));
+        QString("color: %1; font-size: 24px; background: transparent;").arg(ui::colors::TEXT_TERTIARY()));
     bear_label_->setStyleSheet(
-        QString("color: %1; font-size: 12px; background: transparent;").arg(ui::colors::NEGATIVE()));
+        QString("color: %1; font-size: 24px; background: transparent;").arg(ui::colors::NEGATIVE()));
 
     separator_->setStyleSheet(QString("background: %1;").arg(ui::colors::BORDER_DIM()));
 
-    vix_title_label_->setStyleSheet(QString("color: %1; font-size: 12px; font-weight: bold; background: transparent;")
+    vix_title_label_->setStyleSheet(QString("color: %1; font-size: 24px; font-weight: bold; background: transparent;")
                                         .arg(ui::colors::TEXT_TERTIARY()));
     breadth_title_label_->setStyleSheet(
-        QString("color: %1; font-size: 12px; font-weight: bold; background: transparent;")
+        QString("color: %1; font-size: 24px; font-weight: bold; background: transparent;")
             .arg(ui::colors::TEXT_TERTIARY()));
-    vix_label_->setStyleSheet(QString("color: %1; font-size: 10px; font-weight: bold; background: transparent;")
+    vix_label_->setStyleSheet(QString("color: %1; font-size: 24px; font-weight: bold; background: transparent;")
                                   .arg(ui::colors::TEXT_PRIMARY()));
-    breadth_label_->setStyleSheet(QString("color: %1; font-size: 10px; font-weight: bold; background: transparent;")
+    breadth_label_->setStyleSheet(QString("color: %1; font-size: 24px; font-weight: bold; background: transparent;")
                                       .arg(ui::colors::TEXT_PRIMARY()));
 }
 
@@ -274,7 +274,7 @@ void MarketSentimentWidget::populate(const QVector<services::QuoteData>& quotes)
 
     verdict_label_->setText(verdict);
     set_css_cached(verdict_label_,
-                   QString("color: %1; font-size: 12px; font-weight: bold; background: transparent;").arg(score_color));
+                   QString("color: %1; font-size: 24px; font-weight: bold; background: transparent;").arg(score_color));
 
     // Update bar proportions
     auto* bar_layout = qobject_cast<QHBoxLayout*>(bull_bar_->parentWidget()->layout());
@@ -295,7 +295,7 @@ void MarketSentimentWidget::populate(const QVector<services::QuoteData>& quotes)
                             : vix_price > 18 ? ui::colors::WARNING()
                                              : ui::colors::POSITIVE();
         set_css_cached(vix_label_,
-                       QString("color: %1; font-size: 10px; font-weight: bold; background: transparent;").arg(vix_color));
+                       QString("color: %1; font-size: 24px; font-weight: bold; background: transparent;").arg(vix_color));
     }
 
     // Up / down count (any move, not the ±0.5% buckets the score uses).
@@ -304,7 +304,7 @@ void MarketSentimentWidget::populate(const QVector<services::QuoteData>& quotes)
                                   : advancers < decliners ? ui::colors::NEGATIVE()
                                                           : ui::colors::TEXT_PRIMARY();
     set_css_cached(breadth_label_,
-                   QString("color: %1; font-size: 10px; font-weight: bold; background: transparent;").arg(breadth_color));
+                   QString("color: %1; font-size: 24px; font-weight: bold; background: transparent;").arg(breadth_color));
 }
 
 void MarketSentimentWidget::retranslateUi() {

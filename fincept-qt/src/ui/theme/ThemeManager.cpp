@@ -38,7 +38,7 @@ const ThemeTokens THEME_OBSIDIAN = {
     .negative_bg = "#1a0a0a",
     .row_alt = "#0c0c0c",
     .font_family = "'Consolas','Courier New',monospace",
-    .font_size_base = 14,
+    .font_size_base = 24,
     .chart_colors = {"#d97706", "#0891b2", "#16a34a", "#dc2626", "#2563eb", "#ca8a04"},
 };
 
@@ -129,7 +129,7 @@ void ThemeManager::apply_theme(const QString& /*name*/) {
 
 void ThemeManager::apply_font(const QString& family, int size_px) {
     font_families_ = build_font_chain(family);
-    font_size_px_ = (size_px > 0) ? size_px : 15;
+    font_size_px_ = (size_px > 0) ? size_px : 24;
     rebuild_and_apply();
 }
 
@@ -147,7 +147,7 @@ void ThemeManager::apply_density(const QString& density) {
 void ThemeManager::apply_typography_and_density(const QString& family, int size_px, const QString& density) {
     if (!family.isEmpty())
         font_families_ = build_font_chain(family);
-    font_size_px_ = (size_px > 0) ? size_px : 15;
+    font_size_px_ = (size_px > 0) ? size_px : 24;
     if (density == "Compact")
         density_pad_ = 2;
     else if (density == "Comfortable" || density.isEmpty())
@@ -344,7 +344,7 @@ QString ThemeManager::build_global_qss() const {
         }
         ads--CDockWidgetTab QLabel {
             color: %10;
-            font-size: 11px;
+            font-size: 24px;
             font-weight: 600;
             background: transparent;
         }
@@ -470,11 +470,11 @@ QString ThemeManager::build_global_qss() const {
         }
         /* ── Reusable object-name selectors ────────────────────────────── */
         #sectionTitle {
-            color: %9; font-size: 13px; font-weight: 700;
+            color: %9; font-size: 24px; font-weight: 700;
             background: transparent; border: none; padding: 0;
         }
         #sectionHeader {
-            color: %10; font-size: 11px; font-weight: 600;
+            color: %10; font-size: 24px; font-weight: 600;
             text-transform: uppercase; letter-spacing: 1px;
             background: transparent; border: none;
             border-bottom: 1px solid %6; padding-bottom: 4px;
@@ -499,19 +499,19 @@ QString ThemeManager::build_global_qss() const {
         }
         #mutedButton:hover { background: %11; color: %2; }
         #statusLabel {
-            color: %10; font-size: 11px; background: transparent;
+            color: %10; font-size: 24px; background: transparent;
             border: none; padding: 0;
         }
         #dimLabel {
-            color: %13; font-size: 11px; background: transparent;
+            color: %13; font-size: 24px; background: transparent;
             border: none; padding: 0;
         }
         #dataLabel {
-            color: %10; font-size: 13px; background: transparent;
+            color: %10; font-size: 24px; background: transparent;
             border: none; padding: 0;
         }
         #dataValue {
-            color: %2; font-size: 13px; font-weight: 600;
+            color: %2; font-size: 24px; font-weight: 600;
             background: transparent; border: none; padding: 0;
         }
         #positiveText { color: %20; }
@@ -598,7 +598,7 @@ QString ThemeManager::build_ads_qss() const {
         }
         ads--CDockWidgetTab QLabel {
             color: %6;
-            font-size: 11px;
+            font-size: 24px;
             font-weight: 600;
             background: transparent;
         }

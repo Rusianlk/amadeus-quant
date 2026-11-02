@@ -111,15 +111,15 @@ void WatchlistWidget::apply_config(const QJsonObject& cfg) {
 }
 
 void WatchlistWidget::apply_styles() {
-    symbols_label_->setStyleSheet(QString("color: %1; font-size: 12px; font-weight: bold; background: transparent;")
+    symbols_label_->setStyleSheet(QString("color: %1; font-size: 24px; font-weight: bold; background: transparent;")
                                       .arg(ui::colors::TEXT_TERTIARY()));
     symbols_input_->setStyleSheet(
         QString("QLineEdit { background: %1; color: %2; border: 1px solid %3; "
-                "font-size: 10px; padding: 2px 6px; font-family: Consolas; }"
+                "font-size: 24px; padding: 2px 6px; font-family: Consolas; }"
                 "QLineEdit:focus { border-color: %4; }")
             .arg(ui::colors::BG_BASE(), ui::colors::TEXT_PRIMARY(), ui::colors::BORDER_DIM(), ui::colors::AMBER()));
     go_btn_->setStyleSheet(QString("QPushButton { background: %1; color: %2; border: none; "
-                                   "font-size: 12px; font-weight: bold; padding: 3px; }"
+                                   "font-size: 24px; font-weight: bold; padding: 3px; }"
                                    "QPushButton:hover { background: %1; }")
                                .arg(ui::colors::AMBER(), ui::colors::BG_BASE()));
 }

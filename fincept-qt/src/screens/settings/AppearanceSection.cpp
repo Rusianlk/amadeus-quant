@@ -25,7 +25,7 @@
 namespace fincept::screens {
 
 namespace {
-constexpr const char* kDefaultFontSize = "15px";
+constexpr const char* kDefaultFontSize = "24px";
 constexpr const char* kDefaultFontFamily = "Consolas";
 constexpr const char* kDefaultDensity = "Default";
 

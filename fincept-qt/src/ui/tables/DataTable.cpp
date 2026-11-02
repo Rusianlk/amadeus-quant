@@ -11,7 +11,7 @@ namespace {
 /// Uniform row height, applied once on the vertical header in the constructor
 /// rather than per row. Kept in sync with the `height: 26px` item rule in the
 /// stylesheet below.
-constexpr int kRowHeightPx = 26;
+constexpr int kRowHeightPx = 36;
 } // namespace
 
 DataTable::DataTable(QWidget* parent) : QTableWidget(parent) {
@@ -41,9 +41,9 @@ DataTable::DataTable(QWidget* parent) : QTableWidget(parent) {
     // (set_cell_numeric() / ui::NumericTableWidgetItem).
     // Enabling it globally causes lexicographic sort on tables that only
     // use setText() — e.g. "$10" sorts before "$2", "100K" before "2M".
-    setStyleSheet(QString("QTableWidget { background: %1; alternate-background-color: %2; "
+    setStyleSheet(QString("QTableWidget { background: %1; alternate-background-color: %2; font-size: 16px; "
                           "gridline-color: %3; border: none; }"
-                          "QTableWidget::item { padding: 4px 8px; height: 26px; }"
+                          "QTableWidget::item { padding: 4px 8px; height: 36px; }"
                           "QTableWidget::item:selected { background: #111111; }")
                       .arg(colors::DARK(), colors::ROW_ALT(), colors::BORDER()));
 }
