@@ -16,7 +16,10 @@ NewsTranslationService::NewsTranslationService() {}
 
 bool NewsTranslationService::auto_translate_enabled() const {
     auto r = fincept::SettingsRepository::instance().get("news.auto_translate_es");
-    return r.is_ok() && r.value() == "true";
+    // Default ON when the user has never set it.
+    if (r.is_err() || r.value().isEmpty())
+        return true;
+    return r.value() == "true";
 }
 
 void NewsTranslationService::set_auto_translate_enabled(bool on) {

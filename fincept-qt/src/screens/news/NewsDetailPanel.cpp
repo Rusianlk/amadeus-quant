@@ -610,6 +610,25 @@ void NewsDetailPanel::show_article(const services::NewsArticle& article) {
 
     summary_label_->setText(article.summary.isEmpty() ? tr("No summary available.") : article.summary);
 
+    // Auto-translate to Spanish when the option is on (default).
+    if (fincept::services::NewsTranslationService::instance().auto_translate_enabled()) {
+        const QString source_text = article.headline + "\n\n" + article.summary;
+        const QString for_article = article.id;
+        QPointer<NewsDetailPanel> self = this;
+        fincept::services::NewsTranslationService::instance().translate_to_spanish(
+            source_text, [self, for_article](bool ok, QString translated) {
+                if (!self || self->current_article_.id != for_article || !ok || translated.isEmpty())
+                    return;
+                const int split = translated.indexOf("\n\n");
+                if (split > 0) {
+                    self->headline_label_->setText(translated.left(split).trimmed());
+                    self->summary_label_->setText(translated.mid(split + 2).trimmed());
+                } else {
+                    self->summary_label_->setText(translated.trimmed());
+                }
+            });
+    }
+
     // Impact + (optional) threat classification share the impact label.
     // Threat takes precedence when present so users see the more specific
     // signal — the bare impact level alone wasn't useful here.
