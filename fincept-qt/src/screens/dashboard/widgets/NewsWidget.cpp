@@ -1,4 +1,6 @@
 #include <QSizePolicy>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
 #include "screens/dashboard/widgets/NewsWidget.h"
 
 #include "datahub/DataHub.h"
@@ -137,32 +139,36 @@ void NewsWidget::populate(const QVector<services::NewsArticle>& articles) {
 
         auto* row = new QWidget(this);
         row->setStyleSheet(QString("border-bottom: 1px solid %1;").arg(ui::colors::BORDER_DIM()));
-        auto* rl = new QHBoxLayout(row);
-        rl->setContentsMargins(4, 4, 4, 4);
-        rl->setSpacing(8);
+        auto* vl = new QVBoxLayout(row);
+        vl->setContentsMargins(6, 6, 6, 6);
+        vl->setSpacing(2);
 
+        // Meta line: time + source. Headline goes on its own line so it can
+        // wrap instead of being clipped mid-sentence.
+        auto* meta = new QHBoxLayout;
+        meta->setContentsMargins(0, 0, 0, 0);
+        meta->setSpacing(8);
         if (!time_str.isEmpty()) {
             auto* time_lbl = new QLabel(time_str);
-            time_lbl->setFixedWidth(36);
             time_lbl->setStyleSheet(
-                QString("color: %1; font-size: 12px; background: transparent;").arg(ui::colors::CYAN()));
-            rl->addWidget(time_lbl);
+                QString("color: %1; font-size: 11px; background: transparent;").arg(ui::colors::CYAN()));
+            meta->addWidget(time_lbl);
         }
+        if (!article.source.isEmpty()) {
+            auto* src = new QLabel(article.source);
+            src->setStyleSheet(
+                QString("color: %1; font-size: 11px; background: transparent;").arg(ui::colors::TEXT_SECONDARY()));
+            meta->addWidget(src);
+        }
+        meta->addStretch();
+        vl->addLayout(meta);
 
         auto* headline = new QLabel(article.headline);
         headline->setWordWrap(true);
         headline->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
         headline->setStyleSheet(
-            QString("color: %1; font-size: 12px; background: transparent;").arg(ui::colors::TEXT_PRIMARY()));
-        rl->addWidget(headline, 1);
-
-        if (!article.source.isEmpty()) {
-            auto* src = new QLabel(article.source);
-            src->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Preferred);
-            src->setStyleSheet(
-                QString("color: %1; font-size: 10px; background: transparent;").arg(ui::colors::TEXT_TERTIARY()));
-            rl->addWidget(src, 0);
-        }
+            QString("color: %1; font-size: 13px; background: transparent;").arg(ui::colors::TEXT_PRIMARY()));
+        vl->addWidget(headline);
 
         // Click → open the article. Child labels are made transparent to the
         // mouse so the click lands on the row, where eventFilter() sees it.
