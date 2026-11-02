@@ -113,7 +113,8 @@ DashboardScreen::DashboardScreen(QWidget* parent) : QWidget(parent) {
     content_split_->setStretchFactor(1, 1);
     content_split_->setCollapsible(0, false);
     content_split_->setCollapsible(1, false);
-    market_pulse_->setMinimumWidth(180);
+    market_pulse_->setMinimumWidth(280);
+    market_pulse_->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
 
     vl->addWidget(content_split_, 1);
 
@@ -440,7 +441,8 @@ bool DashboardScreen::eventFilter(QObject* obj, QEvent* event) {
 QWidget* DashboardScreen::build_enterprise_strip() {
     auto* strip = new QFrame(this);
     strip->setObjectName("dashEntStrip");
-    strip->setFixedHeight(30);
+    strip->setMinimumHeight(40);
+    strip->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
     auto* hl = new QHBoxLayout(strip);
     hl->setContentsMargins(12, 0, 6, 0);
     hl->setSpacing(10);

@@ -98,7 +98,8 @@ static const QStringList kSnapshotSymbols = services::MarketDataService::global_
 // ── Constructor ──────────────────────────────────────────────────────────────
 
 MarketPulsePanel::MarketPulsePanel(QWidget* parent) : QWidget(parent) {
-    setMinimumWidth(260);
+    setMinimumWidth(300);
+    setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
     setAttribute(Qt::WA_StyledBackground, true);
     setAutoFillBackground(true);
     // Constrain preferred width so the QSplitter doesn't give this panel
@@ -375,7 +376,7 @@ QWidget* MarketPulsePanel::build_header() {
 QWidget* MarketPulsePanel::build_section_header(const QString& title, const QString& icon_char, const QString& color) {
     Q_UNUSED(color)
     auto* w = new QWidget(this);
-    w->setFixedHeight(26);
+    w->setMinimumHeight(36);
     // Styling applied by refresh_theme() via style_section lambda
 
     auto* hl = new QHBoxLayout(w);

@@ -79,7 +79,8 @@ BaseWidget::BaseWidget(const QString& title, QWidget* parent, const QString& acc
 
     // ── Title bar ──
     title_bar_ = new QWidget(this);
-    title_bar_->setFixedHeight(26);
+    title_bar_->setMinimumHeight(36);
+    title_bar_->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
     title_bar_->setStyleSheet(
         QString("background: %1; border-bottom: 1px solid %2;").arg(ui::colors::BG_RAISED(), ui::colors::BORDER_DIM()));
 

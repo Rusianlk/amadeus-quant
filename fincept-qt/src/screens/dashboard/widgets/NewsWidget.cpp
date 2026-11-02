@@ -139,6 +139,7 @@ void NewsWidget::populate(const QVector<services::NewsArticle>& articles) {
 
         auto* row = new QWidget(this);
         row->setStyleSheet(QString("border-bottom: 1px solid %1;").arg(ui::colors::BORDER_DIM()));
+        row->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
         auto* vl = new QVBoxLayout(row);
         vl->setContentsMargins(6, 6, 6, 6);
         vl->setSpacing(2);
