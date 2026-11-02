@@ -145,7 +145,7 @@ void NewsWidget::populate(const QVector<services::NewsArticle>& articles) {
             auto* time_lbl = new QLabel(time_str);
             time_lbl->setFixedWidth(36);
             time_lbl->setStyleSheet(
-                QString("color: %1; font-size: 9px; background: transparent;").arg(ui::colors::CYAN()));
+                QString("color: %1; font-size: 12px; background: transparent;").arg(ui::colors::CYAN()));
             rl->addWidget(time_lbl);
         }
 

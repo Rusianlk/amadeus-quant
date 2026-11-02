@@ -94,7 +94,7 @@ BaseWidget::BaseWidget(const QString& title, QWidget* parent, const QString& acc
     hl->addWidget(accent_bar_);
 
     title_label_ = new QLabel(title);
-    title_label_->setStyleSheet(QString("color: %1; font-size: 9px; font-weight: bold; letter-spacing: 0.5px; "
+    title_label_->setStyleSheet(QString("color: %1; font-size: 12px; font-weight: bold; letter-spacing: 0.5px; "
                                         "background: transparent; text-transform: uppercase;")
                                     .arg(accent_color_));
     hl->addWidget(title_label_);
@@ -102,7 +102,7 @@ BaseWidget::BaseWidget(const QString& title, QWidget* parent, const QString& acc
     // Loading indicator
     loading_label_ = new QLabel("...");
     loading_label_->setStyleSheet(
-        QString("color: %1; font-size: 9px; background: transparent;").arg(ui::colors::AMBER()));
+        QString("color: %1; font-size: 12px; background: transparent;").arg(ui::colors::AMBER()));
     loading_label_->setVisible(false);
     hl->addWidget(loading_label_);
 

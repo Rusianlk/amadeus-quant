@@ -135,14 +135,14 @@ void RiskMetricsWidget::apply_styles() {
     for (const auto& sr : stock_rows_)
         reset_css_cache(sr.chg_pct);
     vix_card_->setStyleSheet(QString("background: %1; border-radius: 2px;").arg(ui::colors::BG_RAISED()));
-    vix_header_lbl_->setStyleSheet(QString("color: %1; font-size: 9px; font-weight: bold; background: transparent;")
+    vix_header_lbl_->setStyleSheet(QString("color: %1; font-size: 12px; font-weight: bold; background: transparent;")
                                        .arg(ui::colors::TEXT_TERTIARY()));
-    vix_regime_->setStyleSheet(QString("color: %1; font-size: 9px; font-weight: bold; background: transparent;")
+    vix_regime_->setStyleSheet(QString("color: %1; font-size: 12px; font-weight: bold; background: transparent;")
                                    .arg(ui::colors::TEXT_TERTIARY()));
     vix_value_->setStyleSheet(QString("color: %1; font-size: 22px; font-weight: bold; background: transparent;")
                                   .arg(ui::colors::TEXT_TERTIARY()));
     vix_bar_fill_->setStyleSheet(
-        QString("color: %1; font-size: 8px; background: transparent;").arg(ui::colors::TEXT_TERTIARY()));
+        QString("color: %1; font-size: 11px; background: transparent;").arg(ui::colors::TEXT_TERTIARY()));
 
     // VIX gradient bar: green → yellow-green → amber → orange → red (theme-aware)
     if (vix_bar_segments_.size() == 5) {
@@ -157,9 +157,9 @@ void RiskMetricsWidget::apply_styles() {
     sep1_->setStyleSheet(QString("background: %1;").arg(ui::colors::BORDER_DIM()));
     sep2_->setStyleSheet(QString("background: %1;").arg(ui::colors::BORDER_DIM()));
 
-    stocks_hdr_->setStyleSheet(QString("color: %1; font-size: 9px; font-weight: bold; background: transparent;")
+    stocks_hdr_->setStyleSheet(QString("color: %1; font-size: 12px; font-weight: bold; background: transparent;")
                                    .arg(ui::colors::TEXT_TERTIARY()));
-    corr_hdr_->setStyleSheet(QString("color: %1; font-size: 9px; font-weight: bold; background: transparent;")
+    corr_hdr_->setStyleSheet(QString("color: %1; font-size: 12px; font-weight: bold; background: transparent;")
                                  .arg(ui::colors::TEXT_TERTIARY()));
 
     for (const auto& sr : stock_rows_) {
@@ -168,12 +168,12 @@ void RiskMetricsWidget::apply_styles() {
         sr.chg_pct->setStyleSheet(QString("color: %1; font-size: 10px; font-weight: bold; background: transparent;")
                                       .arg(ui::colors::TEXT_TERTIARY()));
         sr.hi_lo->setStyleSheet(
-            QString("color: %1; font-size: 9px; background: transparent;").arg(ui::colors::TEXT_TERTIARY()));
+            QString("color: %1; font-size: 12px; background: transparent;").arg(ui::colors::TEXT_TERTIARY()));
     }
 
     for (auto* lbl : spread_labels_)
         lbl->setStyleSheet(
-            QString("color: %1; font-size: 9px; background: transparent;").arg(ui::colors::TEXT_SECONDARY()));
+            QString("color: %1; font-size: 12px; background: transparent;").arg(ui::colors::TEXT_SECONDARY()));
 
     spy_qqq_spread_->setStyleSheet(QString("color: %1; font-size: 10px; font-weight: bold; background: transparent;")
                                        .arg(ui::colors::TEXT_PRIMARY()));
@@ -272,7 +272,7 @@ void RiskMetricsWidget::populate(const QVector<services::QuoteData>& quotes) {
                        QString("color: %1; font-size: 22px; font-weight: bold; background: transparent;").arg(color));
         vix_regime_->setText(regime);
         set_css_cached(vix_regime_,
-                       QString("color: %1; font-size: 9px; font-weight: bold; background: transparent;").arg(color));
+                       QString("color: %1; font-size: 12px; font-weight: bold; background: transparent;").arg(color));
 
         // Marker on the 5-segment 0-40 bar. Positioned with a contents margin
         // from the bar's real width (was a hard-coded 140 px inside a
@@ -280,7 +280,7 @@ void RiskMetricsWidget::populate(const QVector<services::QuoteData>& quotes) {
         const double pct = qBound(0.0, vix / 40.0, 1.0);
         const int bar_w = vix_bar_fill_->width() > 12 ? vix_bar_fill_->width() - 8 : 140;
         vix_bar_fill_->setContentsMargins(static_cast<int>(pct * bar_w), 0, 0, 0);
-        set_css_cached(vix_bar_fill_, QString("color: %1; font-size: 8px; background: transparent;").arg(color));
+        set_css_cached(vix_bar_fill_, QString("color: %1; font-size: 11px; background: transparent;").arg(color));
     }
 
     // High-beta stocks

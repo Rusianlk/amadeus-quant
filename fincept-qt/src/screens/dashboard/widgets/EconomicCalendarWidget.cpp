@@ -103,7 +103,7 @@ EconomicCalendarWidget::EconomicCalendarWidget(QWidget* parent)
 void EconomicCalendarWidget::apply_styles() {
     header_widget_->setStyleSheet(QString("background: %1;").arg(ui::colors::BG_RAISED()));
     for (auto* lbl : header_labels_)
-        lbl->setStyleSheet(QString("color: %1; font-size: 9px; font-weight: bold; background: transparent;")
+        lbl->setStyleSheet(QString("color: %1; font-size: 12px; font-weight: bold; background: transparent;")
                                .arg(ui::colors::TEXT_TERTIARY()));
     header_sep_->setStyleSheet(QString("background: %1;").arg(ui::colors::BORDER_DIM()));
     scroll_area_->setStyleSheet(
@@ -301,19 +301,19 @@ void EconomicCalendarWidget::populate(const QJsonArray& events) {
 
         auto* cty_lbl = new QLabel(country);
         cty_lbl->setFixedWidth(kColWidthCty);
-        cty_lbl->setStyleSheet(QString("color: %1; font-size: 9px; background: transparent;").arg(ui::colors::CYAN()));
+        cty_lbl->setStyleSheet(QString("color: %1; font-size: 12px; background: transparent;").arg(ui::colors::CYAN()));
         rl->addWidget(cty_lbl, 0);
 
         auto* date_lbl = new QLabel(date_display);
         date_lbl->setFixedWidth(kColWidthDate);
         date_lbl->setStyleSheet(
-            QString("color: %1; font-size: 9px; background: transparent;").arg(ui::colors::TEXT_SECONDARY()));
+            QString("color: %1; font-size: 12px; background: transparent;").arg(ui::colors::TEXT_SECONDARY()));
         rl->addWidget(date_lbl, 0);
 
         auto* ref_lbl = new QLabel(reference_period.isEmpty() ? "--" : reference_period);
         ref_lbl->setFixedWidth(kColWidthRef);
         ref_lbl->setStyleSheet(
-            QString("color: %1; font-size: 9px; background: transparent;")
+            QString("color: %1; font-size: 12px; background: transparent;")
                 .arg(reference_period.isEmpty() ? ui::colors::TEXT_TERTIARY() : ui::colors::TEXT_SECONDARY()));
         rl->addWidget(ref_lbl, 0);
 
@@ -328,14 +328,14 @@ void EconomicCalendarWidget::populate(const QJsonArray& events) {
         fcst_lbl->setFixedWidth(kColWidthFcst);
         fcst_lbl->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
         fcst_lbl->setStyleSheet(
-            QString("color: %1; font-size: 9px; background: transparent;").arg(ui::colors::TEXT_SECONDARY()));
+            QString("color: %1; font-size: 12px; background: transparent;").arg(ui::colors::TEXT_SECONDARY()));
         rl->addWidget(fcst_lbl, 0);
 
         auto* cons_lbl = new QLabel(consensus.isEmpty() ? "--" : consensus);
         cons_lbl->setFixedWidth(kColWidthCons);
         cons_lbl->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
         cons_lbl->setStyleSheet(
-            QString("color: %1; font-size: 9px; background: transparent;")
+            QString("color: %1; font-size: 12px; background: transparent;")
                 .arg(consensus.isEmpty() ? ui::colors::TEXT_TERTIARY() : ui::colors::TEXT_SECONDARY()));
         rl->addWidget(cons_lbl, 0);
 
@@ -343,7 +343,7 @@ void EconomicCalendarWidget::populate(const QJsonArray& events) {
         prev_lbl->setFixedWidth(kColWidthPrev);
         prev_lbl->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
         prev_lbl->setStyleSheet(
-            QString("color: %1; font-size: 9px; background: transparent;")
+            QString("color: %1; font-size: 12px; background: transparent;")
                 .arg(previous.isEmpty() ? ui::colors::TEXT_TERTIARY() : ui::colors::TEXT_SECONDARY()));
         rl->addWidget(prev_lbl, 0);
 
@@ -351,7 +351,7 @@ void EconomicCalendarWidget::populate(const QJsonArray& events) {
         imp_lbl->setFixedWidth(kColWidthImp);
         imp_lbl->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
         imp_lbl->setStyleSheet(
-            QString("color: %1; font-size: 9px; font-weight: bold; background: transparent;").arg(imp_color));
+            QString("color: %1; font-size: 12px; font-weight: bold; background: transparent;").arg(imp_color));
         rl->addWidget(imp_lbl, 0);
 
         list_layout_->addWidget(row);

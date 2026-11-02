@@ -98,7 +98,7 @@ static const QStringList kSnapshotSymbols = services::MarketDataService::global_
 // ── Constructor ──────────────────────────────────────────────────────────────
 
 MarketPulsePanel::MarketPulsePanel(QWidget* parent) : QWidget(parent) {
-    setMinimumWidth(180);
+    setMinimumWidth(260);
     setAttribute(Qt::WA_StyledBackground, true);
     setAutoFillBackground(true);
     // Constrain preferred width so the QSplitter doesn't give this panel
@@ -176,7 +176,7 @@ void MarketPulsePanel::refresh_theme() {
             QString("color: %1; font-size: 12px; background: transparent;").arg(ui::colors::AMBER()));
     if (header_title_)
         header_title_->setStyleSheet(
-            QString("color: %1; font-size: 10px; font-weight: bold; letter-spacing: 1px; background: transparent;")
+            QString("color: %1; font-size: 12px; font-weight: bold; letter-spacing: 1px; background: transparent;")
                 .arg(ui::colors::AMBER()));
     if (header_live_dot_)
         header_live_dot_->setStyleSheet(QString("background: %1; border-radius: 3px;").arg(ui::colors::POSITIVE()));
@@ -197,10 +197,10 @@ void MarketPulsePanel::refresh_theme() {
                 QString("background: %1; border-bottom: 1px solid %2; border-top: 1px solid %2;")
                     .arg(ui::colors::BG_RAISED(), ui::colors::BORDER_DIM()));
         if (sh.icon)
-            sh.icon->setStyleSheet(QString("color: %1; font-size: 10px; background: transparent;").arg(icon_color));
+            sh.icon->setStyleSheet(QString("color: %1; font-size: 12px; background: transparent;").arg(icon_color));
         if (sh.title)
             sh.title->setStyleSheet(
-                QString("color: %1; font-size: 9px; font-weight: bold; letter-spacing: 0.5px; background: transparent;")
+                QString("color: %1; font-size: 12px; font-weight: bold; letter-spacing: 0.5px; background: transparent;")
                     .arg(ui::colors::TEXT_SECONDARY()));
     };
 
@@ -213,7 +213,7 @@ void MarketPulsePanel::refresh_theme() {
     // ── Fear & Greed ──
     if (fg_header_label_)
         fg_header_label_->setStyleSheet(
-            QString("color: %1; font-size: 9px; font-weight: bold; letter-spacing: 0.5px; background: transparent;")
+            QString("color: %1; font-size: 12px; font-weight: bold; letter-spacing: 0.5px; background: transparent;")
                 .arg(ui::colors::TEXT_SECONDARY()));
     if (fg_gauge_icon_)
         fg_gauge_icon_->setStyleSheet(
@@ -226,29 +226,29 @@ void MarketPulsePanel::refresh_theme() {
                                                  ui::colors::POSITIVE_DIM(), ui::colors::POSITIVE()));
     if (fg_score_val_)
         fg_score_val_->setStyleSheet(QString("color: %1; font-size: 18px; font-weight: bold; background: transparent;")
-                                         .arg(ui::colors::TEXT_TERTIARY()));
+                                         .arg(ui::colors::TEXT_SECONDARY()));
     if (fg_score_max_)
         fg_score_max_->setStyleSheet(
-            QString("color: %1; font-size: 9px; background: transparent;").arg(ui::colors::TEXT_TERTIARY()));
+            QString("color: %1; font-size: 12px; background: transparent;").arg(ui::colors::TEXT_SECONDARY()));
     if (fg_sentiment_)
         fg_sentiment_->setStyleSheet(
-            QString("color: %1; font-size: 9px; font-weight: bold; letter-spacing: 0.5px; background: transparent;")
-                .arg(ui::colors::TEXT_TERTIARY()));
+            QString("color: %1; font-size: 12px; font-weight: bold; letter-spacing: 0.5px; background: transparent;")
+                .arg(ui::colors::TEXT_SECONDARY()));
 
     // ── Market Breadth rows ──
     auto style_breadth = [](BreadthRow& row) {
         if (row.name)
-            row.name->setStyleSheet(QString("color: %1; font-size: 9px; font-weight: bold; background: transparent;")
+            row.name->setStyleSheet(QString("color: %1; font-size: 12px; font-weight: bold; background: transparent;")
                                         .arg(ui::colors::TEXT_SECONDARY()));
         if (row.adv)
             row.adv->setStyleSheet(
-                QString("color: %1; font-size: 8px; background: transparent;").arg(ui::colors::POSITIVE()));
+                QString("color: %1; font-size: 11px; background: transparent;").arg(ui::colors::POSITIVE()));
         if (row.slash)
             row.slash->setStyleSheet(
-                QString("color: %1; font-size: 8px; background: transparent;").arg(ui::colors::TEXT_TERTIARY()));
+                QString("color: %1; font-size: 11px; background: transparent;").arg(ui::colors::TEXT_SECONDARY()));
         if (row.dec)
             row.dec->setStyleSheet(
-                QString("color: %1; font-size: 8px; background: transparent;").arg(ui::colors::NEGATIVE()));
+                QString("color: %1; font-size: 11px; background: transparent;").arg(ui::colors::NEGATIVE()));
         if (row.green)
             row.green->setStyleSheet(QString("background: %1; border-radius: 0;").arg(ui::colors::POSITIVE()));
         if (row.red)
@@ -276,16 +276,16 @@ void MarketPulsePanel::refresh_theme() {
             sd.row.container->setStyleSheet(QString("border-bottom: 1px solid %1;").arg(ui::colors::BORDER_DIM()));
         if (sd.row.name_lbl)
             sd.row.name_lbl->setStyleSheet(
-                QString("color: %1; font-size: 9px; font-weight: bold; letter-spacing: 0.3px; background: transparent;")
+                QString("color: %1; font-size: 12px; font-weight: bold; letter-spacing: 0.3px; background: transparent;")
                     .arg(ui::colors::TEXT_SECONDARY()));
         if (sd.row.val)
             sd.row.val->setStyleSheet(
-                QString("color: %1; font-size: 10px; font-weight: bold; background: transparent;").arg(sd.val_color));
+                QString("color: %1; font-size: 12px; font-weight: bold; background: transparent;").arg(sd.val_color));
         if (sd.row.chg)
             sd.row.chg->setProperty("fincept_pulse_css", QVariant());
         if (sd.row.chg)
-            sd.row.chg->setStyleSheet(QString("color: %1; font-size: 8px; font-weight: bold; background: transparent;")
-                                          .arg(ui::colors::TEXT_TERTIARY()));
+            sd.row.chg->setStyleSheet(QString("color: %1; font-size: 11px; font-weight: bold; background: transparent;")
+                                          .arg(ui::colors::TEXT_SECONDARY()));
     }
 
     // ── Market Hours rows ──
@@ -293,7 +293,7 @@ void MarketPulsePanel::refresh_theme() {
         if (hr.container)
             hr.container->setStyleSheet(QString("border-bottom: 1px solid %1;").arg(ui::colors::BORDER_DIM()));
         if (hr.name_lbl)
-            hr.name_lbl->setStyleSheet(QString("color: %1; font-size: 9px; font-weight: bold; background: transparent;")
+            hr.name_lbl->setStyleSheet(QString("color: %1; font-size: 12px; font-weight: bold; background: transparent;")
                                            .arg(ui::colors::TEXT_SECONDARY()));
         // dot and status colors are data-driven (open/closed/pre) —
         // refresh_market_hours() handles those, call it to re-resolve tokens.
@@ -609,7 +609,7 @@ void MarketPulsePanel::style_mover_section(QWidget* container, bool positive_sec
                 "QLabel#pulseMoverArrow{color:%3;font-size:8px;}"
                 "QLabel#pulseMoverChg{color:%3;font-size:10px;font-weight:bold;}"
                 "QLabel#pulseMoverVol{color:%4;font-size:8px;}")
-            .arg(ui::colors::BORDER_DIM(), ui::colors::TEXT_PRIMARY(), accent, ui::colors::TEXT_TERTIARY()));
+            .arg(ui::colors::BORDER_DIM(), ui::colors::TEXT_PRIMARY(), accent, ui::colors::TEXT_SECONDARY()));
 }
 
 static QString format_volume(double vol) {
@@ -855,7 +855,7 @@ void MarketPulsePanel::refresh_market_hours() {
         else
             hr.status->setText(tr("CLOSED"));
         pulse_set_css_cached(hr.status, 
-            QString("color: %1; font-size: 8px; font-weight: bold; background: transparent;").arg(color));
+            QString("color: %1; font-size: 11px; font-weight: bold; background: transparent;").arg(color));
     }
 }
 
@@ -979,7 +979,7 @@ void MarketPulsePanel::rebuild_breadth_from_cache() {
                     .arg(sentiment_color));
         if (fg_sentiment_)
             fg_sentiment_->setStyleSheet(
-                QString("color: %1; font-size: 9px; font-weight: bold; letter-spacing: 0.5px; background: transparent;")
+                QString("color: %1; font-size: 12px; font-weight: bold; letter-spacing: 0.5px; background: transparent;")
                     .arg(sentiment_color));
     }
 }
@@ -1044,9 +1044,9 @@ void MarketPulsePanel::rebuild_snapshot_from_cache() {
         row.chg->setText(fmt_chg(q));
         QString chg_color = q.change_pct > 0   ? ui::colors::POSITIVE()
                             : q.change_pct < 0 ? ui::colors::NEGATIVE()
-                                               : ui::colors::TEXT_TERTIARY();
+                                               : ui::colors::TEXT_SECONDARY();
         pulse_set_css_cached(row.chg, 
-            QString("color: %1; font-size: 8px; font-weight: bold; background: transparent;").arg(chg_color));
+            QString("color: %1; font-size: 11px; font-weight: bold; background: transparent;").arg(chg_color));
     };
     update_stat("^VIX", vix_row_);
     update_stat("^TNX", us10y_row_);
