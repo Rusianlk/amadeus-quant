@@ -25,7 +25,7 @@
 namespace fincept::screens {
 
 namespace {
-constexpr const char* kDefaultFontSize = "14px";
+constexpr const char* kDefaultFontSize = "15px";
 constexpr const char* kDefaultFontFamily = "Consolas";
 constexpr const char* kDefaultDensity = "Default";
 
@@ -188,7 +188,7 @@ void AppearanceSection::build_ui() {
 
     app_density_ = new QComboBox;
     app_density_->addItems(ui::ThemeManager::available_densities());
-    app_density_->setCurrentText("Default");
+    app_density_->setCurrentText("Comfortable");
     app_density_->setStyleSheet(combo_ss());
     auto* density_row =
         make_row(tr("Content Density"), app_density_, tr("Controls padding and spacing throughout the UI."));

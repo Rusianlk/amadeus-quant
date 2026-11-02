@@ -129,17 +129,17 @@ void ThemeManager::apply_theme(const QString& /*name*/) {
 
 void ThemeManager::apply_font(const QString& family, int size_px) {
     font_families_ = build_font_chain(family);
-    font_size_px_ = (size_px > 0) ? size_px : 14;
+    font_size_px_ = (size_px > 0) ? size_px : 15;
     rebuild_and_apply();
 }
 
 void ThemeManager::apply_density(const QString& density) {
     if (density == "Compact")
         density_pad_ = 2;
-    else if (density == "Comfortable")
-        density_pad_ = 8;
+    else if (density == "Comfortable" || density.isEmpty())
+        density_pad_ = 6;
     else
-        density_pad_ = 4;
+        density_pad_ = 6;
 
     rebuild_and_apply();
 }
@@ -147,13 +147,13 @@ void ThemeManager::apply_density(const QString& density) {
 void ThemeManager::apply_typography_and_density(const QString& family, int size_px, const QString& density) {
     if (!family.isEmpty())
         font_families_ = build_font_chain(family);
-    font_size_px_ = (size_px > 0) ? size_px : 14;
+    font_size_px_ = (size_px > 0) ? size_px : 15;
     if (density == "Compact")
         density_pad_ = 2;
-    else if (density == "Comfortable")
-        density_pad_ = 8;
+    else if (density == "Comfortable" || density.isEmpty())
+        density_pad_ = 6;
     else
-        density_pad_ = 4;
+        density_pad_ = 6;
     rebuild_and_apply();
 }
 

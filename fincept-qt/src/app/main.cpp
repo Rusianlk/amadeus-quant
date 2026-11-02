@@ -275,6 +275,15 @@ int main(int argc, char* argv[]) {
     // Do it early so a crash in Qt's own startup still produces a dump.
     fincept::crash::install();
 
+    // Laptop / VM scale. The terminal UI is dense and uses pixel fonts.
+    // On a 1080p laptop or a Parallels VM (often 96 DPI on a retina host)
+    // it renders unreadably small. Scale the whole UI, not just the font,
+    // so layouts grow with the text. Skip if the user already set a factor.
+    if (qEnvironmentVariableIsEmpty("QT_SCALE_FACTOR") &&
+        qEnvironmentVariableIsEmpty("QT_SCREEN_SCALE_FACTORS")) {
+        qputenv("QT_SCALE_FACTOR", "1.25");
+    }
+
     // Required before QApplication when any dock panel contains an OpenGL widget
     // (Qt Charts, QOpenGLWidget) — prevents black rendering in floating windows.
     QApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
