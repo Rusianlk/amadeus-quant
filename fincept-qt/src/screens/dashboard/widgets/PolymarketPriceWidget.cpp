@@ -202,7 +202,7 @@ QDialog* PolymarketPriceWidget::make_config_dialog(QWidget* parent) {
     for (const auto& e : entries_)
         lines.append(e.asset_id + " | " + e.label);
     edit->setPlainText(lines.join("\n"));
-    edit->setFixedHeight(120);
+    edit->setMinimumHeight(120);
     form->addRow(tr("Markets"), edit);
 
     auto* buttons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, dlg);
@@ -239,9 +239,9 @@ void PolymarketPriceWidget::apply_styles() {
         return; // ctor runs this before the first build_rows()
     // A probability label with no "lvl" yet (still "—") keeps the tertiary colour.
     rows_host_->setStyleSheet(
-        QString("QLabel#pmPriceHint{color:%2;font-size:10px;background:transparent;padding:4px 0;}"
-                "QLabel#pmPriceLabel{color:%1;font-size:11px;font-weight:600;background:transparent;}"
-                "QLabel#pmPricePct{color:%2;font-size:11px;font-weight:700;background:transparent;}"
+        QString("QLabel#pmPriceHint{color:%2;font-size: 24px;background:transparent;padding:4px 0;}"
+                "QLabel#pmPriceLabel{color:%1;font-size: 24px;font-weight:600;background:transparent;}"
+                "QLabel#pmPricePct{color:%2;font-size: 24px;font-weight:700;background:transparent;}"
                 "QLabel#pmPricePct[lvl=\"hi\"]{color:%3;}"
                 "QLabel#pmPricePct[lvl=\"lo\"]{color:%4;}"
                 "QLabel#pmPricePct[lvl=\"mid\"]{color:%1;}")

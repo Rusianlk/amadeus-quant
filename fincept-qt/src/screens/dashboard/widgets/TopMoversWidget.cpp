@@ -31,7 +31,7 @@ QStringList top_movers_parse_symbols(const QString& text) {
 TopMoversWidget::TopMoversWidget(const QJsonObject& cfg, QWidget* parent) : BaseWidget(tr("TOP MOVERS"), parent) {
     // Tab toggle
     auto* tab_bar = new QWidget(this);
-    tab_bar->setFixedHeight(26);
+    tab_bar->setMinimumHeight(32);
     auto* tl = new QHBoxLayout(tab_bar);
     tl->setContentsMargins(4, 2, 4, 2);
     tl->setSpacing(0);

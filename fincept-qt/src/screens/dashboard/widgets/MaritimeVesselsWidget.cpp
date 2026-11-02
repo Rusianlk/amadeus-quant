@@ -51,7 +51,7 @@ MaritimeVesselsWidget::MaritimeVesselsWidget(const QJsonObject& cfg, QWidget* pa
     vl->addWidget(header_widget_);
 
     header_sep_ = new QFrame;
-    header_sep_->setFixedHeight(1);
+    header_sep_->setMinimumHeight(32);
     vl->addWidget(header_sep_);
 
     // Scrollable list
@@ -131,7 +131,7 @@ void MaritimeVesselsWidget::build_rows() {
         status_label_ = new QLabel(tr("No vessels configured — click gear to add IMOs"));
         status_label_->setAlignment(Qt::AlignCenter);
         status_label_->setStyleSheet(
-            QString("color:%1;font-size:10px;padding:16px;background:transparent;").arg(ui::colors::TEXT_TERTIARY()));
+            QString("color:%1;font-size: 24px;padding:16px;background:transparent;").arg(ui::colors::TEXT_TERTIARY()));
         list_layout_->addWidget(status_label_);
         list_layout_->addStretch();
         return;
@@ -150,24 +150,24 @@ void MaritimeVesselsWidget::build_rows() {
 
         r.name = new QLabel(QStringLiteral("IMO ") + imo);
         r.name->setToolTip(QStringLiteral("IMO ") + imo);
-        r.name->setStyleSheet(QString("color:%1;font-size:10px;font-weight:bold;background:transparent;")
+        r.name->setStyleSheet(QString("color:%1;font-size: 24px;font-weight:bold;background:transparent;")
                                   .arg(ui::colors::TEXT_PRIMARY()));
         rl->addWidget(r.name, 3);
 
         r.route = new QLabel(QStringLiteral("—"));
         r.route->setStyleSheet(
-            QString("color:%1;font-size:9px;background:transparent;").arg(ui::colors::TEXT_SECONDARY()));
+            QString("color:%1;font-size: 24px;background:transparent;").arg(ui::colors::TEXT_SECONDARY()));
         rl->addWidget(r.route, 4);
 
         r.speed = new QLabel(QStringLiteral("—"));
         r.speed->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
-        r.speed->setStyleSheet(QString("color:%1;font-size:10px;font-weight:bold;background:transparent;")
+        r.speed->setStyleSheet(QString("color:%1;font-size: 24px;font-weight:bold;background:transparent;")
                                    .arg(ui::colors::TEXT_PRIMARY()));
         rl->addWidget(r.speed, 1);
 
         r.progress = new QLabel(QStringLiteral("—"));
         r.progress->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
-        r.progress->setStyleSheet(QString("color:%1;font-size:9px;background:transparent;").arg(ui::colors::CYAN()));
+        r.progress->setStyleSheet(QString("color:%1;font-size: 24px;background:transparent;").arg(ui::colors::CYAN()));
         rl->addWidget(r.progress, 1);
 
         list_layout_->addWidget(row);
@@ -245,7 +245,7 @@ void MaritimeVesselsWidget::on_vessel(const QString& imo, const QVariant& v) {
     else if (pct < 25)
         pc = ui::colors::WARNING();
     it->progress->setStyleSheet(
-        QString("color:%1;font-size:9px;font-weight:bold;background:transparent;").arg(pc.name()));
+        QString("color:%1;font-size: 24px;font-weight:bold;background:transparent;").arg(pc.name()));
 
     set_loading(false);
 }
@@ -258,7 +258,7 @@ QDialog* MaritimeVesselsWidget::make_config_dialog(QWidget* parent) {
     auto* edit = new QPlainTextEdit(dlg);
     edit->setPlaceholderText(tr("One IMO per line (e.g. 9811000)"));
     edit->setPlainText(imos_.join('\n'));
-    edit->setFixedHeight(140);
+    edit->setMinimumHeight(140);
     form->addRow(tr("IMO numbers"), edit);
 
     auto* buttons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, dlg);
@@ -289,7 +289,7 @@ void MaritimeVesselsWidget::on_theme_changed() {
 void MaritimeVesselsWidget::apply_styles() {
     header_widget_->setStyleSheet(QString("background:%1;").arg(ui::colors::BG_RAISED()));
     for (auto* lbl : header_labels_)
-        lbl->setStyleSheet(QString("color:%1;font-size:9px;font-weight:bold;background:transparent;")
+        lbl->setStyleSheet(QString("color:%1;font-size: 24px;font-weight:bold;background:transparent;")
                                .arg(ui::colors::TEXT_TERTIARY()));
     header_sep_->setStyleSheet(QString("background:%1;").arg(ui::colors::BORDER_DIM()));
     scroll_area_->setStyleSheet(QString("QScrollArea{border:none;background:transparent;}"
@@ -299,7 +299,7 @@ void MaritimeVesselsWidget::apply_styles() {
                                     .arg(ui::colors::BORDER_MED()));
     if (status_label_)
         status_label_->setStyleSheet(
-            QString("color:%1;font-size:10px;padding:16px;background:transparent;").arg(ui::colors::TEXT_TERTIARY()));
+            QString("color:%1;font-size: 24px;padding:16px;background:transparent;").arg(ui::colors::TEXT_TERTIARY()));
 }
 
 void MaritimeVesselsWidget::retranslateUi() {

@@ -106,8 +106,8 @@ void WebScraperWidget::apply_styles() {
     if (!header)
         return;
     header->setStyleSheet(QString("QLabel#scraperFormatBadge{color:%1;background:%2;border-radius:0;"
-                                  "padding:2px 6px;font-size:10px;font-weight:700;}"
-                                  "QLabel#scraperStatus{color:%3;font-size:11px;background:transparent;}"
+                                  "padding:2px 6px;font-size: 24px;font-weight:700;}"
+                                  "QLabel#scraperStatus{color:%3;font-size: 24px;background:transparent;}"
                                   "QLabel#scraperStatus[error=\"true\"]{color:%4;}")
                               .arg(ui::colors::TEXT_ON_ACCENT(), ui::colors::AMBER(), ui::colors::TEXT_TERTIARY(),
                                    ui::colors::NEGATIVE()));
@@ -370,7 +370,7 @@ QDialog* WebScraperWidget::make_config_dialog(QWidget* parent) {
                                "capped at 10 MB and 30 s. If the page renders tables via JavaScript, use its "
                                "underlying API URL instead."));
     help->setWordWrap(true);
-    help->setStyleSheet(QString("color:%1;font-size:11px;").arg(ui::colors::TEXT_TERTIARY()));
+    help->setStyleSheet(QString("color:%1;font-size: 24px;").arg(ui::colors::TEXT_TERTIARY()));
     form->addRow(help);
 
     // Inline validation — an invalid URL used to be accepted and only failed
@@ -378,7 +378,7 @@ QDialog* WebScraperWidget::make_config_dialog(QWidget* parent) {
     auto* error_lbl = new QLabel(dlg);
     error_lbl->setWordWrap(true);
     error_lbl->setVisible(false);
-    error_lbl->setStyleSheet(QString("color:%1;font-size:11px;font-weight:600;").arg(ui::colors::NEGATIVE()));
+    error_lbl->setStyleSheet(QString("color:%1;font-size: 24px;font-weight:600;").arg(ui::colors::NEGATIVE()));
     form->addRow(error_lbl);
 
     auto* buttons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, dlg);

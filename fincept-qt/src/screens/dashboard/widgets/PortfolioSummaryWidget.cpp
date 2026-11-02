@@ -193,19 +193,19 @@ void PortfolioSummaryWidget::apply_styles() {
     summary_card_->setStyleSheet(
         QString("QWidget#psCard{background:%1;border-radius:2px;}"
                 "QWidget#psCard QLabel{border-radius:2px;background:transparent;}"
-                "QLabel#psMetricLbl{color:%2;font-size:9px;}"
-                "QLabel#psMetricVal{color:%3;font-size:13px;font-weight:bold;}"
+                "QLabel#psMetricLbl{color:%2;font-size: 24px;}"
+                "QLabel#psMetricVal{color:%3;font-size: 24px;font-weight:bold;}"
                 "QLabel#psMetricVal[tone=\"pos\"]{color:%4;}"
                 "QLabel#psMetricVal[tone=\"neg\"]{color:%5;}")
             .arg(ui::colors::BG_RAISED(), ui::colors::TEXT_TERTIARY(), ui::colors::TEXT_PRIMARY(),
                  ui::colors::POSITIVE(), ui::colors::NEGATIVE()));
     header_row_->setStyleSheet(
         QString("QWidget#psHeader{background:%1;}"
-                "QWidget#psHeader QLabel{color:%2;font-size:9px;font-weight:bold;background:transparent;}")
+                "QWidget#psHeader QLabel{color:%2;font-size: 24px;font-weight:bold;background:transparent;}")
             .arg(ui::colors::BG_RAISED(), ui::colors::TEXT_TERTIARY()));
     if (portfolio_name_lbl_)
         portfolio_name_lbl_->setStyleSheet(
-            QString("color: %1; font-size: 10px; font-weight: 600; background: transparent; padding: 0 2px;")
+            QString("color: %1; font-size: 24px; font-weight: 600; background: transparent; padding: 0 2px;")
                 .arg(ui::colors::TEXT_SECONDARY()));
     scroll_area_->setStyleSheet(
         QString("QScrollArea { border: none; background: transparent; }"
@@ -220,14 +220,14 @@ void PortfolioSummaryWidget::apply_styles() {
         list_widget_->setStyleSheet(QString("#psList{background:transparent;}"
                                             "#psList QWidget#psRow{background:transparent;}"
                                             "#psList QWidget#psRowAlt{background:%1;}"
-                                            "#psList QLabel{font-size:10px;background:transparent;}"
+                                            "#psList QLabel{font-size: 24px;background:transparent;}"
                                             "#psList QLabel#psSym{color:%2;}"
                                             "#psList QLabel#psShares{color:%3;}"
                                             "#psList QLabel#psNum{color:%2;}"
                                             "#psList QLabel#psPnl{color:%2;}"
                                             "#psList QLabel#psPnl[tone=\"pos\"]{color:%4;}"
                                             "#psList QLabel#psPnl[tone=\"neg\"]{color:%5;}"
-                                            "#psList QLabel#psEmpty{color:%6;font-size:11px;padding:20px;}")
+                                            "#psList QLabel#psEmpty{color:%6;font-size: 24px;padding:20px;}")
                                         .arg(ui::colors::BG_RAISED(), ui::colors::TEXT_PRIMARY(),
                                              ui::colors::TEXT_SECONDARY(), ui::colors::POSITIVE(),
                                              ui::colors::NEGATIVE(), ui::colors::TEXT_TERTIARY()));

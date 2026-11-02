@@ -166,7 +166,7 @@ void NotesWidget::refresh_data() {
         auto* err = new QLabel(tr("Failed to load notes: %1").arg(QString::fromStdString(result.error())));
         err->setAlignment(Qt::AlignCenter);
         err->setStyleSheet(
-            QString("color:%1;font-size:10px;background:transparent;padding:16px;").arg(ui::colors::NEGATIVE()));
+            QString("color:%1;font-size: 24px;background:transparent;padding:16px;").arg(ui::colors::NEGATIVE()));
         list_layout_->addWidget(err);
         list_layout_->addStretch();
         set_loading(false);
@@ -200,7 +200,7 @@ void NotesWidget::refresh_data() {
         auto* empty = new QLabel(msg);
         empty->setAlignment(Qt::AlignCenter);
         empty->setStyleSheet(
-            QString("color:%1;font-size:10px;background:transparent;padding:16px;").arg(ui::colors::TEXT_TERTIARY()));
+            QString("color:%1;font-size: 24px;background:transparent;padding:16px;").arg(ui::colors::TEXT_TERTIARY()));
         list_layout_->addWidget(empty);
         list_layout_->addStretch();
         set_loading(false);
@@ -224,7 +224,7 @@ void NotesWidget::refresh_data() {
 
         if (note.is_favorite) {
             auto* star = new QLabel(QStringLiteral("★"));
-            star->setStyleSheet(QString("color:%1;font-size:11px;background:transparent;").arg(ui::colors::AMBER()));
+            star->setStyleSheet(QString("color:%1;font-size: 24px;background:transparent;").arg(ui::colors::AMBER()));
             top->addWidget(star);
         }
 
@@ -236,7 +236,7 @@ void NotesWidget::refresh_data() {
         auto* title_lbl = new QLabel(title_text);
         title_lbl->setToolTip(note.title);
         title_lbl->setStyleSheet(
-            QString("color:%1;font-size:11px;font-weight:600;background:transparent;").arg(ui::colors::TEXT_PRIMARY()));
+            QString("color:%1;font-size: 24px;font-weight:600;background:transparent;").arg(ui::colors::TEXT_PRIMARY()));
         top->addWidget(title_lbl, 1);
 
         const QString sgly = sentiment_glyph(note.sentiment);
@@ -244,7 +244,7 @@ void NotesWidget::refresh_data() {
             auto* sent = new QLabel(sgly);
             sent->setToolTip(note.sentiment);
             sent->setStyleSheet(
-                QString("color:%1;font-size:10px;background:transparent;").arg(sentiment_color(note.sentiment)));
+                QString("color:%1;font-size: 24px;background:transparent;").arg(sentiment_color(note.sentiment)));
             top->addWidget(sent);
         }
         rl->addLayout(top);
@@ -258,14 +258,14 @@ void NotesWidget::refresh_data() {
             auto* prio = new QLabel(QStringLiteral("●"));
             prio->setToolTip(QStringLiteral("Priority: ") + note.priority);
             prio->setStyleSheet(
-                QString("color:%1;font-size:9px;background:transparent;").arg(priority_color(note.priority)));
+                QString("color:%1;font-size: 24px;background:transparent;").arg(priority_color(note.priority)));
             bot->addWidget(prio);
         }
 
         if (!note.category.isEmpty()) {
             auto* cat = new QLabel(note.category);
             cat->setStyleSheet(
-                QString("color:%1;font-size:9px;font-weight:600;background:transparent;").arg(ui::colors::CYAN()));
+                QString("color:%1;font-size: 24px;font-weight:600;background:transparent;").arg(ui::colors::CYAN()));
             bot->addWidget(cat);
         }
 
@@ -276,7 +276,7 @@ void NotesWidget::refresh_data() {
             auto* tlbl = new QLabel(tkr);
             tlbl->setToolTip(note.tickers);
             tlbl->setStyleSheet(
-                QString("color:%1;font-size:9px;background:transparent;").arg(ui::colors::TEXT_SECONDARY()));
+                QString("color:%1;font-size: 24px;background:transparent;").arg(ui::colors::TEXT_SECONDARY()));
             bot->addWidget(tlbl);
         }
 
@@ -285,7 +285,7 @@ void NotesWidget::refresh_data() {
         const QString age = format_relative(note.updated_at.isEmpty() ? note.created_at : note.updated_at);
         auto* age_lbl = new QLabel(age);
         age_lbl->setStyleSheet(
-            QString("color:%1;font-size:9px;background:transparent;").arg(ui::colors::TEXT_TERTIARY()));
+            QString("color:%1;font-size: 24px;background:transparent;").arg(ui::colors::TEXT_TERTIARY()));
         bot->addWidget(age_lbl);
 
         rl->addLayout(bot);

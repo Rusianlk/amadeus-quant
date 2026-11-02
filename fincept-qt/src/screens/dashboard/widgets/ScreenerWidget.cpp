@@ -103,23 +103,23 @@ ScreenerWidget::ScreenerWidget(QWidget* parent) : BaseWidget(tr("STOCK SCREENER"
 
 void ScreenerWidget::apply_styles() {
     filter_bar_->setStyleSheet(QString("background: %1;").arg(ui::colors::BG_RAISED()));
-    filter_lbl_->setStyleSheet(QString("color: %1; font-size: 9px; font-weight: bold; background: transparent;")
+    filter_lbl_->setStyleSheet(QString("color: %1; font-size: 24px; font-weight: bold; background: transparent;")
                                    .arg(ui::colors::TEXT_TERTIARY()));
     filter_combo_->setStyleSheet(
-        QString("QComboBox { background: %1; color: %2; border: 1px solid %3; font-size: 10px; padding: 2px 6px; }"
+        QString("QComboBox { background: %1; color: %2; border: 1px solid %3; font-size: 24px; padding: 2px 6px; }"
                 "QComboBox::drop-down { border: none; }"
                 "QComboBox QAbstractItemView { background: %1; color: %2; border: 1px solid %3; }")
             .arg(ui::colors::BG_BASE())
             .arg(ui::colors::TEXT_PRIMARY())
             .arg(ui::colors::BORDER_MED()));
     count_lbl_->setStyleSheet(
-        QString("color: %1; font-size: 9px; background: transparent;").arg(ui::colors::TEXT_TERTIARY()));
+        QString("color: %1; font-size: 24px; background: transparent;").arg(ui::colors::TEXT_TERTIARY()));
 
     // The header used to carry a selector-less sheet, which Qt also applies to its
     // labels (so they drew the bottom border too) — the label rule keeps that.
     header_->setStyleSheet(
         QString("QWidget#scHeader{background:%1;border-bottom:1px solid %2;}"
-                "QWidget#scHeader QLabel{border-bottom:1px solid %2;color:%3;font-size:9px;font-weight:bold;"
+                "QWidget#scHeader QLabel{border-bottom:1px solid %2;color:%3;font-size: 24px;font-weight:bold;"
                 "background:transparent;}")
             .arg(ui::colors::BG_RAISED(), ui::colors::BORDER_DIM(), ui::colors::TEXT_TERTIARY()));
 
@@ -140,14 +140,14 @@ void ScreenerWidget::apply_styles() {
             QString("#screenerList{background:transparent;}"
                     "#screenerList QWidget#scRow{background:transparent;}"
                     "#screenerList QWidget#scRowAlt{background:%1;}"
-                    "#screenerList QLabel{font-size:10px;background:transparent;}"
+                    "#screenerList QLabel{font-size: 24px;background:transparent;}"
                     "#screenerList QLabel#scSym{color:%2;font-weight:bold;}"
                     "#screenerList QLabel#scPrice{color:%3;}"
                     "#screenerList QLabel#scChg{color:%3;font-weight:bold;}"
                     "#screenerList QLabel#scChg[dir=\"pos\"]{color:%4;}"
                     "#screenerList QLabel#scChg[dir=\"neg\"]{color:%5;}"
                     "#screenerList QLabel#scVol{color:%6;}"
-                    "#screenerList QLabel#scEmpty{color:%7;font-size:11px;padding:20px;}")
+                    "#screenerList QLabel#scEmpty{color:%7;font-size: 24px;padding:20px;}")
                 .arg(ui::colors::BG_RAISED(), ui::colors::INFO(), ui::colors::TEXT_PRIMARY(), ui::colors::POSITIVE(),
                      ui::colors::NEGATIVE(), ui::colors::TEXT_SECONDARY(), ui::colors::TEXT_TERTIARY()));
     }

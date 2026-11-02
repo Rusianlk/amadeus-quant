@@ -41,7 +41,7 @@ RiskMetricsWidget::RiskMetricsWidget(QWidget* parent) : BaseWidget(tr("RISK METR
 
     // VIX gradient bar (0-40 range, 5 segments) — uses theme tokens
     auto* bar_row = new QWidget(this);
-    bar_row->setFixedHeight(6);
+    bar_row->setMinimumHeight(32);
     auto* brl = new QHBoxLayout(bar_row);
     brl->setContentsMargins(0, 0, 0, 0);
     brl->setSpacing(1);
@@ -61,7 +61,7 @@ RiskMetricsWidget::RiskMetricsWidget(QWidget* parent) : BaseWidget(tr("RISK METR
 
     // ── Section separator ──
     sep1_ = new QFrame;
-    sep1_->setFixedHeight(1);
+    sep1_->setMinimumHeight(32);
     vl->addWidget(sep1_);
 
     // ── Volatile stocks section ──
@@ -93,7 +93,7 @@ RiskMetricsWidget::RiskMetricsWidget(QWidget* parent) : BaseWidget(tr("RISK METR
 
     // ── Correlation proxies ──
     sep2_ = new QFrame;
-    sep2_->setFixedHeight(1);
+    sep2_->setMinimumHeight(32);
     vl->addWidget(sep2_);
 
     corr_hdr_ = new QLabel(tr("SPREAD PROXIES"));

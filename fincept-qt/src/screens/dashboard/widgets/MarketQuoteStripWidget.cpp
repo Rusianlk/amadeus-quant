@@ -214,9 +214,9 @@ void MarketQuoteStripWidget::apply_styles() {
         return; // ctor runs this before the first build_rows()
     // A change label with no "dir" yet (still "—") keeps the tertiary colour.
     rows_host_->setStyleSheet(
-        QString("QLabel#quoteStripSymbol{color:%1;font-size:11px;font-weight:700;background:transparent;}"
-                "QLabel#quoteStripPrice{color:%1;font-size:11px;font-weight:600;background:transparent;}"
-                "QLabel#quoteStripChange{color:%2;font-size:11px;font-weight:600;background:transparent;}"
+        QString("QLabel#quoteStripSymbol{color:%1;font-size: 24px;font-weight:700;background:transparent;}"
+                "QLabel#quoteStripPrice{color:%1;font-size: 24px;font-weight:600;background:transparent;}"
+                "QLabel#quoteStripChange{color:%2;font-size: 24px;font-weight:600;background:transparent;}"
                 "QLabel#quoteStripChange[dir=\"up\"]{color:%3;}"
                 "QLabel#quoteStripChange[dir=\"down\"]{color:%4;}")
             .arg(ui::colors::TEXT_PRIMARY(), ui::colors::TEXT_TERTIARY(), ui::colors::POSITIVE(),

@@ -81,7 +81,7 @@ MarginUsageWidget::MarginUsageWidget(const QJsonObject& cfg, QWidget* parent) : 
     usage_bar_->setRange(0, 100);
     usage_bar_->setValue(0);
     usage_bar_->setTextVisible(false);
-    usage_bar_->setFixedHeight(6);
+    usage_bar_->setMinimumHeight(32);
     vl->addWidget(usage_bar_);
 
     vl->addStretch(1);
@@ -256,12 +256,12 @@ void MarginUsageWidget::on_theme_changed() {
 
 void MarginUsageWidget::apply_styles() {
     header_hint_->setStyleSheet(
-        QString("color:%1;font-size:9px;background:transparent;padding:2px 0;").arg(ui::colors::TEXT_TERTIARY()));
+        QString("color:%1;font-size: 24px;background:transparent;padding:2px 0;").arg(ui::colors::TEXT_TERTIARY()));
 
     const QString row_label_css =
-        QString("color:%1;font-size:10px;background:transparent;").arg(ui::colors::TEXT_TERTIARY());
+        QString("color:%1;font-size: 24px;background:transparent;").arg(ui::colors::TEXT_TERTIARY());
     const QString row_value_css =
-        QString("color:%1;font-size:12px;font-weight:600;background:transparent;").arg(ui::colors::TEXT_PRIMARY());
+        QString("color:%1;font-size: 24px;font-weight:600;background:transparent;").arg(ui::colors::TEXT_PRIMARY());
     for (QLabel* l : {available_val_, used_val_, total_val_, collateral_val_}) {
         if (l)
             l->setStyleSheet(row_value_css);
@@ -273,7 +273,7 @@ void MarginUsageWidget::apply_styles() {
 
     if (usage_pct_label_)
         usage_pct_label_->setStyleSheet(
-            QString("color:%1;font-size:10px;font-weight:600;background:transparent;padding-top:4px;")
+            QString("color:%1;font-size: 24px;font-weight:600;background:transparent;padding-top:4px;")
                 .arg(ui::colors::TEXT_SECONDARY()));
 
     if (usage_bar_)

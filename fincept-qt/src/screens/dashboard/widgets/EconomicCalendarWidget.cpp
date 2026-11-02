@@ -60,7 +60,7 @@ EconomicCalendarWidget::EconomicCalendarWidget(QWidget* parent)
     vl->addWidget(header_widget_);
 
     header_sep_ = new QFrame;
-    header_sep_->setFixedHeight(1);
+    header_sep_->setMinimumHeight(32);
     vl->addWidget(header_sep_);
 
     // Scrollable list

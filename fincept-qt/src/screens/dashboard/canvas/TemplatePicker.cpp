@@ -64,7 +64,7 @@ TemplatePicker::TemplatePicker(QWidget* parent) : QDialog(parent) {
     setFixedSize(640, 400);
     setStyleSheet(QString("QDialog { background: %1; }"
                           "QPushButton { background: %2; border: 1px solid %3; color: %4; "
-                          "  padding: 4px 12px; font-size: 10px; }"
+                          "  padding: 4px 12px; font-size: 24px; }"
                           "QPushButton:hover { border-color: %5; color: %5; }")
                       .arg(ui::colors::BG_BASE(), ui::colors::BG_SURFACE(), ui::colors::BORDER_MED(),
                            ui::colors::TEXT_PRIMARY(), ui::colors::AMBER()));
@@ -75,11 +75,11 @@ TemplatePicker::TemplatePicker(QWidget* parent) : QDialog(parent) {
 
     title_lbl_ = new QLabel(tr("CHOOSE TEMPLATE"));
     title_lbl_->setStyleSheet(
-        QString("color: %1; font-size: 11px; font-weight: bold; letter-spacing: 1px;").arg(ui::colors::AMBER()));
+        QString("color: %1; font-size: 24px; font-weight: bold; letter-spacing: 1px;").arg(ui::colors::AMBER()));
     vl->addWidget(title_lbl_);
 
     sub_lbl_ = new QLabel(tr("Select a template to reset your dashboard. Current layout will be replaced."));
-    sub_lbl_->setStyleSheet(QString("color: %1; font-size: 9px;").arg(ui::colors::TEXT_TERTIARY()));
+    sub_lbl_->setStyleSheet(QString("color: %1; font-size: 24px;").arg(ui::colors::TEXT_TERTIARY()));
     sub_lbl_->setWordWrap(true);
     vl->addWidget(sub_lbl_);
 
@@ -104,18 +104,18 @@ TemplatePicker::TemplatePicker(QWidget* parent) : QDialog(parent) {
         cl->addWidget(preview, 0, Qt::AlignHCenter);
 
         auto* name_lbl = new QLabel(template_display_name_tr(tmpl));
-        name_lbl->setStyleSheet(QString("color: %1; font-size: 10px; font-weight: bold; background: transparent;")
+        name_lbl->setStyleSheet(QString("color: %1; font-size: 24px; font-weight: bold; background: transparent;")
                                     .arg(ui::colors::TEXT_PRIMARY()));
         cl->addWidget(name_lbl);
 
         auto* desc_lbl = new QLabel(template_description_tr(tmpl));
         desc_lbl->setStyleSheet(
-            QString("color: %1; font-size: 9px; background: transparent;").arg(ui::colors::TEXT_SECONDARY()));
+            QString("color: %1; font-size: 24px; background: transparent;").arg(ui::colors::TEXT_SECONDARY()));
         desc_lbl->setWordWrap(true);
         cl->addWidget(desc_lbl);
 
         auto* apply_btn = new QPushButton(tr("APPLY"));
-        apply_btn->setFixedHeight(24);
+        apply_btn->setMinimumHeight(32);
         const QString tid = tmpl.id;
         connect(apply_btn, &QPushButton::clicked, this, [this, tid]() {
             emit template_selected(tid);
@@ -136,7 +136,7 @@ TemplatePicker::TemplatePicker(QWidget* parent) : QDialog(parent) {
     auto* bot = new QHBoxLayout;
     bot->addStretch();
     cancel_btn_ = new QPushButton(tr("CANCEL"));
-    cancel_btn_->setFixedHeight(28);
+    cancel_btn_->setMinimumHeight(32);
     connect(cancel_btn_, &QPushButton::clicked, this, &QDialog::reject);
     bot->addWidget(cancel_btn_);
     vl->addLayout(bot);

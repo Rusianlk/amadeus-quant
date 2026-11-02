@@ -46,7 +46,7 @@ MarketSentimentWidget::MarketSentimentWidget(QWidget* parent) : BaseWidget(tr("M
 
     // ── Sentiment bar ──
     auto* bar_container = new QWidget(this);
-    bar_container->setFixedHeight(8);
+    bar_container->setMinimumHeight(32);
     auto* bar_layout = new QHBoxLayout(bar_container);
     bar_layout->setContentsMargins(0, 0, 0, 0);
     bar_layout->setSpacing(1);
@@ -82,7 +82,7 @@ MarketSentimentWidget::MarketSentimentWidget(QWidget* parent) : BaseWidget(tr("M
 
     // ── VIX and Breadth ──
     separator_ = new QFrame;
-    separator_->setFixedHeight(1);
+    separator_->setMinimumHeight(32);
     vl->addWidget(separator_);
 
     auto* stats = new QWidget(this);

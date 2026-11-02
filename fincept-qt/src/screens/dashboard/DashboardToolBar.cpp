@@ -26,7 +26,7 @@ void apply_solid_background(QWidget* widget, const QColor& color) {
 namespace fincept::screens {
 
 DashboardToolBar::DashboardToolBar(QWidget* parent) : QWidget(parent) {
-    setFixedHeight(26);
+    setMinimumHeight(36);
     setObjectName("dashToolBar");
     apply_solid_background(this, QColor(ui::colors::BG_SURFACE()));
 
@@ -94,14 +94,14 @@ DashboardToolBar::DashboardToolBar(QWidget* parent) : QWidget(parent) {
     rl->setSpacing(4);
 
     compact_btn_ = new QPushButton(tr("COMPACT"));
-    compact_btn_->setFixedHeight(20);
+    compact_btn_->setMinimumHeight(36);
     compact_btn_->setObjectName("dtBtn");
     compact_btn_->setToolTip(tr("Toggle compact row height"));
     connect(compact_btn_, &QPushButton::clicked, this, &DashboardToolBar::toggle_compact_clicked);
     rl->addWidget(compact_btn_);
 
     pulse_btn_ = new QPushButton(tr("PULSE"));
-    pulse_btn_->setFixedHeight(20);
+    pulse_btn_->setMinimumHeight(36);
     pulse_btn_->setObjectName("dtBtn");
     pulse_btn_->setToolTip(tr("Show / hide the Market Pulse panel (Ctrl+P)"));
     connect(pulse_btn_, &QPushButton::clicked, this, &DashboardToolBar::toggle_pulse_clicked);
@@ -110,28 +110,28 @@ DashboardToolBar::DashboardToolBar(QWidget* parent) : QWidget(parent) {
     make_sep(rl);
 
     refresh_btn_ = new QPushButton(tr("REFRESH"));
-    refresh_btn_->setFixedHeight(20);
+    refresh_btn_->setMinimumHeight(36);
     refresh_btn_->setObjectName("dtBtn");
     refresh_btn_->setToolTip(tr("Force-refresh all live data on the dashboard (F5)"));
     connect(refresh_btn_, &QPushButton::clicked, this, &DashboardToolBar::refresh_clicked);
     rl->addWidget(refresh_btn_);
 
     add_btn_ = new QPushButton(tr("+ ADD"));
-    add_btn_->setFixedHeight(20);
+    add_btn_->setMinimumHeight(36);
     add_btn_->setObjectName("dtAddBtn");
     add_btn_->setToolTip(tr("Add a widget to the dashboard (Ctrl+N)"));
     connect(add_btn_, &QPushButton::clicked, this, &DashboardToolBar::add_widget_clicked);
     rl->addWidget(add_btn_);
 
     save_btn_ = new QPushButton(tr("SAVE"));
-    save_btn_->setFixedHeight(20);
+    save_btn_->setMinimumHeight(36);
     save_btn_->setObjectName("dtBtn");
     save_btn_->setToolTip(tr("Save the current widget layout (Ctrl+S)"));
     connect(save_btn_, &QPushButton::clicked, this, &DashboardToolBar::save_layout_clicked);
     rl->addWidget(save_btn_);
 
     reset_btn_ = new QPushButton(tr("RESET"));
-    reset_btn_->setFixedHeight(20);
+    reset_btn_->setMinimumHeight(36);
     reset_btn_->setObjectName("dtResetBtn");
     reset_btn_->setToolTip(tr("Replace the current layout with a template"));
     connect(reset_btn_, &QPushButton::clicked, this, &DashboardToolBar::reset_layout_clicked);

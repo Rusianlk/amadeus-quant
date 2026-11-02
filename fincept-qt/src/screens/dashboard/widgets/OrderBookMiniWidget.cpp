@@ -212,7 +212,7 @@ void OrderBookMiniWidget::populate(const QVector<trading::BrokerOrderInfo>& rows
             cancel_btn = new QPushButton("×", table_);
             cancel_btn->setProperty("obCancel", true);
             cancel_btn->setCursor(Qt::PointingHandCursor);
-            cancel_btn->setFixedHeight(18);
+            cancel_btn->setMinimumHeight(32);
             // The row's order id is read at click time — the button is reused.
             connect(cancel_btn, &QPushButton::clicked, this,
                     [this, cancel_btn]() { cancel_order(cancel_btn->property("order_id").toString()); });
@@ -283,14 +283,14 @@ void OrderBookMiniWidget::on_theme_changed() {
 
 void OrderBookMiniWidget::apply_styles() {
     header_hint_->setStyleSheet(
-        QString("color:%1;font-size:9px;background:transparent;padding:2px 0;").arg(ui::colors::TEXT_TERTIARY()));
+        QString("color:%1;font-size: 24px;background:transparent;padding:2px 0;").arg(ui::colors::TEXT_TERTIARY()));
     table_->setStyleSheet(
-        QString("QTableWidget{background:transparent;color:%1;gridline-color:%2;font-size:10px;border:none;}"
+        QString("QTableWidget{background:transparent;color:%1;gridline-color:%2;font-size: 24px;border:none;}"
                 "QHeaderView::section{background:%3;color:%4;border:none;border-bottom:1px solid %2;"
-                "padding:2px 4px;font-size:9px;font-weight:bold;}"
+                "padding:2px 4px;font-size: 24px;font-weight:bold;}"
                 "QTableWidget::item{padding:2px 4px;}"
                 "QPushButton[obCancel=\"true\"]{color:%4;background:transparent;border:1px solid %2;"
-                "border-radius:2px;font-size:11px;font-weight:bold;}"
+                "border-radius:2px;font-size: 24px;font-weight:bold;}"
                 "QPushButton[obCancel=\"true\"]:hover{color:%5;border-color:%5;}")
             .arg(ui::colors::TEXT_PRIMARY(), ui::colors::BORDER_DIM(), ui::colors::BG_RAISED(),
                  ui::colors::TEXT_TERTIARY(), ui::colors::NEGATIVE()));

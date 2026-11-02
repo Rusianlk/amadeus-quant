@@ -205,24 +205,24 @@ void TodayPnLWidget::populate(const QVector<trading::BrokerPosition>& rows) {
     };
     total_pnl_label_->setText(rows.isEmpty() ? QStringLiteral("—") : fmt_pnl(total_pnl, inr));
     set_css_cached(total_pnl_label_,
-                   QString("color:%1;font-size:24px;font-weight:700;background:transparent;padding:4px 0;")
+                   QString("color:%1;font-size: 24px;font-weight:700;background:transparent;padding:4px 0;")
                        .arg(rows.isEmpty() ? ui::colors::TEXT_TERTIARY() : tone(total_pnl)));
 
     if (day_unreported) {
         day_pnl_value_->setText(tr("n/a"));
         day_pnl_value_->setToolTip(tr("This broker's positions feed does not report day (mark-to-market) P&L."));
-        set_css_cached(day_pnl_value_, QString("color:%1;font-size:12px;font-weight:600;background:transparent;")
+        set_css_cached(day_pnl_value_, QString("color:%1;font-size: 24px;font-weight:600;background:transparent;")
                                            .arg(ui::colors::TEXT_TERTIARY()));
     } else {
         day_pnl_value_->setText(fmt_pnl(day_pnl, inr));
         day_pnl_value_->setToolTip(QString());
-        set_css_cached(day_pnl_value_, QString("color:%1;font-size:12px;font-weight:600;background:transparent;")
+        set_css_cached(day_pnl_value_, QString("color:%1;font-size: 24px;font-weight:600;background:transparent;")
                                            .arg(tone(day_pnl)));
     }
 
     realized_pnl_value_->setText(fmt_pnl(realized, inr));
     set_css_cached(realized_pnl_value_,
-                   QString("color:%1;font-size:12px;font-weight:600;background:transparent;").arg(tone(realized)));
+                   QString("color:%1;font-size: 24px;font-weight:600;background:transparent;").arg(tone(realized)));
 
     positions_value_->setText(QString::number(open_positions));
 
@@ -267,10 +267,10 @@ void TodayPnLWidget::on_theme_changed() {
 
 void TodayPnLWidget::apply_styles() {
     header_hint_->setStyleSheet(
-        QString("color:%1;font-size:9px;background:transparent;padding:2px 0;").arg(ui::colors::TEXT_TERTIARY()));
+        QString("color:%1;font-size: 24px;background:transparent;padding:2px 0;").arg(ui::colors::TEXT_TERTIARY()));
 
     const QString row_label_css =
-        QString("color:%1;font-size:10px;background:transparent;").arg(ui::colors::TEXT_TERTIARY());
+        QString("color:%1;font-size: 24px;background:transparent;").arg(ui::colors::TEXT_TERTIARY());
     if (hero_caption_)
         hero_caption_->setStyleSheet(row_label_css + "letter-spacing:0.5px;");
     reset_css_cache(total_pnl_label_);
@@ -284,7 +284,7 @@ void TodayPnLWidget::apply_styles() {
         positions_label_->setStyleSheet(row_label_css);
     if (positions_value_)
         positions_value_->setStyleSheet(
-            QString("color:%1;font-size:12px;font-weight:600;background:transparent;").arg(ui::colors::TEXT_PRIMARY()));
+            QString("color:%1;font-size: 24px;font-weight:600;background:transparent;").arg(ui::colors::TEXT_PRIMARY()));
 }
 
 void TodayPnLWidget::retranslateUi() {

@@ -353,7 +353,7 @@ void MarketPulsePanel::flush_render() {
 
 QWidget* MarketPulsePanel::build_header() {
     header_bar_ = new QWidget(this);
-    header_bar_->setFixedHeight(30);
+    header_bar_->setMinimumHeight(32);
     // Styling applied by refresh_theme()
 
     auto* hl = new QHBoxLayout(header_bar_);
@@ -440,7 +440,7 @@ QWidget* MarketPulsePanel::build_fear_greed_section() {
 
     // Gradient bar (red→green, themed)
     fg_gradient_bar_ = new QFrame;
-    fg_gradient_bar_->setFixedHeight(6);
+    fg_gradient_bar_->setMinimumHeight(32);
     vl->addWidget(fg_gradient_bar_);
 
     // Score row
@@ -509,7 +509,7 @@ QWidget* MarketPulsePanel::build_breadth_section() {
         rl->addWidget(top);
 
         auto* bar_container = new QWidget(this);
-        bar_container->setFixedHeight(4);
+        bar_container->setMinimumHeight(32);
         auto* bar_layout = new QHBoxLayout(bar_container);
         bar_layout->setContentsMargins(0, 0, 0, 0);
         bar_layout->setSpacing(0);

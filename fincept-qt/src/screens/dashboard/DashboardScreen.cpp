@@ -217,14 +217,14 @@ void DashboardScreen::refresh_theme() {
     // the Enterprise strip without per-widget sheets.
     setStyleSheet(QString("*{background:%1;}"
                           "QFrame#dashEntStrip{background:%2;border:none;border-bottom:1px solid %3;}"
-                          "QLabel#dashEntStripHead{background:transparent;color:%4;font-size:11px;font-weight:700;"
+                          "QLabel#dashEntStripHead{background:transparent;color:%4;font-size: 24px;font-weight:700;"
                           "  letter-spacing:1px;}"
-                          "QLabel#dashEntStripText{background:transparent;color:%5;font-size:12px;}"
+                          "QLabel#dashEntStripText{background:transparent;color:%5;font-size: 24px;}"
                           "QPushButton#dashEntStripCta{background:transparent;color:%4;border:1px solid %6;"
-                          "  padding:2px 10px;font-size:11px;font-weight:700;letter-spacing:0.5px;}"
+                          "  padding:2px 10px;font-size: 24px;font-weight:700;letter-spacing:0.5px;}"
                           "QPushButton#dashEntStripCta:hover{color:%7;border-color:%4;}"
                           "QPushButton#dashEntStripClose{background:transparent;color:%8;border:none;padding:0 6px;"
-                          "  font-size:14px;}"
+                          "  font-size: 24px;}"
                           "QPushButton#dashEntStripClose:hover{color:%7;}")
                       .arg(ui::colors::BG_BASE(), ui::colors::BG_SURFACE(), ui::colors::BORDER_DIM(),
                            ui::colors::AMBER(), ui::colors::TEXT_SECONDARY(), ui::colors::AMBER_DIM(),

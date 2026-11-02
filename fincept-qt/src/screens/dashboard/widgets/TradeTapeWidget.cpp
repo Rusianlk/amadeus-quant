@@ -236,9 +236,9 @@ void TradeTapeWidget::on_theme_changed() {
 
 void TradeTapeWidget::apply_styles() {
     table_->setStyleSheet(
-        QString("QTableWidget{background:transparent;color:%1;gridline-color:%2;font-size:10px;border:none;}"
+        QString("QTableWidget{background:transparent;color:%1;gridline-color:%2;font-size: 24px;border:none;}"
                 "QHeaderView::section{background:%3;color:%4;border:none;border-bottom:1px solid %2;"
-                "padding:2px 4px;font-size:9px;font-weight:bold;}"
+                "padding:2px 4px;font-size: 24px;font-weight:bold;}"
                 "QTableWidget::item{padding:2px 4px;}")
             .arg(ui::colors::TEXT_PRIMARY(), ui::colors::BORDER_DIM(), ui::colors::BG_RAISED(),
                  ui::colors::TEXT_TERTIARY()));

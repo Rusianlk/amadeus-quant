@@ -245,8 +245,8 @@ void SparklineStripWidget::apply_styles() {
     if (QWidget* host = content_layout() ? content_layout()->parentWidget() : nullptr)
         host->setStyleSheet(
             QString("*{background:transparent;}"  // what BaseWidget set on this host
-                    "QLabel#sparkSym{color:%1;font-size:11px;font-weight:700;background:transparent;}"
-                    "QLabel#sparkLast{color:%1;font-size:11px;font-weight:600;background:transparent;}")
+                    "QLabel#sparkSym{color:%1;font-size: 24px;font-weight:700;background:transparent;}"
+                    "QLabel#sparkLast{color:%1;font-size: 24px;font-weight:600;background:transparent;}")
                 .arg(ui::colors::TEXT_PRIMARY()));
     for (auto it = rows_.begin(); it != rows_.end(); ++it) {
         if (it->spark)

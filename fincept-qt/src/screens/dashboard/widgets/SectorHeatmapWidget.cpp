@@ -47,8 +47,8 @@ void SectorHeatmapWidget::apply_styles() {
     // Only the data-driven bits (tile tint, +/- colour) are still set
     // per-widget, and only when they actually change.
     grid_container_->setStyleSheet(
-        QString("#sectorHeatGrid QLabel#sectorName{color:%1;font-size:9px;font-weight:bold;background:transparent;}"
-                "#sectorHeatGrid QLabel#sectorChg{font-size:11px;font-weight:bold;background:transparent;}")
+        QString("#sectorHeatGrid QLabel#sectorName{color:%1;font-size: 24px;font-weight:bold;background:transparent;}"
+                "#sectorHeatGrid QLabel#sectorChg{font-size: 24px;font-weight:bold;background:transparent;}")
             .arg(ui::colors::TEXT_PRIMARY()));
     // Force the data-driven colours to be re-applied against the new tokens.
     for (auto& c : cells_) {
@@ -199,7 +199,7 @@ void SectorHeatmapWidget::populate(const QVector<services::QuoteData>& quotes) {
         const int sign = !have ? 2 : q.change_pct > 0 ? 1 : q.change_pct < 0 ? -1 : 3; // 2 = none, 3 = flat
         if (sign != c.last_sign) {
             c.last_sign = sign;
-            c.chg->setStyleSheet(QString("color: %1; font-size: 11px; font-weight: bold; background: transparent;")
+            c.chg->setStyleSheet(QString("color: %1; font-size: 24px; font-weight: bold; background: transparent;")
                                      .arg(sign == 1    ? ui::colors::POSITIVE()
                                           : sign == -1 ? ui::colors::NEGATIVE()
                                                        : ui::colors::TEXT_TERTIARY()));

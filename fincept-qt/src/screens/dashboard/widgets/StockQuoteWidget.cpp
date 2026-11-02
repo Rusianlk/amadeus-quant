@@ -58,7 +58,7 @@ StockQuoteWidget::StockQuoteWidget(const QString& symbol, QWidget* parent)
 
     // ── Separator ──
     sep_ = new QFrame;
-    sep_->setFixedHeight(1);
+    sep_->setMinimumHeight(32);
     vl->addWidget(sep_);
 
     // ── Stats grid ──
@@ -148,20 +148,20 @@ void StockQuoteWidget::apply_styles() {
     reset_css_cache(change_label_);
     price_label_->setStyleSheet(QString("color: %1; font-size: 28px; font-weight: bold; background: transparent;")
                                     .arg(ui::colors::TEXT_PRIMARY()));
-    arrow_label_->setStyleSheet("font-size: 12px; background: transparent;");
-    change_label_->setStyleSheet(QString("color: %1; font-size: 11px; font-weight: bold; background: transparent;")
+    arrow_label_->setStyleSheet("font-size: 24px; background: transparent;");
+    change_label_->setStyleSheet(QString("color: %1; font-size: 24px; font-weight: bold; background: transparent;")
                                      .arg(ui::colors::TEXT_SECONDARY()));
     ticker_label_->setStyleSheet(
-        QString("color: %1; font-size: 14px; font-weight: bold; background: transparent;").arg(ui::colors::AMBER()));
+        QString("color: %1; font-size: 24px; font-weight: bold; background: transparent;").arg(ui::colors::AMBER()));
     sep_->setStyleSheet(QString("background: %1;").arg(ui::colors::BORDER_DIM()));
 
     for (auto* cell : stat_cells_)
         cell->setStyleSheet(QString("background: %1; border-radius: 2px;").arg(ui::colors::BG_RAISED()));
     for (auto* lbl : stat_labels_)
         lbl->setStyleSheet(
-            QString("color: %1; font-size: 9px; background: transparent;").arg(ui::colors::TEXT_TERTIARY()));
+            QString("color: %1; font-size: 24px; background: transparent;").arg(ui::colors::TEXT_TERTIARY()));
     for (auto* val : stat_values_)
-        val->setStyleSheet(QString("color: %1; font-size: 11px; font-weight: bold; background: transparent;")
+        val->setStyleSheet(QString("color: %1; font-size: 24px; font-weight: bold; background: transparent;")
                                .arg(ui::colors::TEXT_PRIMARY()));
 }
 
@@ -242,9 +242,9 @@ void StockQuoteWidget::populate(const services::QuoteData& q) {
                                                   dash_fmt::signed_pct(q.change_pct)));
     // Colours only change when the sign does — set_css_cached skips the CSS
     // re-parse on every other tick.
-    set_css_cached(arrow_label_, QString("color: %1; font-size: 12px; background: transparent;").arg(color));
+    set_css_cached(arrow_label_, QString("color: %1; font-size: 24px; background: transparent;").arg(color));
     set_css_cached(change_label_,
-                   QString("color: %1; font-size: 11px; font-weight: bold; background: transparent;").arg(color));
+                   QString("color: %1; font-size: 24px; font-weight: bold; background: transparent;").arg(color));
     set_css_cached(price_label_,
                    QString("color: %1; font-size: 28px; font-weight: bold; background: transparent;").arg(color));
 

@@ -226,10 +226,10 @@ void CryptoTickerWidget::apply_styles() {
         return; // ctor runs this before the first build_rows()
     // A change label with no "dir" yet (still "—") keeps the tertiary colour.
     rows_host_->setStyleSheet(
-        QString("QLabel#cryptoTickerHdr{color:%1;font-size:9px;background:transparent;padding:2px 0;}"
-                "QLabel#cryptoTickerSym{color:%2;font-size:11px;font-weight:700;background:transparent;}"
-                "QLabel#cryptoTickerPrice{color:%2;font-size:11px;font-weight:600;background:transparent;}"
-                "QLabel#cryptoTickerChg{color:%1;font-size:11px;font-weight:600;background:transparent;}"
+        QString("QLabel#cryptoTickerHdr{color:%1;font-size: 24px;background:transparent;padding:2px 0;}"
+                "QLabel#cryptoTickerSym{color:%2;font-size: 24px;font-weight:700;background:transparent;}"
+                "QLabel#cryptoTickerPrice{color:%2;font-size: 24px;font-weight:600;background:transparent;}"
+                "QLabel#cryptoTickerChg{color:%1;font-size: 24px;font-weight:600;background:transparent;}"
                 "QLabel#cryptoTickerChg[dir=\"up\"]{color:%3;}"
                 "QLabel#cryptoTickerChg[dir=\"down\"]{color:%4;}")
             .arg(ui::colors::TEXT_TERTIARY(), ui::colors::TEXT_PRIMARY(), ui::colors::POSITIVE(),

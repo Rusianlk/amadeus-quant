@@ -384,14 +384,14 @@ void BrokerHoldingsWidget::on_theme_changed() {
 
 void BrokerHoldingsWidget::apply_styles() {
     header_hint_->setStyleSheet(
-        QString("color:%1;font-size:9px;background:transparent;padding:2px 0;").arg(ui::colors::TEXT_TERTIARY()));
+        QString("color:%1;font-size: 24px;background:transparent;padding:2px 0;").arg(ui::colors::TEXT_TERTIARY()));
     table_->setStyleSheet(
-        QString("QTableWidget{background:transparent;color:%1;gridline-color:%2;font-size:10px;border:none;}"
+        QString("QTableWidget{background:transparent;color:%1;gridline-color:%2;font-size: 24px;border:none;}"
                 "QHeaderView::section{background:%3;color:%4;border:none;border-bottom:1px solid %2;"
-                "padding:2px 4px;font-size:9px;font-weight:bold;}"
+                "padding:2px 4px;font-size: 24px;font-weight:bold;}"
                 "QTableWidget::item{padding:2px 4px;}"
                 "QPushButton[holdingsExit=\"true\"]{color:%5;background:transparent;border:1px solid %5;"
-                "border-radius:2px;padding:0 6px;font-size:9px;font-weight:bold;}"
+                "border-radius:2px;padding:0 6px;font-size: 24px;font-weight:bold;}"
                 "QPushButton[holdingsExit=\"true\"]:hover{color:%6;background:%5;}"
                 "QPushButton[holdingsExit=\"true\"]:disabled{color:%2;border-color:%2;}")
             .arg(ui::colors::TEXT_PRIMARY(), ui::colors::BORDER_DIM(), ui::colors::BG_RAISED(),
@@ -400,7 +400,7 @@ void BrokerHoldingsWidget::apply_styles() {
     if (square_off_all_btn_)
         square_off_all_btn_->setStyleSheet(
             QString("QPushButton{color:%1;background:transparent;border:1px solid %1;border-radius:2px;"
-                    "padding:2px 8px;font-size:9px;font-weight:bold;}"
+                    "padding:2px 8px;font-size: 24px;font-weight:bold;}"
                     "QPushButton:hover{color:%2;background:%1;}"
                     "QPushButton:disabled{color:%3;border-color:%3;}")
                 .arg(ui::colors::NEGATIVE(), ui::colors::BG_BASE(), ui::colors::BORDER_DIM()));

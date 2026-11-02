@@ -82,9 +82,9 @@ void PerformanceWidget::apply_styles() {
     rows_host_->setStyleSheet(
         QString("QWidget#perfRow{border-bottom:1px solid %1;}"
                 "QWidget#perfRow QLabel{border-bottom:1px solid %1;}"
-                "QLabel#perfMetric{color:%2;font-size:11px;background:transparent;}"
-                "QLabel#perfPeriod{color:%3;font-size:9px;background:transparent;}"
-                "QLabel#perfValue{color:%4;font-size:11px;font-weight:bold;background:transparent;}"
+                "QLabel#perfMetric{color:%2;font-size: 24px;background:transparent;}"
+                "QLabel#perfPeriod{color:%3;font-size: 24px;background:transparent;}"
+                "QLabel#perfValue{color:%4;font-size: 24px;font-weight:bold;background:transparent;}"
                 "QLabel#perfValue[tone=\"pos\"]{color:%5;}"
                 "QLabel#perfValue[tone=\"neg\"]{color:%6;}"
                 "QLabel#perfValue[tone=\"warn\"]{color:%7;}")

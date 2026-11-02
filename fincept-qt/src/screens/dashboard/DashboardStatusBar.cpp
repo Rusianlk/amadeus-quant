@@ -59,7 +59,7 @@ QString status_bar_age_text(qint64 age_ms) {
 namespace fincept::screens {
 
 DashboardStatusBar::DashboardStatusBar(QWidget* parent) : QWidget(parent) {
-    setFixedHeight(24);
+    setMinimumHeight(32);
     setObjectName("dashStatusBar");
     apply_solid_background(this, QColor(ui::colors::BG_BASE()));
 

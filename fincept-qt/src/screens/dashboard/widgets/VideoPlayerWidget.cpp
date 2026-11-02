@@ -78,7 +78,7 @@ void VideoPlayerWidget::build_channel_list() {
 
         auto* row = new QPushButton;
         row->setCursor(Qt::PointingHandCursor);
-        row->setFixedHeight(32);
+        row->setMinimumHeight(32);
         channel_rows_.append(row);
 
         auto* rl = new QHBoxLayout(row);
@@ -91,7 +91,7 @@ void VideoPlayerWidget::build_channel_list() {
         rl->addWidget(dot);
 
         auto* play = new QLabel(QChar(0x25B6));
-        play->setStyleSheet(QString("color: %1; font-size: 10px; background: transparent;").arg(ch.accent));
+        play->setStyleSheet(QString("color: %1; font-size: 24px; background: transparent;").arg(ch.accent));
         rl->addWidget(play);
 
         auto* name = new QLabel(ch.name);
@@ -108,7 +108,7 @@ void VideoPlayerWidget::build_channel_list() {
 
     // Separator
     channel_sep_ = new QLabel;
-    channel_sep_->setFixedHeight(1);
+    channel_sep_->setMinimumHeight(32);
     vl->addSpacing(4);
     vl->addWidget(channel_sep_);
     vl->addSpacing(4);
@@ -176,13 +176,13 @@ void VideoPlayerWidget::build_player_view() {
     // Status overlay (loading / error)
     status_label_ = new QLabel;
     status_label_->setAlignment(Qt::AlignCenter);
-    status_label_->setFixedHeight(20);
+    status_label_->setMinimumHeight(32);
     status_label_->hide();
     vl->addWidget(status_label_);
 
     // Control bar
     controls_ = new QWidget(this);
-    controls_->setFixedHeight(28);
+    controls_->setMinimumHeight(32);
 
     auto* cl = new QHBoxLayout(controls_);
     cl->setContentsMargins(8, 0, 8, 0);
@@ -193,7 +193,7 @@ void VideoPlayerWidget::build_player_view() {
 
     stop_btn_ = new QPushButton(QString(QChar(0x25A0)) + " " + tr("STOP"));
     stop_btn_->setCursor(Qt::PointingHandCursor);
-    stop_btn_->setFixedHeight(20);
+    stop_btn_->setMinimumHeight(32);
     connect(stop_btn_, &QPushButton::clicked, this, &VideoPlayerWidget::stop_playback);
     cl->addWidget(stop_btn_);
 
@@ -422,7 +422,7 @@ void VideoPlayerWidget::apply_styles() {
                                    "QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical { height: 0; }")
                                .arg(ui::colors::BORDER_MED()));
 
-    channel_header_->setStyleSheet(QString("color: %1; font-size: 9px; font-weight: bold; letter-spacing: 0.5px; "
+    channel_header_->setStyleSheet(QString("color: %1; font-size: 24px; font-weight: bold; letter-spacing: 0.5px; "
                                            "background: transparent; padding: 2px 0;")
                                        .arg(ui::colors::TEXT_TERTIARY()));
 
@@ -435,54 +435,54 @@ void VideoPlayerWidget::apply_styles() {
                 .arg(ui::colors::BG_RAISED(), ui::colors::BORDER_DIM(), ui::colors::BG_HOVER(), ch.accent));
     }
     for (auto* lbl : channel_name_labels_) {
-        lbl->setStyleSheet(QString("color: %1; font-size: 10px; font-weight: bold; background: transparent;")
+        lbl->setStyleSheet(QString("color: %1; font-size: 24px; font-weight: bold; background: transparent;")
                                .arg(ui::colors::TEXT_PRIMARY()));
     }
     for (auto* lbl : channel_desc_labels_) {
         lbl->setStyleSheet(
-            QString("color: %1; font-size: 9px; background: transparent;").arg(ui::colors::TEXT_TERTIARY()));
+            QString("color: %1; font-size: 24px; background: transparent;").arg(ui::colors::TEXT_TERTIARY()));
     }
 
     channel_sep_->setStyleSheet(QString("background: %1;").arg(ui::colors::BORDER_DIM()));
 
-    custom_header_->setStyleSheet(QString("color: %1; font-size: 9px; font-weight: bold; letter-spacing: 0.5px; "
+    custom_header_->setStyleSheet(QString("color: %1; font-size: 24px; font-weight: bold; letter-spacing: 0.5px; "
                                           "background: transparent;")
                                       .arg(ui::colors::TEXT_TERTIARY()));
 
     url_input_->setStyleSheet(
         QString("QLineEdit { background: %1; color: %2; border: 1px solid %3; "
-                "border-radius: 2px; padding: 4px 8px; font-size: 10px; }"
+                "border-radius: 2px; padding: 4px 8px; font-size: 24px; }"
                 "QLineEdit:focus { border-color: %4; }")
             .arg(ui::colors::BG_BASE(), ui::colors::TEXT_PRIMARY(), ui::colors::BORDER_DIM(), ui::colors::AMBER()));
 
     play_btn_->setStyleSheet(QString("QPushButton { background: %1; color: %2; border: none; border-radius: 2px; "
-                                     "font-size: 9px; font-weight: bold; padding: 5px; }"
+                                     "font-size: 24px; font-weight: bold; padding: 5px; }"
                                      "QPushButton:hover { background: %3; }")
                                  .arg(ui::colors::AMBER(), ui::colors::TEXT_ON_ACCENT(), ui::colors::AMBER_DIM()));
 
     helper_label_->setStyleSheet(
-        QString("color: %1; font-size: 8px; background: transparent;").arg(ui::colors::TEXT_DIM()));
+        QString("color: %1; font-size: 24px; background: transparent;").arg(ui::colors::TEXT_DIM()));
 
     // Player page
 #ifdef HAS_QT_MULTIMEDIA
     video_widget_->setStyleSheet(QString("background: %1;").arg(ui::colors::BG_BASE()));
 #else
     if (status_label_placeholder_)
-        status_label_placeholder_->setStyleSheet(QString("color: %1; font-size: 11px; background: %2;")
+        status_label_placeholder_->setStyleSheet(QString("color: %1; font-size: 24px; background: %2;")
                                                      .arg(ui::colors::TEXT_SECONDARY(), ui::colors::BG_BASE()));
 #endif
 
-    status_label_->setStyleSheet(QString("color: %1; font-size: 9px; background: %2; padding: 0 8px;")
+    status_label_->setStyleSheet(QString("color: %1; font-size: 24px; background: %2; padding: 0 8px;")
                                      .arg(ui::colors::TEXT_SECONDARY(), ui::colors::BG_RAISED()));
 
     controls_->setStyleSheet(
         QString("background: %1; border-top: 1px solid %2;").arg(ui::colors::BG_RAISED(), ui::colors::BORDER_DIM()));
 
     now_playing_->setStyleSheet(
-        QString("color: %1; font-size: 9px; font-weight: bold; background: transparent;").arg(ui::colors::AMBER()));
+        QString("color: %1; font-size: 24px; font-weight: bold; background: transparent;").arg(ui::colors::AMBER()));
 
     stop_btn_->setStyleSheet(QString("QPushButton { background: %1; border: 1px solid %2; color: %3; "
-                                     "font-size: 9px; font-weight: bold; padding: 0 10px; border-radius: 2px; }"
+                                     "font-size: 24px; font-weight: bold; padding: 0 10px; border-radius: 2px; }"
                                      "QPushButton:hover { background: %4; color: %5; }")
                                  .arg(ui::colors::BG_SURFACE(), ui::colors::BORDER_DIM(), ui::colors::TEXT_SECONDARY(),
                                       ui::colors::NEGATIVE(), ui::colors::TEXT_PRIMARY()));
