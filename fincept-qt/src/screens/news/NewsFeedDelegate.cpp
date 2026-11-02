@@ -12,9 +12,9 @@ namespace fincept::screens {
 
 NewsFeedDelegate::NewsFeedDelegate(QObject* parent)
     : QStyledItemDelegate(parent),
-      data_font_(ui::fonts::DATA_FAMILY, ui::fonts::TINY),
-      bold_font_(ui::fonts::DATA_FAMILY, ui::fonts::TINY),
-      tiny_font_(ui::fonts::DATA_FAMILY, 10),
+      data_font_(ui::fonts::DATA_FAMILY, 24),
+      bold_font_(ui::fonts::DATA_FAMILY, 24),
+      tiny_font_(ui::fonts::DATA_FAMILY, 16),
       data_fm_(data_font_),
       bold_fm_(bold_font_),
       tiny_fm_(tiny_font_) {
@@ -28,9 +28,9 @@ QSize NewsFeedDelegate::sizeHint(const QStyleOptionViewItem& option, const QMode
     if (mode == "CLUSTERS") {
         auto cluster = index.data(ClusterRole).value<services::NewsCluster>();
         int related_count = std::max(0, cluster.source_count - 1);
-        return QSize(0, 72 + std::min(related_count, 3) * 16);
+        return QSize(0, 96 + std::min(related_count, 3) * 24);
     }
-    return QSize(0, 26);
+    return QSize(0, 40);
 }
 
 void NewsFeedDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const {

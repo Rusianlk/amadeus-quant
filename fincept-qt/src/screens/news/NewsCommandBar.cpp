@@ -7,7 +7,7 @@ namespace fincept::screens {
 
 NewsCommandBar::NewsCommandBar(QWidget* parent) : QWidget(parent) {
     setObjectName("newsCommandBar");
-    setFixedHeight(kBaseHeight); // 32px command row + 28px intel strip
+    setMinimumHeight(72); // 32px command row + 28px intel strip
 
     auto* root = new QVBoxLayout(this);
     root->setContentsMargins(0, 0, 0, 0);
@@ -110,7 +110,7 @@ void NewsCommandBar::build_command_row(QVBoxLayout* root) {
     // Wrap the command row in a scroll area to prevent overflow
     auto* scroll = new QScrollArea(this);
     scroll->setObjectName("newsCommandRowScroll");
-    scroll->setFixedHeight(32);
+    scroll->setMinimumHeight(36);
     scroll->setWidgetResizable(true);
     scroll->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     scroll->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -118,7 +118,7 @@ void NewsCommandBar::build_command_row(QVBoxLayout* root) {
 
     auto* row = new QWidget(scroll);
     row->setObjectName("newsCommandRow");
-    row->setFixedHeight(32);
+    row->setMinimumHeight(36);
 
     auto* hl = new QHBoxLayout(row);
     hl->setContentsMargins(6, 0, 6, 0);
@@ -127,7 +127,7 @@ void NewsCommandBar::build_command_row(QVBoxLayout* root) {
     // Drawer toggle button
     drawer_btn_ = new QPushButton(tr("INTEL"), row);
     drawer_btn_->setObjectName("newsDrawerBtn");
-    drawer_btn_->setFixedHeight(20);
+    drawer_btn_->setMinimumHeight(28);
     drawer_btn_->setCursor(Qt::PointingHandCursor);
     drawer_btn_->setCheckable(true);
     drawer_btn_->setToolTip(tr("Toggle intelligence drawer"));
@@ -141,7 +141,7 @@ void NewsCommandBar::build_command_row(QVBoxLayout* root) {
     search_input_->setObjectName("newsCommandBarSearch");
     search_input_->setPlaceholderText(tr("Search..."));
     search_input_->setFixedWidth(120);
-    search_input_->setFixedHeight(20);
+    search_input_->setMinimumHeight(28);
     search_input_->setAccessibleName(tr("Search headlines"));
     search_input_->setClearButtonEnabled(true);
     hl->addWidget(search_input_);
@@ -265,7 +265,7 @@ void NewsCommandBar::build_command_row(QVBoxLayout* root) {
     // Language filter
     lang_filter_combo_ = new QComboBox(row);
     lang_filter_combo_->setObjectName("newsCommandBarCombo");
-    lang_filter_combo_->setFixedHeight(18);
+    lang_filter_combo_->setMinimumHeight(28);
     lang_filter_combo_->setFixedWidth(44);
     lang_filter_combo_->addItems({"ALL", "EN", "FR", "DE", "ES", "AR", "ZH", "JA", "HI", "RU"});
     hl->addWidget(lang_filter_combo_);
@@ -274,7 +274,7 @@ void NewsCommandBar::build_command_row(QVBoxLayout* root) {
     // Variant selector
     variant_combo_ = new QComboBox(row);
     variant_combo_->setObjectName("newsCommandBarCombo");
-    variant_combo_->setFixedHeight(18);
+    variant_combo_->setMinimumHeight(28);
     variant_combo_->setFixedWidth(60);
     variant_combo_->addItems({"FULL", "FINANCE", "CRYPTO", "MACRO"});
     hl->addWidget(variant_combo_);
@@ -283,7 +283,7 @@ void NewsCommandBar::build_command_row(QVBoxLayout* root) {
     // RTL toggle
     rtl_btn_ = new QPushButton(tr("RTL"), row);
     rtl_btn_->setObjectName("newsCommandBarPill");
-    rtl_btn_->setFixedHeight(18);
+    rtl_btn_->setMinimumHeight(28);
     rtl_btn_->setCursor(Qt::PointingHandCursor);
     rtl_btn_->setCheckable(true);
     hl->addWidget(rtl_btn_);
@@ -296,7 +296,7 @@ void NewsCommandBar::build_command_row(QVBoxLayout* root) {
     // endpoint, and nothing here calls an AI model), so it is not labelled "AI".
     summarize_btn_ = new QPushButton(tr("BRIEF"), row);
     summarize_btn_->setObjectName("newsDetailAnalyzeBtn");
-    summarize_btn_->setFixedHeight(20);
+    summarize_btn_->setMinimumHeight(28);
     summarize_btn_->setToolTip(tr("Headline brief — the top stories of the current filter, most important first, "
                                   "grouped by category (built locally, no AI, no credits)"));
     hl->addWidget(summarize_btn_);
@@ -306,7 +306,7 @@ void NewsCommandBar::build_command_row(QVBoxLayout* root) {
     // 0 = manual (auto-refresh paused); other values are minutes.
     refresh_combo_ = new QComboBox(row);
     refresh_combo_->setObjectName("newsCommandBarCombo");
-    refresh_combo_->setFixedHeight(18);
+    refresh_combo_->setMinimumHeight(28);
     refresh_combo_->setFixedWidth(70);
     refresh_combo_->setToolTip(tr("Auto-refresh interval"));
     refresh_combo_->addItem(tr("MANUAL"), 0);
@@ -322,7 +322,7 @@ void NewsCommandBar::build_command_row(QVBoxLayout* root) {
     // Sources button — opens the RSS feed manager dialog
     sources_btn_ = new QPushButton(tr("SRC"), row);
     sources_btn_->setObjectName("newsCommandBarSources");
-    sources_btn_->setFixedHeight(20);
+    sources_btn_->setMinimumHeight(28);
     sources_btn_->setCursor(Qt::PointingHandCursor);
     sources_btn_->setToolTip(tr("Manage RSS feed sources"));
     hl->addWidget(sources_btn_);
@@ -331,7 +331,7 @@ void NewsCommandBar::build_command_row(QVBoxLayout* root) {
     // Refresh button
     refresh_btn_ = new QPushButton(tr("REFRESH"), row);
     refresh_btn_->setObjectName("newsCommandBarRefresh");
-    refresh_btn_->setFixedHeight(20);
+    refresh_btn_->setMinimumHeight(28);
     refresh_btn_->setAccessibleName(tr("Refresh news feed"));
     hl->addWidget(refresh_btn_);
     connect(refresh_btn_, &QPushButton::clicked, this, &NewsCommandBar::refresh_clicked);
@@ -457,7 +457,7 @@ void NewsCommandBar::build_intel_row(QVBoxLayout* root) {
     // NewsService WebSocket state and toggles connect/disconnect on click.
     live_badge_ = new QPushButton(tr("OFFLINE"), row);
     live_badge_->setObjectName("newsLiveBadge");
-    live_badge_->setFixedHeight(20);
+    live_badge_->setMinimumHeight(28);
     live_badge_->setCursor(Qt::PointingHandCursor);
     live_badge_->setToolTip(tr("Live feed status — click to toggle WebSocket connection"));
     live_badge_->setProperty("live", false); // colours: #newsLiveBadge rules in the screen's sheet
@@ -470,7 +470,7 @@ void NewsCommandBar::build_intel_row(QVBoxLayout* root) {
 QPushButton* NewsCommandBar::make_pill(const QString& text, const QString& value, QHBoxLayout* layout) {
     auto* btn = new QPushButton(text, this);
     btn->setObjectName("newsCommandBarPill");
-    btn->setFixedHeight(18);
+    btn->setMinimumHeight(28);
     btn->setCursor(Qt::PointingHandCursor);
     // Carry the logical value (e.g. "RELEVANCE" for the "REL" pill) as a
     // property so update_pill_group can match on intent rather than the
@@ -596,7 +596,7 @@ void NewsCommandBar::show_summary(const QString& summary) {
 void NewsCommandBar::hide_summary() {
     if (summary_row_)
         summary_row_->hide();
-    setFixedHeight(kBaseHeight);
+    setMinimumHeight(72);
 }
 
 void NewsCommandBar::set_summarizing(bool busy) {

@@ -57,11 +57,11 @@ static QString news_screen_local_rules() {
                    "QLabel#newsSignalCritical, QLabel#newsPredLow { color: %5; background: transparent; }"
                    "QLabel#newsSignalWarn, QLabel#newsPredMid { color: %6; background: transparent; }"
                    "QLabel#newsPredHigh { color: %7; background: transparent; }"
-                   "QLabel#newsPredSource { color: %8; background: transparent; font-size: 9px; }"
+                   "QLabel#newsPredSource { color: %8; background: transparent; font-size: 16px; }"
                    "QPushButton#newsLiveBadge { color: %8; background: transparent; border: 1px solid %8;"
-                   " padding: 0 6px; font-weight: 700; font-size: 10px; }"
+                   " padding: 0 6px; font-weight: 700; font-size: 16px; }"
                    "QPushButton#newsLiveBadge[live=\"true\"] { color: %7; border-color: %7; }"
-                   "QLabel#newsDetailAiCredits { color: %8; font-size: 10px; }"
+                   "QLabel#newsDetailAiCredits { color: %8; font-size: 16px; }"
                    "QLabel#newsDetailAiCredits[low=\"true\"] { color: %6; }")
         .arg(priority_color(Priority::FLASH), priority_color(Priority::URGENT), priority_color(Priority::BREAKING),
              priority_color(Priority::ROUTINE), ui::colors::NEGATIVE(), ui::colors::WARNING(),
