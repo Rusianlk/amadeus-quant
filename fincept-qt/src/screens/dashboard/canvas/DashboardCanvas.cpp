@@ -798,8 +798,26 @@ void DashboardCanvas::reflow_tiles(bool animate) {
 
 void DashboardCanvas::update_canvas_height() {
     int rows = max_row(layout_.items);
+    if (rows < 1)
+        rows = 1;
+    // Fill the viewport: if the parent scroll area is taller than the
+    // content, grow the row height so widgets stretch into the empty
+    // black area instead of leaving a void at the bottom.
+    int viewport_h = 0;
+    if (auto* scroll = qobject_cast<QScrollArea*>(parentWidget() ? parentWidget()->parentWidget() : nullptr))
+        viewport_h = scroll->viewport()->height();
+    const int base = 72; // taller rows so 24px type fits
+    int row_h = base;
+    if (viewport_h > 0) {
+        const int usable = viewport_h - layout_.margin * (rows + 1);
+        row_h = std::max(base, usable / rows);
+    }
+    if (row_h != layout_.row_h) {
+        layout_.row_h = row_h;
+        reflow_tiles();
+    }
     int h = layout_.margin + rows * (layout_.row_h + layout_.margin);
-    int min_h = std::max(h, 400);
+    int min_h = std::max(h, std::max(400, viewport_h));
     setMinimumHeight(min_h);
     setFixedHeight(min_h);
 }

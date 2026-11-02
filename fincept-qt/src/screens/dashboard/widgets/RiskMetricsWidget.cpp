@@ -1,3 +1,4 @@
+#include <QSizePolicy>
 #include "screens/dashboard/widgets/RiskMetricsWidget.h"
 
 #include "datahub/DataHub.h"
@@ -71,12 +72,15 @@ RiskMetricsWidget::RiskMetricsWidget(QWidget* parent) : BaseWidget(tr("RISK METR
     static const QStringList kVolatile = {"NVDA", "TSLA", "AMD", "META", "PLTR", "COIN"};
     for (const auto& sym : kVolatile) {
         auto* row = new QWidget(this);
+        row->setMinimumHeight(36);
         auto* rl = new QHBoxLayout(row);
+        rl->setContentsMargins(4, 2, 4, 2);
         rl->setContentsMargins(0, 2, 0, 2);
 
         StockRisk sr;
         sr.symbol = new QLabel(sym);
-        sr.symbol->setFixedWidth(48);
+        sr.symbol->setMinimumWidth(72);
+        sr.symbol->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Preferred);
         rl->addWidget(sr.symbol);
 
         sr.chg_pct = new QLabel("--");
@@ -101,7 +105,9 @@ RiskMetricsWidget::RiskMetricsWidget(QWidget* parent) : BaseWidget(tr("RISK METR
 
     auto make_spread_row = [&](const QString& label, QLabel*& out) {
         auto* row = new QWidget(this);
+        row->setMinimumHeight(36);
         auto* rl = new QHBoxLayout(row);
+        rl->setContentsMargins(4, 2, 4, 2);
         rl->setContentsMargins(0, 2, 0, 2);
         auto* lbl = new QLabel(label);
         spread_labels_.append(lbl);
